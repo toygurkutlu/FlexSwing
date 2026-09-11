@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group = 'io.github.toygurkutlu'
+version = '1.0.0'
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io'}
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
