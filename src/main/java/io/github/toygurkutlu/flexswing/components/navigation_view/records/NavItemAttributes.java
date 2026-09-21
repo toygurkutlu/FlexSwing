@@ -66,7 +66,7 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
      * @return the {@code NavItemAttributes} of the {@code NavigationView} subtitle items
      */
     public static NavItemAttributes defaultSubtitleAttributes() {
-        return new NavItemAttributes(TextPosition.LEFT,
+        return new NavItemAttributes(TextPosition.RIGHT,
                                      5,
                                      new Color(40, 40, 40),
                                      new Color(80, 80, 80),
