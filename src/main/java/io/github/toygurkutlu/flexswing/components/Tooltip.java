@@ -176,7 +176,7 @@ public class Tooltip extends JWindow {
      *
      * @return the alignment object that represents {@code Tooltip} location
      */
-    public TooltipAlignment getPTooltipAlignment() {
+    public TooltipAlignment getTooltipAlignment() {
         return alignment;
     }
 
