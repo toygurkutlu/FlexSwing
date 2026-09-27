@@ -446,8 +446,6 @@ public class NavigationView extends JPanel {
 
             sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-
         } else {
             sp.setMinimumSize(new Dimension(0, 0));
             sp.setPreferredSize(new Dimension(0, 0));
