@@ -348,7 +348,7 @@ public class FlexScrollPane extends JScrollPane {
      * @throws NullPointerException if the provided {@code thumbDragColor} is {@code null}
      */
     public void setTrackColor(Color trackColor) {
-        this.TRACK_COLOR = trackColor;
+        this.TRACK_COLOR = Objects.requireNonNull(trackColor, "TrackColor cannot be null.");
         revalidate();
         repaint();
     }
@@ -371,7 +371,7 @@ public class FlexScrollPane extends JScrollPane {
      * @see #setThumbDragColor(Color)
      */
     public void setThumbColor(Color thumbColor) {
-        this.THUMB_COLOR = thumbColor;
+        this.THUMB_COLOR = Objects.requireNonNull(thumbColor, "ThumbColor cannot be null.");
         revalidate();
         repaint();
     }
