@@ -181,7 +181,6 @@ public class FlexComboPopup extends BasicComboPopup {
 
                 if (flexArrowButton != null) flexArrowButton.updateState(true);
 
-
                 sp.setPreferredSize(new Dimension(finalWidth, sp.getPreferredSize().height));
                 sp.revalidate();
                 sp.repaint();

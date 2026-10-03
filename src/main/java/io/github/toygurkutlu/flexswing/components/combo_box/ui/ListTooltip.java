@@ -48,8 +48,8 @@ public class ListTooltip extends JWindow {
     }
 
     public void showTooltip(String text, Point point) {
-        String htmlText = "<html>" + text + "</html>";
-        label.setText(htmlText);
+        if(!text.contains("<html>")) text = "<html>" + text + "</html>";
+        label.setText(text);
         label.setSize(new Dimension(300, Integer.MAX_VALUE));
 
         pack();
