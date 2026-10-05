@@ -41,7 +41,6 @@ import java.util.Objects;
  *     </li>
  * </ol>
  *
- * @apiNote The developer must use {@link #attachTooltip()} for binding the {@code Tooltip} and the {@code JComponent}
  * @see #updateTooltip(TooltipAttribute, Object)
  * @see TooltipAttribute
  * @see TooltipAlignment
@@ -150,7 +149,7 @@ public class Tooltip extends JWindow {
      * After calling this method the provided {@code component} will show the tooltip when the mouse cursor comes
      * the {@code component}'s boundaries and will hide the tooltip when the mouse cursor goes out of boundaries.
      */
-    public void attachTooltip() {
+    private void attachTooltip() {
         component.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
