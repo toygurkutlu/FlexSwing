@@ -20,6 +20,7 @@ public class FlexComboBoxCellRenderer<T> extends JPanel implements ListCellRende
 
         label.setOpaque(false);
         label.setHorizontalAlignment(JLabel.LEFT);
+        label.setFont(attr.font());
         label.setBorder(new EmptyBorder(3, 10, 3, 10));
 
         setLayout(new BorderLayout());
@@ -34,7 +35,6 @@ public class FlexComboBoxCellRenderer<T> extends JPanel implements ListCellRende
         if (value != null) {
             String text = value.toString();
             label.setText(text);
-            label.setFont(attr.font());
 
             if (isSelected) {
                 label.setForeground(attr.selectedForeground());
