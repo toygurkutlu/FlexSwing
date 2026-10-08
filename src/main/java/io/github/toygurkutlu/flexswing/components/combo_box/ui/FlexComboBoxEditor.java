@@ -72,6 +72,7 @@ public class FlexComboBoxEditor extends BasicComboBoxEditor {
         label.setOpaque(false);
         label.setHorizontalAlignment(JLabel.LEFT);
         label.setForeground(displayAttr.foreground());
+        label.setFont(displayAttr.font());
 
         panel.add(label, BorderLayout.CENTER);
     }

@@ -16,15 +16,16 @@ import java.util.Objects;
  *     <li>When using default attributes, any specific property can be modified using the fluent {@code with...()} methods.</li>
  * </ul>
  *
- * @param background         the background color of the display panel
- * @param borderColor        the border color of the display panel
- * @param borderThickness    the border thickness of the display panel
- * @param radii              the border corner radii of the display panel
+ * @param background         the background color of the popup
+ * @param borderColor        the border color of the popup
+ * @param borderThickness    the border thickness of the popup
+ * @param radii              the border corner radii of the popup
  * @param itemForeground     the text color of the items in the list
  * @param itemBackground     the background color of items in the list
  * @param selectedForeground the text color of the selected item
  * @param selectedBackground the background color of the selected item
- * @param padding            the internal gaps between the displayed text and the border of the display panel
+ * @param font               the font of the popup
+ * @param padding            the internal gaps between the displayed text and the border of the popup
  * @param hasTooltip         the status of the tooltip mechanism when hovered
  * @param scrollAttributes   the style of the vertical scroll bar
  * @see #defaultPopupAttributes()
@@ -36,6 +37,7 @@ import java.util.Objects;
  * @see #withItemBackground(Color)
  * @see #withSelectedForeground(Color)
  * @see #withSelectedBackground(Color)
+ * @see #withFont(Font)
  * @see #withHasTooltip(boolean)
  * @see #withScrollAttributes(ScrollAttributes)
  * @see FlexComboBox
@@ -51,6 +53,7 @@ public record PopupAttributes(Color background,
                               Color itemBackground,
                               Color selectedForeground,
                               Color selectedBackground,
+                              Font font,
                               Padding padding,
                               boolean hasTooltip,
                               ScrollAttributes scrollAttributes) {
@@ -69,6 +72,7 @@ public record PopupAttributes(Color background,
                                    new Color(80, 80, 80),
                                    new Color(50, 50, 50),
                                    new Color(255, 255, 255),
+                                   new Font("Arial", Font.PLAIN, 14),
                                    new Padding(3, 3, 3, 10),
                                    true,
                                    ScrollAttributes.defaultScrollAttributes());
@@ -82,7 +86,7 @@ public record PopupAttributes(Color background,
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
     public PopupAttributes withBackground(Color color) {
-        return new PopupAttributes(Objects.requireNonNull(color,"Color cannot be null."),
+        return new PopupAttributes(Objects.requireNonNull(color, "Color cannot be null."),
                                    this.borderColor,
                                    this.borderThickness,
                                    this.radii,
@@ -90,6 +94,7 @@ public record PopupAttributes(Color background,
                                    this.itemBackground,
                                    this.selectedForeground,
                                    this.selectedBackground,
+                                   this.font,
                                    this.padding,
                                    this.hasTooltip,
                                    this.scrollAttributes);
@@ -104,13 +109,14 @@ public record PopupAttributes(Color background,
      */
     public PopupAttributes withBorderColor(Color color) {
         return new PopupAttributes(this.background,
-                                   Objects.requireNonNull(color,"Color cannot be null."),
+                                   Objects.requireNonNull(color, "Color cannot be null."),
                                    this.borderThickness,
                                    this.radii,
                                    this.itemForeground,
                                    this.itemBackground,
                                    this.selectedForeground,
                                    this.selectedBackground,
+                                   this.font,
                                    this.padding,
                                    this.hasTooltip,
                                    this.scrollAttributes);
@@ -125,6 +131,7 @@ public record PopupAttributes(Color background,
                                    this.itemBackground,
                                    this.selectedForeground,
                                    this.selectedBackground,
+                                   this.font,
                                    this.padding,
                                    this.hasTooltip,
                                    this.scrollAttributes);
@@ -146,6 +153,7 @@ public record PopupAttributes(Color background,
                                    this.itemBackground,
                                    this.selectedForeground,
                                    this.selectedBackground,
+                                   this.font,
                                    this.padding,
                                    this.hasTooltip,
                                    this.scrollAttributes);
@@ -163,10 +171,11 @@ public record PopupAttributes(Color background,
                                    this.borderColor,
                                    this.borderThickness,
                                    this.radii,
-                                   Objects.requireNonNull(color,"Color cannot be null."),
+                                   Objects.requireNonNull(color, "Color cannot be null."),
                                    this.itemBackground,
                                    this.selectedForeground,
                                    this.selectedBackground,
+                                   this.font,
                                    this.padding,
                                    this.hasTooltip,
                                    this.scrollAttributes);
@@ -185,9 +194,10 @@ public record PopupAttributes(Color background,
                                    this.borderThickness,
                                    this.radii,
                                    this.itemForeground,
-                                   Objects.requireNonNull(color,"Color cannot be null."),
+                                   Objects.requireNonNull(color, "Color cannot be null."),
                                    this.selectedForeground,
                                    this.selectedBackground,
+                                   this.font,
                                    this.padding,
                                    this.hasTooltip,
                                    this.scrollAttributes);
@@ -208,8 +218,9 @@ public record PopupAttributes(Color background,
                                    this.radii,
                                    this.itemForeground,
                                    this.itemBackground,
-                                   Objects.requireNonNull(color,"Color cannot be null."),
+                                   Objects.requireNonNull(color, "Color cannot be null."),
                                    this.selectedBackground,
+                                   this.font,
                                    this.padding,
                                    this.hasTooltip,
                                    this.scrollAttributes);
@@ -232,6 +243,29 @@ public record PopupAttributes(Color background,
                                    this.itemBackground,
                                    this.selectedForeground,
                                    Objects.requireNonNull(color, "Color cannot be null."),
+                                   this.font,
+                                   this.padding,
+                                   this.hasTooltip,
+                                   this.scrollAttributes);
+    }
+
+    /**
+     * Creates a copy of this {@code PopupAttributes} with the specified font for the popup.
+     *
+     * @param font the new font for the popup, cannot be {@code null}
+     * @return a new {@code PopupAttributes} instance with the updated font
+     * @throws NullPointerException if the provided {@code font} is {@code null}
+     */
+    public PopupAttributes withFont(Font font) {
+        return new PopupAttributes(this.background,
+                                   this.borderColor,
+                                   this.borderThickness,
+                                   this.radii,
+                                   this.itemForeground,
+                                   this.itemBackground,
+                                   this.selectedForeground,
+                                   this.selectedBackground,
+                                   Objects.requireNonNull(font, "Font cannot be null."),
                                    this.padding,
                                    this.hasTooltip,
                                    this.scrollAttributes);
@@ -253,7 +287,8 @@ public record PopupAttributes(Color background,
                                    this.itemBackground,
                                    this.selectedForeground,
                                    this.selectedBackground,
-                                   Objects.requireNonNull(padding,"Padding cannot be null."),
+                                   this.font,
+                                   Objects.requireNonNull(padding, "Padding cannot be null."),
                                    this.hasTooltip,
                                    this.scrollAttributes);
     }
@@ -276,6 +311,7 @@ public record PopupAttributes(Color background,
                                    this.itemBackground,
                                    this.selectedForeground,
                                    this.selectedBackground,
+                                   this.font,
                                    this.padding,
                                    hasTooltip,
                                    this.scrollAttributes);
@@ -298,6 +334,7 @@ public record PopupAttributes(Color background,
                                    this.itemBackground,
                                    this.selectedForeground,
                                    this.selectedBackground,
+                                   this.font,
                                    this.padding,
                                    this.hasTooltip,
                                    Objects.requireNonNull(attr, "ScrollAttributes cannot be null."));

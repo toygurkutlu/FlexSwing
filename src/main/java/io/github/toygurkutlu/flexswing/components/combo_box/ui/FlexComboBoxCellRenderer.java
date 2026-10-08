@@ -34,6 +34,7 @@ public class FlexComboBoxCellRenderer<T> extends JPanel implements ListCellRende
         if (value != null) {
             String text = value.toString();
             label.setText(text);
+            label.setFont(attr.font());
 
             if (isSelected) {
                 label.setForeground(attr.selectedForeground());
