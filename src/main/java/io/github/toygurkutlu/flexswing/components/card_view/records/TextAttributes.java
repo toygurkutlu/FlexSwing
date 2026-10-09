@@ -2,8 +2,8 @@ package io.github.toygurkutlu.flexswing.components.card_view.records;
 
 
 import io.github.toygurkutlu.flexswing.components.CardView;
-import io.github.toygurkutlu.flexswing.enums.StateType;
 import io.github.toygurkutlu.flexswing.components.card_view.enums.TextType;
+import io.github.toygurkutlu.flexswing.enums.StateType;
 import io.github.toygurkutlu.flexswing.objects.Padding;
 import io.github.toygurkutlu.flexswing.objects.StateColors;
 
@@ -30,6 +30,7 @@ import java.util.Objects;
  * @see #withForegrounds(StateColors)
  * @see #withFont(Font)
  * @see #withPadding(Padding)
+ * @see #withPadding(int)
  * @see TextType
  * @see StateColors
  * @see StateType
@@ -135,13 +136,29 @@ public record TextAttributes(TextType textType,
      * @param padding the new internal gaps between texts, cannot be {@code null}
      * @return a new {@code TextAttributes} instance with the updated padding
      * @throws NullPointerException if the provided {@code padding} is {@code null}
-     * @see Padding#Padding(int, int, int, int)
+     * @see #withPadding(int)
      */
     public TextAttributes withPadding(Padding padding) {
         return new TextAttributes(this.textType,
                                   this.foregrounds,
                                   this.font,
                                   Objects.requireNonNull(padding, "Padding cannot be null."));
+    }
+
+    /**
+     * Creates a copy of this {@code TextAttributes} with the internal gaps.
+     *
+     * @param padding the new internal gaps between texts, cannot be {@code null}
+     * @return a new {@code TextAttributes} instance with the updated padding
+     * @throws NullPointerException if the provided {@code padding} is {@code null}
+     * @see #withPadding(Padding)
+     */
+    public TextAttributes withPadding(int padding) {
+        if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
+        return new TextAttributes(this.textType,
+                                  this.foregrounds,
+                                  this.font,
+                                  new Padding(padding));
     }
 
     /**

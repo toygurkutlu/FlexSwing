@@ -33,11 +33,14 @@ import java.util.Objects;
  * @see #withBorderColor(Color)
  * @see #withBorderThickness(int)
  * @see #withRadii(Radii)
+ * @see #withRadii(int)
  * @see #withItemForeground(Color)
  * @see #withItemBackground(Color)
  * @see #withSelectedForeground(Color)
  * @see #withSelectedBackground(Color)
  * @see #withFont(Font)
+ * @see #withPadding(Padding)
+ * @see #withPadding(int)
  * @see #withHasTooltip(boolean)
  * @see #withScrollAttributes(ScrollAttributes)
  * @see FlexComboBox
@@ -122,6 +125,13 @@ public record PopupAttributes(Color background,
                                    this.scrollAttributes);
     }
 
+    /**
+     * Creates a copy of this {@code PopupAttributes} with the specified border thickness of the popup.
+     *
+     * @param thickness the new border thickness of the popup
+     * @return a new {@code PopupAttributes} instance with the updated border thickness
+     * @throws IllegalArgumentException if the provided {@code thickness} is negative
+     */
     public PopupAttributes withBorderThickness(int thickness) {
         return new PopupAttributes(this.background,
                                    this.borderColor,
@@ -143,12 +153,37 @@ public record PopupAttributes(Color background,
      * @param radii the new border corner radii of the popup, cannot be {@code null}
      * @return a new {@code PopupAttributes} instance with the updated border corner radii
      * @throws NullPointerException if the provided {@code radii} is {@code null}
+     * @see #withRadii(int)
      */
     public PopupAttributes withRadii(Radii radii) {
         return new PopupAttributes(this.background,
                                    this.borderColor,
                                    this.borderThickness,
                                    Objects.requireNonNull(radii, "Radii cannot be null."),
+                                   this.itemForeground,
+                                   this.itemBackground,
+                                   this.selectedForeground,
+                                   this.selectedBackground,
+                                   this.font,
+                                   this.padding,
+                                   this.hasTooltip,
+                                   this.scrollAttributes);
+    }
+
+    /**
+     * Creates a copy of this {@code PopupAttributes} with the same border corner radius of the popup.
+     *
+     * @param radius the new border corner radius of the popup, cannot be {@code null}
+     * @return a new {@code PopupAttributes} instance with the updated border corner radius
+     * @throws IllegalArgumentException if the provided {@code radii} is negative
+     * @see #withRadii(Radii)
+     */
+    public PopupAttributes withRadii(int radius) {
+        if(radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
+        return new PopupAttributes(this.background,
+                                   this.borderColor,
+                                   this.borderThickness,
+                                   new Radii(radius),
                                    this.itemForeground,
                                    this.itemBackground,
                                    this.selectedForeground,
@@ -274,9 +309,10 @@ public record PopupAttributes(Color background,
     /**
      * Creates a copy of this {@code PopupAttributes} with the specified internal gaps between items.
      *
-     * @param padding the internal gaps between items, cannot be {@code null}
+     * @param padding the new internal gaps between items, cannot be {@code null}
      * @return a new {@code PopupAttributes} instance with the updated padding
      * @throws NullPointerException if the provided {@code padding} is {@code null}
+     * @see #withPadding(int)
      */
     public PopupAttributes withPadding(Padding padding) {
         return new PopupAttributes(this.background,
@@ -289,6 +325,30 @@ public record PopupAttributes(Color background,
                                    this.selectedBackground,
                                    this.font,
                                    Objects.requireNonNull(padding, "Padding cannot be null."),
+                                   this.hasTooltip,
+                                   this.scrollAttributes);
+    }
+
+    /**
+     * Creates a copy of this {@code PopupAttributes} with the specified internal gaps between items.
+     *
+     * @param padding the new internal gaps between items, cannot be {@code null}
+     * @return a new {@code PopupAttributes} instance with the updated padding
+     * @throws IllegalArgumentException if the provided {@code padding} is negative
+     * @see #withPadding(Padding)
+     */
+    public PopupAttributes withPadding(int padding) {
+        if(padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
+        return new PopupAttributes(this.background,
+                                   this.borderColor,
+                                   this.borderThickness,
+                                   this.radii,
+                                   this.itemForeground,
+                                   this.itemBackground,
+                                   this.selectedForeground,
+                                   this.selectedBackground,
+                                   this.font,
+                                   new Padding(padding),
                                    this.hasTooltip,
                                    this.scrollAttributes);
     }

@@ -36,6 +36,7 @@ import java.util.Objects;
  * @see #withFavoriteConfig(CardMechanism)
  * @see #withFavoriteIconLocation(CardSection)
  * @see #withRadii(Radii)
+ * @see #withRadii(int)
  * @see #withHeaderAttributes(HeaderAttributes)
  * @see #withContentAttributes(ContentAttributes)
  * @see #backgroundByState(CardSection, StateType)
@@ -95,7 +96,7 @@ public record CardAttributes(CardMechanism hoverConfig,
                                   this.selectConfig,
                                   this.collapseConfig,
                                   this.favoriteConfig,
-                                  CardSection.CONTENT,
+                                  this.favIconLocation,
                                   this.radii,
                                   this.headerAttributes,
                                   this.contentAttributes);
@@ -116,7 +117,7 @@ public record CardAttributes(CardMechanism hoverConfig,
                                   Objects.requireNonNull(config, "Config cannot be null"),
                                   this.collapseConfig,
                                   this.favoriteConfig,
-                                  CardSection.CONTENT,
+                                  this.favIconLocation,
                                   this.radii,
                                   this.headerAttributes,
                                   this.contentAttributes);
@@ -137,7 +138,7 @@ public record CardAttributes(CardMechanism hoverConfig,
                                   this.selectConfig,
                                   Objects.requireNonNull(config, "Config cannot be null"),
                                   this.favoriteConfig,
-                                  CardSection.CONTENT,
+                                  this.favIconLocation,
                                   this.radii,
                                   this.headerAttributes,
                                   this.contentAttributes);
@@ -158,7 +159,7 @@ public record CardAttributes(CardMechanism hoverConfig,
                                   this.selectConfig,
                                   this.collapseConfig,
                                   Objects.requireNonNull(config, "Config cannot be null"),
-                                  CardSection.CONTENT,
+                                  this.favIconLocation,
                                   this.radii,
                                   this.headerAttributes,
                                   this.contentAttributes);
@@ -188,15 +189,35 @@ public record CardAttributes(CardMechanism hoverConfig,
      * @param radii the new radii for the card corners, cannot be {@code null}
      * @return a new {@code CardAttributes} instance with the updated card corner radii
      * @throws NullPointerException if the provided {@code radii} is {@code null}
-     * @see Radii#Radii(int, int, int, int)
+     * @see #withRadii(int)
      */
     public CardAttributes withRadii(Radii radii) {
         return new CardAttributes(this.hoverConfig,
                                   this.selectConfig,
                                   this.collapseConfig,
                                   this.favoriteConfig,
-                                  CardSection.CONTENT,
+                                  this.favIconLocation,
                                   Objects.requireNonNull(radii, "Radii cannot be null"),
+                                  this.headerAttributes,
+                                  this.contentAttributes);
+    }
+
+    /**
+     * Creates a copy of this {@code CardAttributes} with the specified card corner radius.
+     *
+     * @param radius the new radius for the card corners, cannot be {@code null}
+     * @return a new {@code CardAttributes} instance with the updated card corner radii
+     * @throws NullPointerException if the provided {@code radii} is {@code null}
+     * @see #withRadii(Radii)
+     */
+    public CardAttributes withRadii(int radius) {
+        if(radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
+        return new CardAttributes(this.hoverConfig,
+                                  this.selectConfig,
+                                  this.collapseConfig,
+                                  this.favoriteConfig,
+                                  this.favIconLocation,
+                                  new Radii(radius),
                                   this.headerAttributes,
                                   this.contentAttributes);
     }
@@ -214,7 +235,7 @@ public record CardAttributes(CardMechanism hoverConfig,
                                   this.selectConfig,
                                   this.collapseConfig,
                                   this.favoriteConfig,
-                                  CardSection.CONTENT,
+                                  this.favIconLocation,
                                   this.radii,
                                   Objects.requireNonNull(headerAttributes, "HeaderAttributes cannot be null"),
                                   this.contentAttributes);
@@ -233,7 +254,7 @@ public record CardAttributes(CardMechanism hoverConfig,
                                   this.selectConfig,
                                   this.collapseConfig,
                                   this.favoriteConfig,
-                                  CardSection.CONTENT,
+                                  this.favIconLocation,
                                   this.radii,
                                   this.headerAttributes,
                                   Objects.requireNonNull(contentAttributes, "ContentAttributes cannot be null"));

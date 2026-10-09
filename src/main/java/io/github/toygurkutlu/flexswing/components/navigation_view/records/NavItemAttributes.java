@@ -15,6 +15,7 @@ import java.util.Objects;
  *
  * @param textPosition       the position of the text according to the icon
  * @param iconTextGap        the gap between the text and the icon
+ * @param verticalGap        the vertical gap between items
  * @param background         the background color of the item
  * @param hoverBackground    the background color of the item when hovered
  * @param selectedBackground the background color of the item when selected
@@ -27,6 +28,7 @@ import java.util.Objects;
  * @see #defaultSubtitleAttributes()
  * @see #withTextPosition(TextPosition)
  * @see #withIconTextGap(int)
+ * @see #withVerticalGap(int)
  * @see #withBackground(Color)
  * @see #withHoverBackground(Color)
  * @see #withSelectedBackground(Color)
@@ -35,10 +37,12 @@ import java.util.Objects;
  * @see #withSelectedForeground(Color)
  * @see #withFont(Font)
  * @see #withPadding(Padding)
+ * @see #withPadding(int)
  * @see TextPosition
  * @see Padding
  */
-public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Color background, Color hoverBackground,
+public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int verticalGap, Color background,
+                                Color hoverBackground,
                                 Color selectedBackground, Color foreground, Color hoverForeground,
                                 Color selectedForeground, Font font, Padding padding) {
 
@@ -49,6 +53,7 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
      */
     public static NavItemAttributes defaultTitleAttributes() {
         return new NavItemAttributes(TextPosition.RIGHT,
+                                     5,
                                      5,
                                      new Color(40, 40, 40),
                                      new Color(80, 80, 80),
@@ -68,6 +73,7 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
     public static NavItemAttributes defaultSubtitleAttributes() {
         return new NavItemAttributes(TextPosition.RIGHT,
                                      5,
+                                     0,
                                      new Color(40, 40, 40),
                                      new Color(80, 80, 80),
                                      new Color(100, 200, 100),
@@ -88,6 +94,7 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
     public NavItemAttributes withTextPosition(TextPosition textPosition) {
         return new NavItemAttributes(Objects.requireNonNull(textPosition, "TextPosition cannot be null."),
                                      this.iconTextGap,
+                                     this.verticalGap,
                                      this.background,
                                      this.hoverBackground,
                                      this.selectedBackground,
@@ -109,6 +116,30 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
         if (gap < 0) throw new IllegalArgumentException("Gap cannot be negative.");
         return new NavItemAttributes(this.textPosition,
                                      gap,
+                                     this.verticalGap,
+                                     this.background,
+                                     this.hoverBackground,
+                                     this.selectedBackground,
+                                     this.foreground,
+                                     this.hoverForeground,
+                                     this.selectedForeground,
+                                     this.font,
+                                     this.padding);
+    }
+
+    /**
+     * Creates a copy of this {@code NavItemAttributes} with the specified vertical gap between the current item and
+     * the item above it.
+     *
+     * @param gap the new vertical gap between items
+     * @return a new {@code NavItemAttributes} instance with the updated vertical gap
+     * @throws IllegalArgumentException if the provided {@code gap} is negative
+     */
+    public NavItemAttributes withVerticalGap(int gap) {
+        if (gap < 0) throw new IllegalArgumentException("Gap cannot be negative.");
+        return new NavItemAttributes(this.textPosition,
+                                     this.iconTextGap,
+                                     gap,
                                      this.background,
                                      this.hoverBackground,
                                      this.selectedBackground,
@@ -129,6 +160,7 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
     public NavItemAttributes withBackground(Color color) {
         return new NavItemAttributes(this.textPosition,
                                      this.iconTextGap,
+                                     this.verticalGap,
                                      Objects.requireNonNull(color, "Color cannot be null."),
                                      this.hoverBackground,
                                      this.selectedBackground,
@@ -149,6 +181,7 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
     public NavItemAttributes withHoverBackground(Color color) {
         return new NavItemAttributes(this.textPosition,
                                      this.iconTextGap,
+                                     this.verticalGap,
                                      this.background,
                                      Objects.requireNonNull(color, "Color cannot be null."),
                                      this.selectedBackground,
@@ -169,6 +202,7 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
     public NavItemAttributes withSelectedBackground(Color color) {
         return new NavItemAttributes(this.textPosition,
                                      this.iconTextGap,
+                                     this.verticalGap,
                                      this.background,
                                      this.hoverBackground,
                                      Objects.requireNonNull(color, "Color cannot be null."),
@@ -189,6 +223,7 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
     public NavItemAttributes withForeground(Color color) {
         return new NavItemAttributes(this.textPosition,
                                      this.iconTextGap,
+                                     this.verticalGap,
                                      this.background,
                                      this.hoverBackground,
                                      this.selectedBackground,
@@ -209,6 +244,7 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
     public NavItemAttributes withHoverForeground(Color color) {
         return new NavItemAttributes(this.textPosition,
                                      this.iconTextGap,
+                                     this.verticalGap,
                                      this.background,
                                      this.hoverBackground,
                                      this.selectedBackground,
@@ -229,6 +265,7 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
     public NavItemAttributes withSelectedForeground(Color color) {
         return new NavItemAttributes(this.textPosition,
                                      this.iconTextGap,
+                                     this.verticalGap,
                                      this.background,
                                      this.hoverBackground,
                                      this.selectedBackground,
@@ -249,6 +286,7 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
     public NavItemAttributes withFont(Font font) {
         return new NavItemAttributes(this.textPosition,
                                      this.iconTextGap,
+                                     this.verticalGap,
                                      this.background,
                                      this.hoverBackground,
                                      this.selectedBackground,
@@ -265,10 +303,12 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
      * @param padding the new padding for the item, cannot be {@code null}
      * @return a new {@code NavItemAttributes} instance with the updated padding
      * @throws NullPointerException if the provided {@code padding} is {@code null}
+     * @see #withPadding(int) 
      */
     public NavItemAttributes withPadding(Padding padding) {
         return new NavItemAttributes(this.textPosition,
                                      this.iconTextGap,
+                                     this.verticalGap,
                                      this.background,
                                      this.hoverBackground,
                                      this.selectedBackground,
@@ -277,5 +317,28 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, Colo
                                      this.selectedForeground,
                                      this.font,
                                      Objects.requireNonNull(padding, "Padding cannot be null."));
+    }
+
+    /**
+     * Creates a copy of this {@code NavItemAttributes} with the specified internal padding.
+     *
+     * @param padding the new padding for the item, cannot be {@code null}
+     * @return a new {@code NavItemAttributes} instance with the updated padding
+     * @throws IllegalArgumentException if the provided {@code padding} is negative
+     * @see #withPadding(Padding) 
+     */
+    public NavItemAttributes withPadding(int padding) {
+        if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
+        return new NavItemAttributes(this.textPosition,
+                                     this.iconTextGap,
+                                     this.verticalGap,
+                                     this.background,
+                                     this.hoverBackground,
+                                     this.selectedBackground,
+                                     this.foreground,
+                                     this.hoverForeground,
+                                     this.selectedForeground,
+                                     this.font,
+                                     new Padding(padding));
     }
 }

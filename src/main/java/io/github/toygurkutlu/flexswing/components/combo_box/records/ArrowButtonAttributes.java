@@ -25,6 +25,7 @@ import java.util.Objects;
  * @see #withHoverColor(Color)
  * @see #withBorderColor(Color)
  * @see #withRadii(Radii)
+ * @see #withRadii(int)
  * @see #withArrowColor(Color)
  * @see FlexComboBox
  * @see Radii
@@ -121,6 +122,7 @@ public record ArrowButtonAttributes(Color background,
      * @param radii the new corner radii for the arrow button, cannot be {@code null}
      * @return a new {@code ArrowButtonAttributes} instance with the updated radii
      * @throws NullPointerException if the provided {@code radii} is {@code null}
+     * @see #withRadii(int)
      */
     public ArrowButtonAttributes withRadii(Radii radii) {
         return new ArrowButtonAttributes(this.background,
@@ -128,6 +130,24 @@ public record ArrowButtonAttributes(Color background,
                                          this.hoverColor,
                                          this.borderColor,
                                          Objects.requireNonNull(radii, "Radii cannot be null."),
+                                         this.arrowColor);
+    }
+
+    /**
+     * Creates a copy of this {@code ArrowButtonAttributes} with the specified border corner radii of the arrow button.
+     *
+     * @param radius the new corner radius for the arrow button, cannot be negative
+     * @return a new {@code ArrowButtonAttributes} instance with the updated radii
+     * @throws IllegalArgumentException if the provided {@code radius} is negative
+     * @see #withRadii(Radii)
+     */
+    public ArrowButtonAttributes withRadii(int radius) {
+        if(radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
+        return new ArrowButtonAttributes(this.background,
+                                         this.pressedColor,
+                                         this.hoverColor,
+                                         this.borderColor,
+                                         new Radii(radius),
                                          this.arrowColor);
     }
 

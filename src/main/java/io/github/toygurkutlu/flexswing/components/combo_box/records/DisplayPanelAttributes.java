@@ -26,9 +26,11 @@ import java.util.Objects;
  * @see #withBorderColor(Color)
  * @see #withBorderThickness(int)
  * @see #withRadii(Radii)
+ * @see #withRadii(int)
  * @see #withForeground(Color)
  * @see #withFont(Font)
  * @see #withPadding(Padding)
+ * @see #withPadding(int)
  * @see FlexComboBox
  * @see Radii
  * @see Padding
@@ -114,12 +116,32 @@ public record DisplayPanelAttributes(Color background,
      * @param radii the new corner radii of the display panel, cannot be {@code null}
      * @return a new {@code DisplayPanelAttributes} instance with the updated corner radii
      * @throws NullPointerException if the provided {@code radii} is {@code null}
+     * @see #withRadii(int)
      */
     public DisplayPanelAttributes withRadii(Radii radii) {
         return new DisplayPanelAttributes(this.background,
                                           this.borderColor,
                                           this.borderThickness,
                                           Objects.requireNonNull(radii, "Radii cannot be null."),
+                                          this.foreground,
+                                          this.font,
+                                          this.padding);
+    }
+
+    /**
+     * Creates a copy of this {@code DisplayPanelAttributes} with the same corner radius of the display panel border.
+     *
+     * @param radius the new corner radius of the display panel, cannot be {@code null}
+     * @return a new {@code DisplayPanelAttributes} instance with the updated corner radius
+     * @throws NullPointerException if the provided {@code radii} is {@code null}
+     * @see #withRadii(Radii)
+     */
+    public DisplayPanelAttributes withRadii(int radius) {
+        if(radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
+        return new DisplayPanelAttributes(this.background,
+                                          this.borderColor,
+                                          this.borderThickness,
+                                          new Radii(radius),
                                           this.foreground,
                                           this.font,
                                           this.padding);
@@ -166,6 +188,7 @@ public record DisplayPanelAttributes(Color background,
      * @param padding the new internal gaps of the display panel, cannot be {@code null}
      * @return a new {@code DisplayPanelAttributes} instance with the updated internal gaps
      * @throws NullPointerException if the provided {@code padding} is {@code null}
+     * @see #withPadding(int)
      */
     public DisplayPanelAttributes withPadding(Padding padding) {
         return new DisplayPanelAttributes(this.background,
@@ -175,5 +198,25 @@ public record DisplayPanelAttributes(Color background,
                                           this.foreground,
                                           this.font,
                                           Objects.requireNonNull(padding, "Padding cannot be null."));
+    }
+
+    /**
+     * Creates a copy of this {@code DisplayPanelAttributes} with the same internal gaps between the displayed
+     * text and the border of the display panel.
+     *
+     * @param padding the new internal gaps of the display panel, cannot be {@code null}
+     * @return a new {@code DisplayPanelAttributes} instance with the updated internal gaps
+     * @throws IllegalArgumentException if the provided {@code padding} is negative
+     * @see #withRadii(Radii)
+     */
+    public DisplayPanelAttributes withPadding(int padding) {
+        if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
+        return new DisplayPanelAttributes(this.background,
+                                          this.borderColor,
+                                          this.borderThickness,
+                                          this.radii,
+                                          this.foreground,
+                                          this.font,
+                                          new Padding(padding));
     }
 }

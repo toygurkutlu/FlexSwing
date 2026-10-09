@@ -34,6 +34,20 @@ public class Radii {
     }
 
     /**
+     * Constructs a new configuration for the component border's corners with same radius.
+     *
+     * @param radius     radius of the corner, cannot be negative
+     * @throws IllegalArgumentException if the provided radius is negative
+     */
+    public Radii(int radius) {
+        if (radius < 0) throw new IllegalArgumentException("TopLeft radius cannot be negative.");
+        this.topLeft = radius;
+        this.topRight = radius;
+        this.bottomLeft = radius;
+        this.bottomRight = radius;
+    }
+
+    /**
      * Gets the top left corner radius of the component border.
      *
      * @return the top left corner radius

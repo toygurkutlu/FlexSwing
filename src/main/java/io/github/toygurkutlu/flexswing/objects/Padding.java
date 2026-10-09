@@ -45,6 +45,22 @@ public class Padding {
     }
 
     /**
+     * Constructs a new configuration for the internal gaps between components or the content and the component
+     * border.
+     *
+     * @param padding    the vertical gap between two components or the content and the component border's corner,
+     *               cannot be negative
+     * @throws IllegalArgumentException if the provided padding value is negative
+     */
+    public Padding(int padding){
+        if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
+        this.top = padding;
+        this.left = padding;
+        this.bottom = padding;
+        this.right = padding;
+    }
+
+    /**
      * Sets the vertical gap between two components or the content and the component border's top side.
      */
     public int top() {
