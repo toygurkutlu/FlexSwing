@@ -412,7 +412,7 @@ public class NavigationView extends JPanel {
                 Icon[] subtitleIcons = titleItem.getSubtitleIcons();
                 JPanel panel = createSubtitlePanel(i, subtitles, subtitleIcons);
 
-                gbc.insets.top = subtitleAttr.verticalGap();
+                gbc.insets.top = 0;
                 gbc.insets.left = subtitleAttr.horizontalGap();
                 contentPanel.add(panel, gbc);
 
@@ -645,7 +645,7 @@ public class NavigationView extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(subtitleAttr.verticalGap(),5,5,5);
+        gbc.insets = new Insets(subtitleAttr.verticalGap(),0,0,0);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.weightx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
