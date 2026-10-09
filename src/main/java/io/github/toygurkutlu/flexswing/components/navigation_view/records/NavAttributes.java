@@ -45,7 +45,7 @@ public record NavAttributes(Color background, NavItemAttributes titleAttributes,
      * @return a new {@code NavAttributes} instance with the updated background color
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
-    private NavAttributes withBackground(Color color) {
+    public NavAttributes withBackground(Color color) {
         return new NavAttributes(Objects.requireNonNull(color, "Color cannot be null."),
                                  this.titleAttributes,
                                  this.subtitleAttributes,
@@ -59,7 +59,7 @@ public record NavAttributes(Color background, NavItemAttributes titleAttributes,
      * @return a new {@code NavAttributes} instance with the updated title style
      * @throws NullPointerException if the provided {@code attr} is {@code null}
      */
-    private NavAttributes withTitleAttributes(NavItemAttributes attr) {
+    public NavAttributes withTitleAttributes(NavItemAttributes attr) {
         return new NavAttributes(this.background,
                                  Objects.requireNonNull(attr, "NavItemAttributes cannot be null."),
                                  this.subtitleAttributes,
@@ -73,7 +73,7 @@ public record NavAttributes(Color background, NavItemAttributes titleAttributes,
      * @return a new {@code NavAttributes} instance with the updated subtitle style
      * @throws NullPointerException if the provided {@code attr} is {@code null}
      */
-    private NavAttributes withSubtitleAttributes(NavItemAttributes attr) {
+    public NavAttributes withSubtitleAttributes(NavItemAttributes attr) {
         return new NavAttributes(this.background,
                                  this.titleAttributes,
                                  Objects.requireNonNull(attr, "NavItemAttributes cannot be null."),
@@ -87,7 +87,7 @@ public record NavAttributes(Color background, NavItemAttributes titleAttributes,
      * @return a new {@code NavAttributes} instance with the updated scroll style
      * @throws NullPointerException if the provided {@code attr} is {@code null}
      */
-    private NavAttributes withScrollAttributes(ScrollAttributes attr) {
+    public NavAttributes withScrollAttributes(ScrollAttributes attr) {
         return new NavAttributes(this.background,
                                  this.titleAttributes,
                                  this.subtitleAttributes,
