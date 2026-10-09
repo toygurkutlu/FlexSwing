@@ -425,7 +425,7 @@ public class NavigationView extends JPanel {
         gbc.anchor = GridBagConstraints.NORTHWEST;
         contentPanel.add(Box.createVerticalGlue(), gbc);
 
-        sp = new JScrollPane(contentPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        sp = new JScrollPane(contentPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         sp.setOpaque(false);
         sp.getViewport().setOpaque(false);
         sp.setBorder(new EmptyBorder(1, 1, 1, 1));
