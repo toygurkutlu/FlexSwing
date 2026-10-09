@@ -394,7 +394,7 @@ public class NavigationView extends JPanel {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
 
         for (int i = 0; i < items.size(); i++) {
-            gbc.insets.top = 5;
+            gbc.insets.top = titleAttr.verticalGap();
             gbc.insets.left = 5;
             NavItem titleItem = items.get(i);
 
@@ -407,7 +407,7 @@ public class NavigationView extends JPanel {
             boolean hasSubtitles = hasSubtitles(i);
 
             if (hasSubtitles) {
-                gbc.insets.top = 0;
+                gbc.insets.top = subtitleAttr.verticalGap();
                 gbc.insets.left = 25;
 
                 String[] subtitles = titleItem.getSubtitles();
