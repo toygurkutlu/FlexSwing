@@ -57,6 +57,7 @@ public class NavigationView extends JPanel {
     private List<JPanel> titlePanels;
     private List<JPanel> subtitlePanels;
     private NavItemListener listener;
+    private int innerGap = 25;
 
     /**
      * Creates a {@code NavigationView} instance with the provided items and config.
@@ -400,7 +401,7 @@ public class NavigationView extends JPanel {
             Icon icon = titleItem.getTitleIcon();
 
             gbc.insets.top = titleAttr.verticalGap();
-            gbc.insets.left = 5;
+            gbc.insets.left = titleAttr.horizontalGap();
             contentPanel.add(createTitlePanel(i, text, icon), gbc);
             gbc.gridy++;
 
@@ -412,7 +413,7 @@ public class NavigationView extends JPanel {
                 JPanel panel = createSubtitlePanel(i, subtitles, subtitleIcons);
 
                 gbc.insets.top = subtitleAttr.verticalGap();
-                gbc.insets.left = 25;
+                gbc.insets.left = subtitleAttr.horizontalGap();
                 contentPanel.add(panel, gbc);
 
                 gbc.gridy++;
