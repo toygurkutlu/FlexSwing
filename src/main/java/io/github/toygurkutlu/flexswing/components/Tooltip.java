@@ -169,11 +169,7 @@ public class Tooltip extends JWindow {
      * @apiNote Use {@link #attachTooltip()} method if you want to attach the tooltip again.
      * */
     public void detachTooltip(){
-        if(isAttached){
-            SwingUtilities.invokeLater(() -> setVisible(false));
-            isAttached = false;
-            component.removeMouseListener(tooltipListener());
-        }
+        component.removeMouseListener(tooltipListener());
     }
 
     private MouseListener tooltipListener(){
