@@ -1,10 +1,13 @@
 package io.github.toygurkutlu.flexswing.components;
 
 
+import com.sun.nio.sctp.IllegalUnbindException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Objects;
 
 /**
@@ -62,6 +65,7 @@ public class Tooltip extends JWindow {
     private int bottomPadding = 6;
     private int rightPadding = 12;
     private TooltipAlignment alignment = TooltipAlignment.BOTTOM_CENTER_TO_CENTER;
+    private boolean isAttached = false;
 
     /**
      * Represents the location of the tooltip
@@ -109,7 +113,6 @@ public class Tooltip extends JWindow {
     public Tooltip(JComponent component, String text) {
         this.component = Objects.requireNonNull(component, "Component cannot be null.");
         this.text = Objects.requireNonNull(text, "Text cannot be null.");
-
         init();
     }
 
@@ -148,9 +151,32 @@ public class Tooltip extends JWindow {
      * with {@link MouseAdapter#mouseEntered(MouseEvent)} and {@link MouseAdapter#mouseExited(MouseEvent)} methods.
      * After calling this method the provided {@code component} will show the tooltip when the mouse cursor comes
      * the {@code component}'s boundaries and will hide the tooltip when the mouse cursor goes out of boundaries.
+     * @apiNote The user should call this method only if tooltip previously detached. Otherwise, creating new
+     * Tooltip automatically triggers this method.
+     * @throws IllegalArgumentException if the tooltip is already attached
      */
-    private void attachTooltip() {
-        component.addMouseListener(new MouseAdapter() {
+    public void attachTooltip() {
+        if (isAttached){
+            throw new IllegalArgumentException("Tooltip is already attached for this component.");
+        }else{
+            isAttached = true;
+            component.addMouseListener(tooltipListener());
+        }
+    }
+
+    /**
+     * Detaches the attached tooltip from the component.
+     * @apiNote Use {@link #attachTooltip()} method if you want to attach the tooltip again.
+     * */
+    public void detachTooltip(){
+        if(isAttached){
+            isAttached = false;
+            component.removeMouseListener(tooltipListener());
+        }
+    }
+
+    private MouseListener tooltipListener(){
+        return new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 pack();
@@ -167,7 +193,7 @@ public class Tooltip extends JWindow {
             public void mouseExited(MouseEvent e) {
                 SwingUtilities.invokeLater(() -> setVisible(false));
             }
-        });
+        };
     }
 
     /**

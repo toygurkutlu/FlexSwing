@@ -14,7 +14,6 @@ public class FlexComboBoxUI extends BasicComboBoxUI {
     public FlexComboBoxUI(ComboAttributes attr) {
         this.attr = attr;
         flexArrowButton = new FlexArrowButton(attr.arrowButtonAttributes());
-
     }
 
     @Override
