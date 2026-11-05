@@ -65,6 +65,7 @@ public class Tooltip extends JWindow {
     private int bottomPadding = 6;
     private int rightPadding = 12;
     private TooltipAlignment alignment = TooltipAlignment.BOTTOM_CENTER_TO_CENTER;
+    private boolean tooltipAttached = false;
 
     /**
      * Represents the location of the tooltip
@@ -155,7 +156,10 @@ public class Tooltip extends JWindow {
      * @throws IllegalArgumentException if the tooltip is already attached
      */
     public void attachTooltip() {
-        component.addMouseListener(tooltipListener());
+        if (!tooltipAttached) {
+            component.addMouseListener(tooltipListener);
+            tooltipAttached = true;
+        }
     }
 
     /**
@@ -163,29 +167,30 @@ public class Tooltip extends JWindow {
      * @apiNote Use {@link #attachTooltip()} method if you want to attach the tooltip again.
      * */
     public void detachTooltip(){
-        component.removeMouseListener(tooltipListener());
+        if (tooltipAttached) {
+            component.removeMouseListener(tooltipListener);
+            tooltipAttached = false;
+        }
     }
 
-    private MouseListener tooltipListener(){
-        return new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                pack();
+    private final MouseListener tooltipListener = new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            pack();
 
-                SwingUtilities.invokeLater(() -> {
-                    Point point = getPoint(alignment);
-                    setLocation(point.x, point.y);
-                    setVisible(true);
-                    toFront();
-                });
-            }
+            SwingUtilities.invokeLater(() -> {
+                Point point = getPoint(alignment);
+                setLocation(point.x, point.y);
+                setVisible(true);
+                toFront();
+            });
+        }
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                SwingUtilities.invokeLater(() -> setVisible(false));
-            }
-        };
-    }
+        @Override
+        public void mouseExited(MouseEvent e) {
+            SwingUtilities.invokeLater(() -> setVisible(false));
+        }
+    };
 
     /**
      * Sets the alignment location where the {@code Tooltip} will be displayed.
