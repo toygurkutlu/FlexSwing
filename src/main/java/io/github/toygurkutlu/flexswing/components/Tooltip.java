@@ -156,12 +156,7 @@ public class Tooltip extends JWindow {
      * @throws IllegalArgumentException if the tooltip is already attached
      */
     public void attachTooltip() {
-        if (isAttached){
-            throw new IllegalArgumentException("Tooltip is already attached for this component.");
-        }else{
-            isAttached = true;
-            component.addMouseListener(tooltipListener());
-        }
+        component.addMouseListener(tooltipListener());
     }
 
     /**
