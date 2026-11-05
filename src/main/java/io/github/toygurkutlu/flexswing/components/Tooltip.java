@@ -65,7 +65,6 @@ public class Tooltip extends JWindow {
     private int bottomPadding = 6;
     private int rightPadding = 12;
     private TooltipAlignment alignment = TooltipAlignment.BOTTOM_CENTER_TO_CENTER;
-    private boolean isAttached = false;
 
     /**
      * Represents the location of the tooltip
