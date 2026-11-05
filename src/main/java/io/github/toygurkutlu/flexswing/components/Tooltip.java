@@ -170,6 +170,7 @@ public class Tooltip extends JWindow {
      * */
     public void detachTooltip(){
         if(isAttached){
+            SwingUtilities.invokeLater(() -> setVisible(false));
             isAttached = false;
             component.removeMouseListener(tooltipListener());
         }
