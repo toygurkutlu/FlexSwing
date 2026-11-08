@@ -231,10 +231,10 @@ public class NavigationView extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 5, 10);
         gbc.gridx = 0;
+        gbc.weighty = 1;
 
         if(attr.isCollapseMechanismEnabled()) {
             gbc.gridy = 0;
-            gbc.weighty = 1;
             gbc.gridheight = GridBagConstraints.REMAINDER;
             gbc.anchor = GridBagConstraints.NORTH;
             add(iconLabel, gbc);
@@ -243,7 +243,6 @@ public class NavigationView extends JPanel {
 
         gbc.insets.left = 0;
         gbc.insets.top = 5;
-        gbc.weighty = 0;
         gbc.weightx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridheight = 1;
@@ -464,6 +463,14 @@ public class NavigationView extends JPanel {
         }
         revalidate();
         repaint();
+    }
+
+    public void disableVerticalScrollPane(){
+        sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+    }
+
+    public void enableVerticalScrollPane(){
+        sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
     }
 
     private void setTittleIsSelected(int position, boolean isSelected) {
