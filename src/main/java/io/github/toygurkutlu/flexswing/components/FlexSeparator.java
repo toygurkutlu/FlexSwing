@@ -5,7 +5,7 @@ import java.awt.*;
 
 /**
  * Customizable separator that extends from JSeparator.
- *<p>Use the following methods to customize the {@code separator}:</p>
+ * <p>Use the following methods to customize the {@code separator}:</p>
  * <ol>
  *     <li><strong>Orientation:</strong>
  *         <ul>
@@ -24,48 +24,48 @@ import java.awt.*;
  *         </ul>
  *     </li>
  * </ol>
- * */
+ */
 public class FlexSeparator extends JSeparator {
 
     private int thickness = 1;
 
     /**
-     * Creates an instance with the specified orientation. Default thickness is 1 pixel.
+     * Creates an instance with the specified orientation. The default thickness is 1 pixel and default
+     * color is dark gray.
+     *
      * @param orientation the orientation of the separator
-     * */
+     */
     public FlexSeparator(int orientation) {
-        super(orientation);
-        updateSizes();
+        this(orientation, 1, Color.DARK_GRAY);
     }
 
     /**
-     * Creates an instance with the specified orientation and thickness.
+     * Creates an instance with the specified orientation and thickness. The default color is dark gray.
+     *
      * @param orientation the orientation of the separator
-     * @param thickness the thickness of the separator
-     * */
+     * @param thickness   the thickness of the separator
+     */
     public FlexSeparator(int orientation, int thickness) {
-        super(orientation);
-        this.thickness = thickness;
-        updateSizes();
+        this(orientation, thickness, Color.DARK_GRAY);
     }
 
     /**
-     * Creates an instance with the specified orientation and color.
+     * Creates an instance with the specified orientation and color. The default thickness is 1 pixel.
+     *
      * @param orientation the orientation of the separator
-     * @param color the color of the separator
-     * */
+     * @param color       the color of the separator
+     */
     public FlexSeparator(int orientation, Color color) {
-        super(orientation);
-        setForeground(color);
-        updateSizes();
+        this(orientation, 1, color);
     }
 
     /**
      * Creates an instance with the specified orientation, thickness and color.
+     *
      * @param orientation the orientation of the separator
-     * @param thickness the thickness of the separator
-     * @param color the color of the separator
-     * */
+     * @param thickness   the thickness of the separator
+     * @param color       the color of the separator
+     */
     public FlexSeparator(int orientation, int thickness, Color color) {
         super(orientation);
         this.thickness = thickness;
@@ -111,8 +111,9 @@ public class FlexSeparator extends JSeparator {
 
     /**
      * Sets the thickness of the separator. The default value of this property is 1 pixel.
+     *
      * @param thickness the new thickness of the separator in pixels
-     * */
+     */
     public void setThickness(int thickness) {
         this.thickness = thickness;
         updateSizes();
@@ -122,24 +123,27 @@ public class FlexSeparator extends JSeparator {
 
     /**
      * Sets the color of the separator.
+     *
      * @param color the new color of the separator
-     * */
+     */
     public void setColor(Color color) {
         setForeground(color);
     }
 
     /**
      * Sets the color of the separator.
+     *
      * @param color the new color of the separator
-     * */
+     */
     public void setLineColor(Color color) {
         setColor(color);
     }
 
     /**
      * Gets the thickness of the separator.
+     *
      * @return the thickness of the separator in pixels
-     * */
+     */
     public int getThickness() {
         return this.thickness;
     }
