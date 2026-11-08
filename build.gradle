@@ -1,10 +1,9 @@
 plugins {
     id 'java'
-    id 'maven-publish'
 }
 
 group = 'io.github.toygurkutlu'
-version = '1.0.21'
+version = '1.0.22'
 sourceCompatibility = '17'
 targetCompatibility = '17'
 
