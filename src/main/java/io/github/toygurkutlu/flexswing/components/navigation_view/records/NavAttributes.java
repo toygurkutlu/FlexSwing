@@ -13,14 +13,18 @@ import java.util.Objects;
  *     <li>When using default attributes, any specific property can be modified using the fluent {@code with...()} methods.</li>
  * </ul>
  *
- * @param background         the background color of the {@code NavigationView}
- * @param titleAttributes    the style attributes for the title items
- * @param subtitleAttributes the style attributes for the subtitle items
- * @param scrollAttributes   the style attributes for the vertical scroll bar
+ * @param background                 the background color of the {@code NavigationView}
+ * @param isCollapseMechanismEnabled the config of the collapse mechanism
+ * @param titleAttributes            the style attributes for the title items
+ * @param subtitleAttributes         the style attributes for the subtitle items
+ * @param scrollAttributes           the style attributes for the vertical scroll bar
  * @see NavItemAttributes
  * @see ScrollAttributes
  */
-public record NavAttributes(Color background, NavItemAttributes titleAttributes, NavItemAttributes subtitleAttributes,
+public record NavAttributes(Color background,
+                            boolean isCollapseMechanismEnabled,
+                            NavItemAttributes titleAttributes,
+                            NavItemAttributes subtitleAttributes,
                             ScrollAttributes scrollAttributes) {
 
     /**
@@ -30,6 +34,7 @@ public record NavAttributes(Color background, NavItemAttributes titleAttributes,
      */
     public static NavAttributes defaultNavAttributes() {
         return new NavAttributes(new Color(40, 40, 40),
+                                 true,
                                  NavItemAttributes.defaultTitleAttributes(),
                                  NavItemAttributes.defaultSubtitleAttributes(),
                                  new ScrollAttributes(new Color(40, 40, 40),
@@ -47,6 +52,21 @@ public record NavAttributes(Color background, NavItemAttributes titleAttributes,
      */
     public NavAttributes withBackground(Color color) {
         return new NavAttributes(Objects.requireNonNull(color, "Color cannot be null."),
+                                 true,
+                                 this.titleAttributes,
+                                 this.subtitleAttributes,
+                                 this.scrollAttributes);
+    }
+
+    /**
+     * Creates a copy of this {@code NavAttributes} with the specified collapse mechanism.
+     *
+     * @param isEnabled {@code true} for enabling collapse mechanism; {@code false} otherwise
+     * @return a new {@code NavAttributes} instance with the updated collapse mechanism
+     */
+    public NavAttributes withCollapseMechanism(boolean isEnabled) {
+        return new NavAttributes(this.background,
+                                 isEnabled,
                                  this.titleAttributes,
                                  this.subtitleAttributes,
                                  this.scrollAttributes);
@@ -61,6 +81,7 @@ public record NavAttributes(Color background, NavItemAttributes titleAttributes,
      */
     public NavAttributes withTitleAttributes(NavItemAttributes attr) {
         return new NavAttributes(this.background,
+                                 this.isCollapseMechanismEnabled,
                                  Objects.requireNonNull(attr, "NavItemAttributes cannot be null."),
                                  this.subtitleAttributes,
                                  this.scrollAttributes);
@@ -75,6 +96,7 @@ public record NavAttributes(Color background, NavItemAttributes titleAttributes,
      */
     public NavAttributes withSubtitleAttributes(NavItemAttributes attr) {
         return new NavAttributes(this.background,
+                                 this.isCollapseMechanismEnabled,
                                  this.titleAttributes,
                                  Objects.requireNonNull(attr, "NavItemAttributes cannot be null."),
                                  this.scrollAttributes);
@@ -89,6 +111,7 @@ public record NavAttributes(Color background, NavItemAttributes titleAttributes,
      */
     public NavAttributes withScrollAttributes(ScrollAttributes attr) {
         return new NavAttributes(this.background,
+                                 this.isCollapseMechanismEnabled,
                                  this.titleAttributes,
                                  this.subtitleAttributes,
                                  Objects.requireNonNull(attr, "ScrollAttributes cannot be null."));

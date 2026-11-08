@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'io.github.toygurkutlu'
-version = '1.0.22'
+version = '1.0.23'
 sourceCompatibility = '17'
 targetCompatibility = '17'
 

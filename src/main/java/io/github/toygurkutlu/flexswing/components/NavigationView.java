@@ -57,7 +57,6 @@ public class NavigationView extends JPanel {
     private List<JPanel> titlePanels;
     private List<JPanel> subtitlePanels;
     private NavItemListener listener;
-    private int innerGap = 25;
 
     /**
      * Creates a {@code NavigationView} instance with the provided items and config.
@@ -177,9 +176,11 @@ public class NavigationView extends JPanel {
      * Sets the left arrow (hide) icon for the {@code NavigationView}.
      *
      * @param navLeft the new left arrow icon, cannot be null
-     * @throws NullPointerException if the provided {@code navLeft} is {@code null}
+     * @throws IllegalStateException if the collapse mechanism is not enabled
+     * @throws NullPointerException  if the provided {@code navLeft} is {@code null}
      */
     public void setLeftNavigationIcon(Icon navLeft) {
+        if (!attr.isCollapseMechanismEnabled()) throw new IllegalStateException();
         this.navLeft = Objects.requireNonNull(navLeft);
         if (iconLabel != null && !isCollapsed) iconLabel.setIcon(navLeft);
     }
@@ -188,9 +189,11 @@ public class NavigationView extends JPanel {
      * Sets the right arrow (show) icon for the {@code NavigationView}.
      *
      * @param navRight the new right arrow icon, cannot be null
-     * @throws NullPointerException if the provided {@code navRight} is {@code null}
+     * @throws IllegalStateException if the collapse mechanism is not enabled
+     * @throws NullPointerException  if the provided {@code navRight} is {@code null}
      */
     public void setRightNavigationIcon(Icon navRight) {
+        if (!attr.isCollapseMechanismEnabled()) throw new IllegalStateException();
         this.navRight = Objects.requireNonNull(navRight);
         if (iconLabel != null && isCollapsed) iconLabel.setIcon(navRight);
     }
@@ -200,13 +203,15 @@ public class NavigationView extends JPanel {
      *
      * @param navLeft  the new left arrow icon, cannot be null
      * @param navRight the new right arrow icon, cannot be null
-     * @throws NullPointerException if any of the following parameters are {@code null}:
-     *                              <ul>
-     *                                <li>When the provided <code>navLeft</code> is <code>null</code></li>
-     *                                <li>When the provided <code>navRight</code> is <code>null</code></li>
-     *                              </ul>
+     * @throws IllegalStateException if the collapse mechanism is not enabled
+     * @throws NullPointerException  if any of the following parameters are {@code null}:
+     *                               <ul>
+     *                                 <li>When the provided <code>navLeft</code> is <code>null</code></li>
+     *                                 <li>When the provided <code>navRight</code> is <code>null</code></li>
+     *                               </ul>
      */
     public void setNavigationIcons(Icon navLeft, Icon navRight) {
+        if (!attr.isCollapseMechanismEnabled()) throw new IllegalStateException();
         this.navLeft = Objects.requireNonNull(navLeft);
         this.navRight = Objects.requireNonNull(navRight);
         if (iconLabel != null) iconLabel.setIcon(isCollapsed ? navRight : navLeft);
@@ -226,15 +231,18 @@ public class NavigationView extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 5, 10);
         gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weighty = 1;
-        gbc.gridheight = GridBagConstraints.REMAINDER;
-        gbc.anchor = GridBagConstraints.NORTH;
-        add(iconLabel, gbc);
+
+        if(attr.isCollapseMechanismEnabled()) {
+            gbc.gridy = 0;
+            gbc.weighty = 1;
+            gbc.gridheight = GridBagConstraints.REMAINDER;
+            gbc.anchor = GridBagConstraints.NORTH;
+            add(iconLabel, gbc);
+            gbc.gridx++;
+        }
 
         gbc.insets.left = 0;
         gbc.insets.top = 5;
-        gbc.gridx = 1;
         gbc.weighty = 0;
         gbc.weightx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -377,6 +385,7 @@ public class NavigationView extends JPanel {
 
             vsb.setValue(vsb.getValue() + moveAmount);
         });
+        sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         sp.revalidate();
         sp.repaint();
     }
@@ -645,7 +654,7 @@ public class NavigationView extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(subtitleAttr.verticalGap(),0,0,0);
+        gbc.insets = new Insets(subtitleAttr.verticalGap(), 0, 0, 0);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.weightx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
