@@ -2,13 +2,13 @@ package io.github.toygurkutlu.flexswing.components.card_view.records;
 
 
 import io.github.toygurkutlu.flexswing.components.card_view.enums.CardSection;
-import io.github.toygurkutlu.flexswing.enums.StateType;
+import io.github.toygurkutlu.flexswing.components.card_view.enums.MechanismType;
 import io.github.toygurkutlu.flexswing.components.card_view.enums.TextType;
 import io.github.toygurkutlu.flexswing.components.card_view.objects.CardMechanism;
-import io.github.toygurkutlu.flexswing.components.card_view.enums.MechanismType;
-import io.github.toygurkutlu.flexswing.objects.StateColors;
+import io.github.toygurkutlu.flexswing.enums.StateType;
 import io.github.toygurkutlu.flexswing.objects.Padding;
 import io.github.toygurkutlu.flexswing.objects.Radii;
+import io.github.toygurkutlu.flexswing.objects.StateColors;
 
 import java.awt.*;
 import java.util.Objects;
@@ -20,16 +20,16 @@ import java.util.Objects;
  *     <li>When using default attributes, any specific property can be modified using the fluent {@code with...()} methods.</li>
  * </ul>
  *
- * @param hoverConfig       the configuration settings for the {@link MechanismType#HOVERABLE} mechanism
- * @param selectConfig      the configuration settings for the {@link MechanismType#SELECTABLE} mechanism
- * @param collapseConfig    the configuration settings for the {@link MechanismType#COLLAPSIBLE} mechanism
- * @param favoriteConfig    the configuration settings for the {@link MechanismType#FAVORITABLE} mechanism
- * @param favIconLocation   the visual section placement of the favorite icon within the card
- * @param radii             the corner radii configuration of the card
- * @param headerAttributes  the style attributes of the card header panel
- * @param contentAttributes the style attributes of the card content panel
+ * @param hoverConfig        the configuration settings for the {@link MechanismType#HOVERABLE} mechanism
+ * @param selectConfig       the configuration settings for the {@link MechanismType#SELECTABLE} mechanism
+ * @param collapseConfig     the configuration settings for the {@link MechanismType#COLLAPSIBLE} mechanism
+ * @param favoriteConfig     the configuration settings for the {@link MechanismType#FAVORITABLE} mechanism
+ * @param favIconLocation    the visual section placement of the favorite icon within the card
+ * @param radii              the corner radii configuration of the card
+ * @param headerConfig       the style attributes of the card header panel
+ * @param contentPanelConfig the style attributes of the card content panel
  * @apiNote The {@code favIconLocation} attribute only affects the UI layout if the {@link MechanismType#FAVORITABLE} mechanism is enabled.
- * @see #defaultCardAttributes()
+ * @see #defaultConfig()
  * @see #withHoverConfig(CardMechanism)
  * @see #withSelectConfig(CardMechanism)
  * @see #withCollapseConfig(CardMechanism)
@@ -37,8 +37,8 @@ import java.util.Objects;
  * @see #withFavoriteIconLocation(CardSection)
  * @see #withRadii(Radii)
  * @see #withRadii(int)
- * @see #withHeaderAttributes(HeaderAttributes)
- * @see #withContentAttributes(ContentAttributes)
+ * @see #withHeaderAttributes(HeaderConfig)
+ * @see #withContentAttributes(ContentPanelConfig)
  * @see #backgroundByState(CardSection, StateType)
  * @see #foregroundByState(TextType, StateType)
  * @see #fontByTextType(TextType)
@@ -49,32 +49,32 @@ import java.util.Objects;
  * @see StateColors
  * @see StateType
  * @see Radii
- * @see HeaderAttributes
- * @see ContentAttributes
+ * @see HeaderConfig
+ * @see ContentPanelConfig
  */
-public record CardAttributes(CardMechanism hoverConfig,
+public record CardViewConfig(CardMechanism hoverConfig,
                              CardMechanism selectConfig,
                              CardMechanism collapseConfig,
                              CardMechanism favoriteConfig,
                              CardSection favIconLocation,
                              Radii radii,
-                             HeaderAttributes headerAttributes,
-                             ContentAttributes contentAttributes) {
+                             HeaderConfig headerConfig,
+                             ContentPanelConfig contentPanelConfig) {
 
     /**
      * Creates the default style and mechanism attributes for the {@code CardView}.
      *
      * @return the {@code CardAttributes} of the {@code CardView}
      */
-    public static CardAttributes defaultCardAttributes() {
-        return new CardAttributes(new CardMechanism(MechanismType.HOVERABLE, true, false),
+    public static CardViewConfig defaultConfig() {
+        return new CardViewConfig(new CardMechanism(MechanismType.HOVERABLE, true, false),
                                   new CardMechanism(MechanismType.SELECTABLE, true, false),
                                   new CardMechanism(MechanismType.COLLAPSIBLE, true, false),
                                   new CardMechanism(MechanismType.FAVORITABLE, true, false),
                                   CardSection.HEADER,
                                   new Radii(15, 15, 15, 15),
-                                  HeaderAttributes.defaultHeaderAttributes(),
-                                  ContentAttributes.defaultContentAttributes());
+                                  HeaderConfig.defaultHeaderAttributes(),
+                                  ContentPanelConfig.defaultConfig());
     }
 
     /**
@@ -91,15 +91,15 @@ public record CardAttributes(CardMechanism hoverConfig,
      * {@link CardMechanism#CardMechanism(MechanismType, boolean, boolean)} constructor must be {@code false}.
      * @see CardMechanism#CardMechanism(MechanismType, boolean, boolean)
      */
-    public CardAttributes withHoverConfig(CardMechanism config) {
-        return new CardAttributes(Objects.requireNonNull(config, "Config cannot be null"),
+    public CardViewConfig withHoverConfig(CardMechanism config) {
+        return new CardViewConfig(Objects.requireNonNull(config, "Config cannot be null"),
                                   this.selectConfig,
                                   this.collapseConfig,
                                   this.favoriteConfig,
                                   this.favIconLocation,
                                   this.radii,
-                                  this.headerAttributes,
-                                  this.contentAttributes);
+                                  this.headerConfig,
+                                  this.contentPanelConfig);
     }
 
     /**
@@ -112,15 +112,15 @@ public record CardAttributes(CardMechanism hoverConfig,
      * @throws NullPointerException if the provided {@code config} is {@code null}
      * @see CardMechanism#CardMechanism(MechanismType, boolean, boolean)
      */
-    public CardAttributes withSelectConfig(CardMechanism config) {
-        return new CardAttributes(this.hoverConfig,
+    public CardViewConfig withSelectConfig(CardMechanism config) {
+        return new CardViewConfig(this.hoverConfig,
                                   Objects.requireNonNull(config, "Config cannot be null"),
                                   this.collapseConfig,
                                   this.favoriteConfig,
                                   this.favIconLocation,
                                   this.radii,
-                                  this.headerAttributes,
-                                  this.contentAttributes);
+                                  this.headerConfig,
+                                  this.contentPanelConfig);
     }
 
     /**
@@ -133,15 +133,15 @@ public record CardAttributes(CardMechanism hoverConfig,
      * @throws NullPointerException if the provided {@code config} is {@code null}
      * @see CardMechanism#CardMechanism(MechanismType, boolean, boolean)
      */
-    public CardAttributes withCollapseConfig(CardMechanism config) {
-        return new CardAttributes(this.hoverConfig,
+    public CardViewConfig withCollapseConfig(CardMechanism config) {
+        return new CardViewConfig(this.hoverConfig,
                                   this.selectConfig,
                                   Objects.requireNonNull(config, "Config cannot be null"),
                                   this.favoriteConfig,
                                   this.favIconLocation,
                                   this.radii,
-                                  this.headerAttributes,
-                                  this.contentAttributes);
+                                  this.headerConfig,
+                                  this.contentPanelConfig);
     }
 
     /**
@@ -154,15 +154,15 @@ public record CardAttributes(CardMechanism hoverConfig,
      * @throws NullPointerException if the provided {@code config} is {@code null}
      * @see CardMechanism#CardMechanism(MechanismType, boolean, boolean)
      */
-    public CardAttributes withFavoriteConfig(CardMechanism config) {
-        return new CardAttributes(this.hoverConfig,
+    public CardViewConfig withFavoriteConfig(CardMechanism config) {
+        return new CardViewConfig(this.hoverConfig,
                                   this.selectConfig,
                                   this.collapseConfig,
                                   Objects.requireNonNull(config, "Config cannot be null"),
                                   this.favIconLocation,
                                   this.radii,
-                                  this.headerAttributes,
-                                  this.contentAttributes);
+                                  this.headerConfig,
+                                  this.contentPanelConfig);
     }
 
     /**
@@ -172,15 +172,15 @@ public record CardAttributes(CardMechanism hoverConfig,
      * @return a new {@code CardAttributes} instance with the updated favorite icon placement
      * @throws NullPointerException if the provided {@code section} is {@code null}
      */
-    public CardAttributes withFavoriteIconLocation(CardSection section) {
-        return new CardAttributes(this.hoverConfig,
+    public CardViewConfig withFavoriteIconLocation(CardSection section) {
+        return new CardViewConfig(this.hoverConfig,
                                   this.selectConfig,
                                   this.collapseConfig,
                                   this.favoriteConfig,
                                   Objects.requireNonNull(section, "Section cannot be null"),
                                   this.radii,
-                                  this.headerAttributes,
-                                  this.contentAttributes);
+                                  this.headerConfig,
+                                  this.contentPanelConfig);
     }
 
     /**
@@ -191,15 +191,15 @@ public record CardAttributes(CardMechanism hoverConfig,
      * @throws NullPointerException if the provided {@code radii} is {@code null}
      * @see #withRadii(int)
      */
-    public CardAttributes withRadii(Radii radii) {
-        return new CardAttributes(this.hoverConfig,
+    public CardViewConfig withRadii(Radii radii) {
+        return new CardViewConfig(this.hoverConfig,
                                   this.selectConfig,
                                   this.collapseConfig,
                                   this.favoriteConfig,
                                   this.favIconLocation,
                                   Objects.requireNonNull(radii, "Radii cannot be null"),
-                                  this.headerAttributes,
-                                  this.contentAttributes);
+                                  this.headerConfig,
+                                  this.contentPanelConfig);
     }
 
     /**
@@ -210,54 +210,54 @@ public record CardAttributes(CardMechanism hoverConfig,
      * @throws NullPointerException if the provided {@code radii} is {@code null}
      * @see #withRadii(Radii)
      */
-    public CardAttributes withRadii(int radius) {
-        if(radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
-        return new CardAttributes(this.hoverConfig,
+    public CardViewConfig withRadii(int radius) {
+        if (radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
+        return new CardViewConfig(this.hoverConfig,
                                   this.selectConfig,
                                   this.collapseConfig,
                                   this.favoriteConfig,
                                   this.favIconLocation,
                                   new Radii(radius),
-                                  this.headerAttributes,
-                                  this.contentAttributes);
+                                  this.headerConfig,
+                                  this.contentPanelConfig);
     }
 
     /**
      * Creates a copy of this {@code CardAttributes} with the specified {@code HeaderPanel} style.
      *
-     * @param headerAttributes the new style for the {@code HeaderPanel}
+     * @param headerConfig the new style for the {@code HeaderPanel}
      * @return a new {@code CardAttributes} instance with the updated header style
      * @throws NullPointerException if the provided {@code headerAttributes} is {@code null}
-     * @see HeaderAttributes#HeaderAttributes(StateColors, TextAttributes)
+     * @see HeaderConfig#HeaderConfig(StateColors, TextAttributes)
      */
-    public CardAttributes withHeaderAttributes(HeaderAttributes headerAttributes) {
-        return new CardAttributes(this.hoverConfig,
+    public CardViewConfig withHeaderAttributes(HeaderConfig headerConfig) {
+        return new CardViewConfig(this.hoverConfig,
                                   this.selectConfig,
                                   this.collapseConfig,
                                   this.favoriteConfig,
                                   this.favIconLocation,
                                   this.radii,
-                                  Objects.requireNonNull(headerAttributes, "HeaderAttributes cannot be null"),
-                                  this.contentAttributes);
+                                  Objects.requireNonNull(headerConfig, "HeaderAttributes cannot be null"),
+                                  this.contentPanelConfig);
     }
 
     /**
      * Creates a copy of this {@code CardAttributes} with the specified {@code ContentPanel} style.
      *
-     * @param contentAttributes the new style for the {@code ContentPanel}, cannot be {@code null}
+     * @param contentPanelConfig the new style for the {@code ContentPanel}, cannot be {@code null}
      * @return a new {@code CardAttributes} instance with the updated  {@code ContentPanel} style
      * @throws NullPointerException if the provided {@code contentAttributes} is {@code null}
-     * @see ContentAttributes#ContentAttributes(StateColors, TextAttributes, TextAttributes, TextAttributes, TextAttributes)
+     * @see ContentPanelConfig#ContentPanelConfig(StateColors, TextAttributes, TextAttributes, TextAttributes, TextAttributes)
      */
-    public CardAttributes withContentAttributes(ContentAttributes contentAttributes) {
-        return new CardAttributes(this.hoverConfig,
+    public CardViewConfig withContentAttributes(ContentPanelConfig contentPanelConfig) {
+        return new CardViewConfig(this.hoverConfig,
                                   this.selectConfig,
                                   this.collapseConfig,
                                   this.favoriteConfig,
                                   this.favIconLocation,
                                   this.radii,
-                                  this.headerAttributes,
-                                  Objects.requireNonNull(contentAttributes, "ContentAttributes cannot be null"));
+                                  this.headerConfig,
+                                  Objects.requireNonNull(contentPanelConfig, "ContentAttributes cannot be null"));
     }
 
     /**
@@ -266,19 +266,19 @@ public record CardAttributes(CardMechanism hoverConfig,
      * @param cardSection the section of the card
      * @param stateType   the type of the card state, cannot be {@code null}
      * @return the background color that matches the specified {@code StateType}
-     * @throws NullPointerException     if any of the following parameters are {@code null}:
-     *                                  <ul>
-     *                                    <li>When the provided <code>cardSection</code> is <code>null</code></li>
-     *                                    <li>When the provided <code>stateType</code> object is <code>null</code></li>
-     *                                  </ul>
+     * @throws NullPointerException if any of the following parameters are {@code null}:
+     *                              <ul>
+     *                                <li>When the provided <code>cardSection</code> is <code>null</code></li>
+     *                                <li>When the provided <code>stateType</code> object is <code>null</code></li>
+     *                              </ul>
      */
     public Color backgroundByState(CardSection cardSection, StateType stateType) {
         Objects.requireNonNull(cardSection, "CardSection cannot be null.");
         Objects.requireNonNull(stateType, "StateType cannot be null");
         if (cardSection == CardSection.CONTENT)
-            return contentAttributes.backgroundByState(stateType);
+            return contentPanelConfig.backgroundByState(stateType);
         else
-            return headerAttributes.backgroundByState(stateType);
+            return headerConfig.backgroundByState(stateType);
     }
 
     /**
@@ -288,16 +288,16 @@ public record CardAttributes(CardMechanism hoverConfig,
      * @param textType  the type of the text, cannot be {@code null}
      * @param stateType the type of the card state, cannot be {@code null}
      * @return the foreground color that matches the specified {@code TextType} and {@code StateType}
-     * @throws NullPointerException     if any of the following parameters are {@code null}:
-     *                                  <ul>
-     *                                    <li>When the provided <code>textType</code> is <code>null</code></li>
-     *                                    <li>When the provided <code>stateType</code> object is <code>null</code></li>
-     *                                  </ul>
+     * @throws NullPointerException if any of the following parameters are {@code null}:
+     *                              <ul>
+     *                                <li>When the provided <code>textType</code> is <code>null</code></li>
+     *                                <li>When the provided <code>stateType</code> object is <code>null</code></li>
+     *                              </ul>
      * @apiNote For header text foreground color, access the {@link TextAttributes#foregroundByState(StateType)}
-     * method through the header configuration via {@link #headerAttributes()}.
+     * method through the header configuration via {@link #headerConfig()}.
      */
     public Color foregroundByState(TextType textType, StateType stateType) {
-        return this.contentAttributes.foregroundByState(textType, stateType);
+        return this.contentPanelConfig.foregroundByState(textType, stateType);
     }
 
     /**
@@ -307,10 +307,10 @@ public record CardAttributes(CardMechanism hoverConfig,
      * @return the text font that matches the specified {@code TextType}
      * @throws NullPointerException if the provided {@code textType} is {@code null}
      * @apiNote For header text font, access the {@link TextAttributes#font()}
-     * method through the header configuration via {@link #headerAttributes()}.
+     * method through the header configuration via {@link #headerConfig()}.
      */
     public Font fontByTextType(TextType textType) {
-        return this.contentAttributes.fontByTextType(Objects.requireNonNull(textType, "TextType cannot be null"));
+        return this.contentPanelConfig.fontByTextType(Objects.requireNonNull(textType, "TextType cannot be null"));
     }
 
     /**
@@ -320,9 +320,9 @@ public record CardAttributes(CardMechanism hoverConfig,
      * @return the internal that matches the specified {@code TextType}
      * @throws NullPointerException if the provided {@code textType} is {@code null}
      * @apiNote For header text internal padding, access the {@link TextAttributes#padding()}
-     * method through the header configuration via {@link #headerAttributes()}.
+     * method through the header configuration via {@link #headerConfig()}.
      */
     public Padding paddingByTextType(TextType textType) {
-        return this.contentAttributes.paddingByTextType(Objects.requireNonNull(textType, "TextType cannot be null"));
+        return this.contentPanelConfig.paddingByTextType(Objects.requireNonNull(textType, "TextType cannot be null"));
     }
 }

@@ -12,7 +12,7 @@ import java.util.Objects;
  * Used with a ButtonGroup object to create a group of buttons in which only one button at a time can be
  * selected. (Create a ButtonGroup object and use its add method to include the JRadioButton objects in the group.)
  *
- <p>Use the following methods to customize attributes:</p>
+ * <p>Use the following methods to customize attributes:</p>
  * <ol>
  *     <li><strong>Text color:</strong>
  *         <ul>
@@ -115,7 +115,7 @@ public class FlexRadioButton extends JRadioButton {
     /**
      * Sets the border color of the outer circle.
      *
-     * @param color  the new border color of the outer circle, cannot be {@code null}
+     * @param color the new border color of the outer circle, cannot be {@code null}
      * @throws NullPointerException if the provided color is {@code null}
      */
     public void setCircleBorderColor(Color color) {

@@ -14,9 +14,21 @@ import java.util.Objects;
  */
 public class Padding {
 
+    /**
+     * Represents the vertical gap between two components or the content and the component border's top side.
+     */
     private int top;
+    /**
+     * Represents the horizontal gap between two components or the content and the component border's left side.
+     */
     private int left;
+    /**
+     * Represents the vertical gap between two components or the content and the component border's bottom side.
+     */
     private int bottom;
+    /**
+     * Represents the horizontal gap between two components or the content and the component border's right side.
+     */
     private int right;
 
     /**
@@ -48,11 +60,11 @@ public class Padding {
      * Constructs a new configuration for the internal gaps between components or the content and the component
      * border.
      *
-     * @param padding    the vertical gap between two components or the content and the component border's corner,
-     *               cannot be negative
+     * @param padding the vertical gap between two components or the content and the component border's corner,
+     *                cannot be negative
      * @throws IllegalArgumentException if the provided padding value is negative
      */
-    public Padding(int padding){
+    public Padding(int padding) {
         if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
         this.top = padding;
         this.left = padding;
@@ -195,5 +207,53 @@ public class Padding {
      */
     public Padding getPadding() {
         return this;
+    }
+
+    /**
+     * Creates a copy of this {@code Padding} with the specified top padding.
+     *
+     * @param top the new top padding, cannot be negative
+     * @return a new {@code Padding} instance with the updated top padding
+     * @throws IllegalArgumentException if the provided top is negative
+     */
+    public Padding withTopPadding(int top) {
+        if (top < 0) throw new IllegalArgumentException("Top padding cannot be negative.");
+        return new Padding(top, this.left, this.bottom, this.right);
+    }
+
+    /**
+     * Creates a copy of this {@code Padding} with the specified left padding.
+     *
+     * @param left the new left padding, cannot be negative
+     * @return a new {@code Padding} instance with the updated left padding
+     * @throws IllegalArgumentException if the provided left is negative
+     */
+    public Padding withLeftPadding(int left) {
+        if (left < 0) throw new IllegalArgumentException("Left padding cannot be negative.");
+        return new Padding(this.top, left, this.bottom, this.right);
+    }
+
+    /**
+     * Creates a copy of this {@code Padding} with the specified bottom padding.
+     *
+     * @param bottom the new bottom padding, cannot be negative
+     * @return a new {@code Padding} instance with the updated bottom padding
+     * @throws IllegalArgumentException if the provided bottom is negative
+     */
+    public Padding withBottomPadding(int bottom) {
+        if (bottom < 0) throw new IllegalArgumentException("Bottom padding cannot be negative.");
+        return new Padding(this.top, this.left, bottom, this.right);
+    }
+
+    /**
+     * Creates a copy of this {@code Padding} with the specified right padding.
+     *
+     * @param right the new right padding, cannot be negative
+     * @return a new {@code Padding} instance with the updated right padding
+     * @throws IllegalArgumentException if the provided right is negative
+     */
+    public Padding withRightPadding(int right) {
+        if (right < 0) throw new IllegalArgumentException("Right padding cannot be negative.");
+        return new Padding(this.top, this.left, this.bottom, right);
     }
 }

@@ -7,8 +7,8 @@ import io.github.toygurkutlu.flexswing.components.color_picker.components.ColorA
 import io.github.toygurkutlu.flexswing.components.color_picker.components.HueSliderUI;
 import io.github.toygurkutlu.flexswing.components.color_picker.objects.ColorNumericFilter;
 import io.github.toygurkutlu.flexswing.components.color_picker.objects.RGBType;
-import io.github.toygurkutlu.flexswing.objects.RoundedBorder;
 import io.github.toygurkutlu.flexswing.objects.FlexUtil;
+import io.github.toygurkutlu.flexswing.objects.RoundedBorder;
 
 import javax.swing.*;
 import javax.swing.event.AncestorEvent;

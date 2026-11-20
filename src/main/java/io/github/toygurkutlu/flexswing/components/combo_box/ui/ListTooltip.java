@@ -48,7 +48,7 @@ public class ListTooltip extends JWindow {
     }
 
     public void showTooltip(String text, Point point) {
-        if(!text.contains("<html>")) text = "<html>" + text + "</html>";
+        if (!text.contains("<html>")) text = "<html>" + text + "</html>";
         label.setText(text);
         label.setSize(new Dimension(300, Integer.MAX_VALUE));
 
@@ -94,7 +94,7 @@ public class ListTooltip extends JWindow {
     }
 
     public void setBorderRadius(int radius) {
-        if(radius < 0) throw new IllegalArgumentException("Radius cannot be negative");
+        if (radius < 0) throw new IllegalArgumentException("Radius cannot be negative");
         this.borderRadius = radius;
         if (panel != null) {
             panel.repaint();
@@ -102,7 +102,7 @@ public class ListTooltip extends JWindow {
     }
 
     public void setTooltipFont(Font font) {
-        this.font = Objects.requireNonNull(font,"Font cannot be null.");
+        this.font = Objects.requireNonNull(font, "Font cannot be null.");
         if (label != null) {
             label.setFont(font);
             pack();
@@ -110,7 +110,7 @@ public class ListTooltip extends JWindow {
     }
 
     public void setForegroundColor(Color color) {
-        this.foreground = Objects.requireNonNull(color,"Foreground color cannot be null.");
+        this.foreground = Objects.requireNonNull(color, "Foreground color cannot be null.");
         if (label != null) {
             label.setForeground(color);
         }

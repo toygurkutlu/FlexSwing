@@ -1,8 +1,9 @@
 package io.github.toygurkutlu.flexswing.components.card_view.records;
 
-import io.github.toygurkutlu.flexswing.objects.StateColors;
 import io.github.toygurkutlu.flexswing.components.CardView;
 import io.github.toygurkutlu.flexswing.enums.StateType;
+import io.github.toygurkutlu.flexswing.objects.StateColors;
+
 import java.awt.*;
 import java.util.Objects;
 
@@ -24,17 +25,17 @@ import java.util.Objects;
  * @see StateType
  * @see TextAttributes
  */
-public record HeaderAttributes(StateColors backgrounds,
-                               TextAttributes textAttributes) {
+public record HeaderConfig(StateColors backgrounds,
+                           TextAttributes textAttributes) {
 
     /**
      * Creates the default style attributes for the header.
      *
      * @return the {@code HeaderAttributes} of the header
      */
-    public static HeaderAttributes defaultHeaderAttributes() {
-        return new HeaderAttributes(StateColors.defaultHeaderBackgrounds(),
-                                    TextAttributes.defaultHeaderTextAttributes());
+    public static HeaderConfig defaultHeaderAttributes() {
+        return new HeaderConfig(StateColors.defaultHeaderBackgrounds(),
+                                TextAttributes.defaultHeaderTextAttributes());
     }
 
     /**
@@ -45,9 +46,9 @@ public record HeaderAttributes(StateColors backgrounds,
      * @throws NullPointerException if the provided {@code background} object is {@code null}
      * @see StateColors#StateColors(Color, Color, Color, Color)
      */
-    public HeaderAttributes withBackgrounds(StateColors backgrounds) {
-        return new HeaderAttributes(Objects.requireNonNull(backgrounds, "Backgrounds cannot be null."),
-                                    this.textAttributes);
+    public HeaderConfig withBackgrounds(StateColors backgrounds) {
+        return new HeaderConfig(Objects.requireNonNull(backgrounds, "Backgrounds cannot be null."),
+                                this.textAttributes);
     }
 
     /**
@@ -57,9 +58,9 @@ public record HeaderAttributes(StateColors backgrounds,
      * @return a new {@code HeaderAttributes} instance with the updated header text style
      * @throws NullPointerException if the provided {@code textAttributes} object is {@code null}
      */
-    public HeaderAttributes withTextAttribute(TextAttributes textAttributes) {
-        return new HeaderAttributes(this.backgrounds,
-                                    Objects.requireNonNull(textAttributes, "TextAttributes cannot be null."));
+    public HeaderConfig withTextAttribute(TextAttributes textAttributes) {
+        return new HeaderConfig(this.backgrounds,
+                                Objects.requireNonNull(textAttributes, "TextAttributes cannot be null."));
     }
 
     /**

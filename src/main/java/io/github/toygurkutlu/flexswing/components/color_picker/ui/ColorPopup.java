@@ -13,12 +13,11 @@ import java.awt.event.MouseEvent;
  * Provides a simple popup for selecting color which associated with {@link javax.swing.JComponent}.<br><br>
  *
  * <p>
- *     Contains {@link ColorPicker.OnColorSelectedListener} which user can handle color selection via
- *     the {@link ColorPicker.OnColorSelectedListener#onColorSelected(Color)} method,
- *      which receives the newly selected color as an argument.
+ * Contains {@link ColorPicker.OnColorSelectedListener} which user can handle color selection via
+ * the {@link ColorPicker.OnColorSelectedListener#onColorSelected(Color)} method,
+ * which receives the newly selected color as an argument.
  * </p>
- *
- * */
+ */
 public class ColorPopup extends JDialog {
 
     private final ColorPicker.OnColorSelectedListener listener;
@@ -30,7 +29,7 @@ public class ColorPopup extends JDialog {
 
         this.listener = listener;
         colorPanel.setOnColorSelectedListener(listener);
-        if(listener != null) listener.onColorSelected(colorPanel.getDisplayColor());
+        if (listener != null) listener.onColorSelected(colorPanel.getDisplayColor());
 
         setContentPane(colorPanel);
         pack();
@@ -88,13 +87,13 @@ public class ColorPopup extends JDialog {
         }, AWTEvent.MOUSE_EVENT_MASK);
     }
 
-    private void clearFocus(){
+    private void clearFocus() {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
     }
 
     /**
      * Displays the {@code ColorPopup} on the screen.
-
+     *
      * @apiNote Ensure that an {@link ColorPicker.OnColorSelectedListener} is registered before calling
      * this method to correctly handle the user's color selection.
      */

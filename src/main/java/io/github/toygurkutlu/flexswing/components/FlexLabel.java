@@ -21,7 +21,7 @@ import java.util.Objects;
  * <ol>
  *     <li><strong>Corner radii:</strong>
  *         <ul>
- *             <li>{@link #setRadii(int)}</li>
+ *             <li>{@link #setRadius(int)}</li>
  *             <li>{@link #setRadii(Radii)}</li>
  *             <li>{@link #setRadii(int, int, int, int)}</li>
  *             <li>{@link #setTopLeftRadius(int)}</li>
@@ -93,10 +93,13 @@ public class FlexLabel extends JLabel {
     private StateColors foregrounds;
     private StateColors backgrounds;
     private StateColors borderColors;
-    private Radii radii = new Radii(15, 15, 15, 15);;
-    private Padding padding = new Padding(5, 5, 5, 5);;
+    private Radii radii = new Radii(15, 15, 15, 15);
+    ;
+    private Padding padding = new Padding(5, 5, 5, 5);
+    ;
     private int borderThickness = 1;
-    private Font font = new Font("Arial", Font.PLAIN, 14);;
+    private Font font = new Font("Arial", Font.PLAIN, 14);
+    ;
     private Color foreground;
     private Color background;
     private Color borderColor;
@@ -542,9 +545,9 @@ public class FlexLabel extends JLabel {
      * @param radius the corner radius, cannot be negative
      * @throws IllegalArgumentException if the provided {@code radius} is negative
      */
-    public void setRadii(int radius) {
+    public void setRadius(int radius) {
         if (radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
-        this.radii.setRadii(radius);
+        this.radii.setRadius(radius);
         repaint();
     }
 
@@ -815,21 +818,21 @@ public class FlexLabel extends JLabel {
         setBackgroundColor(background);
     }
 
-    private StateColors getDefaultForegrounds(){
+    private StateColors getDefaultForegrounds() {
         return new StateColors(new Color(255, 255, 255),
-                        new Color(200, 200, 200),
-                        new Color(255, 255, 255),
-                        new Color(200, 200, 200));
+                               new Color(200, 200, 200),
+                               new Color(255, 255, 255),
+                               new Color(200, 200, 200));
     }
 
-    private StateColors getDefaultBackgrounds(){
+    private StateColors getDefaultBackgrounds() {
         return new StateColors(new Color(80, 80, 80),
                                new Color(120, 120, 120),
                                new Color(0, 100, 0),
                                new Color(0, 140, 0));
     }
 
-    private StateColors getDefaultBorderColors(){
+    private StateColors getDefaultBorderColors() {
         return new StateColors(new Color(40, 40, 40),
                                new Color(80, 80, 80),
                                new Color(0, 60, 0),

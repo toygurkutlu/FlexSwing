@@ -192,7 +192,7 @@ public class FlexUtil {
      * current focus owner will not be cleared.
      * This method is intended to be used only by KeyboardFocusManager set as current KeyboardFocusManager for
      * the calling thread's context. It is not for general client use.
-     * */
+     */
     public static void clearGlobalFocusOwner() {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
     }

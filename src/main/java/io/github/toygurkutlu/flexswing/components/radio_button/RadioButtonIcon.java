@@ -58,8 +58,12 @@ public class RadioButtonIcon implements Icon {
     }
 
     @Override
-    public int getIconWidth() { return CIRCLE_SIZE; }
+    public int getIconWidth() {
+        return CIRCLE_SIZE;
+    }
 
     @Override
-    public int getIconHeight() { return CIRCLE_SIZE; }
+    public int getIconHeight() {
+        return CIRCLE_SIZE;
+    }
 }

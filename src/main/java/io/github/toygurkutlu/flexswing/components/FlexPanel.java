@@ -21,7 +21,7 @@ import java.util.Objects;
  * <ol>
  *     <li><strong>Corner radii:</strong>
  *         <ul>
- *             <li>{@link #setRadii(int)}</li>
+ *             <li>{@link #setRadius(int)}</li>
  *             <li>{@link #setRadii(Radii)}</li>
  *             <li>{@link #setRadii(int, int, int, int)}</li>
  *             <li>{@link #setTopLeftRadius(int)}</li>
@@ -390,9 +390,9 @@ public class FlexPanel extends JPanel {
      * @param radius the corner radius, cannot be negative
      * @throws IllegalArgumentException if the provided {@code radius} is negative
      */
-    public void setRadii(int radius) {
+    public void setRadius(int radius) {
         if (radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
-        this.radii.setRadii(radius);
+        this.radii.setRadius(radius);
         repaint();
     }
 
@@ -699,14 +699,14 @@ public class FlexPanel extends JPanel {
         }
     };
 
-    private StateColors defaultBackgrounds(){
+    private StateColors defaultBackgrounds() {
         return new StateColors(new Color(80, 80, 80),
                                new Color(120, 120, 120),
                                new Color(0, 100, 0),
                                new Color(0, 140, 0));
     }
 
-    private StateColors defaultBorderColors(){
+    private StateColors defaultBorderColors() {
         return new StateColors(new Color(40, 40, 40),
                                new Color(80, 80, 80),
                                new Color(0, 60, 0),

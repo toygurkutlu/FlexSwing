@@ -12,7 +12,7 @@ public class CirclePanel extends JPanel {
 
     public CirclePanel(int diameter) {
         this.diameter = diameter;
-        int dim = (int) (borderWidth + diameter+1);
+        int dim = (int) (borderWidth + diameter + 1);
         setPreferredSize(new Dimension(dim, dim));
         setOpaque(false);
     }
@@ -27,7 +27,7 @@ public class CirclePanel extends JPanel {
         repaint();
     }
 
-    public Color getFillColor(){
+    public Color getFillColor() {
         return fillColor;
     }
 
@@ -36,7 +36,7 @@ public class CirclePanel extends JPanel {
         repaint();
     }
 
-    public Color getBorderColor(){
+    public Color getBorderColor() {
         return borderColor;
     }
 

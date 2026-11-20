@@ -1,15 +1,15 @@
 package io.github.toygurkutlu.flexswing.components;
 
 
+import io.github.toygurkutlu.flexswing.components.card_view.adapter.CardMechanismAdapter;
 import io.github.toygurkutlu.flexswing.components.card_view.enums.CardSection;
-import io.github.toygurkutlu.flexswing.enums.StateType;
+import io.github.toygurkutlu.flexswing.components.card_view.enums.MechanismType;
 import io.github.toygurkutlu.flexswing.components.card_view.enums.TextType;
 import io.github.toygurkutlu.flexswing.components.card_view.listener.CardMechanismListener;
-import io.github.toygurkutlu.flexswing.components.card_view.adapter.CardMechanismAdapter;
 import io.github.toygurkutlu.flexswing.components.card_view.managers.CardComponentManager;
 import io.github.toygurkutlu.flexswing.components.card_view.objects.CardMechanism;
-import io.github.toygurkutlu.flexswing.components.card_view.enums.MechanismType;
 import io.github.toygurkutlu.flexswing.components.card_view.records.*;
+import io.github.toygurkutlu.flexswing.enums.StateType;
 import io.github.toygurkutlu.flexswing.objects.FlexUtil;
 import io.github.toygurkutlu.flexswing.objects.Padding;
 import io.github.toygurkutlu.flexswing.objects.Radii;
@@ -35,7 +35,7 @@ import java.util.Objects;
  * to the its status.
  * </p>
  *
- * @see CardAttributes
+ * @see CardViewConfig
  * @see CardMechanism
  * @see MechanismType
  * @see #setCardMechanismListener(CardMechanismListener)
@@ -53,9 +53,9 @@ public class CardView extends JPanel {
     private FlexPanel headerPanel;
     private FlexPanel contentPanel;
     private FlexPanel favPanel;
-    private final CardAttributes attr;
-    private final HeaderAttributes hAttr;
-    private final ContentAttributes cAttr;
+    private final CardViewConfig attr;
+    private final HeaderConfig hAttr;
+    private final ContentPanelConfig cAttr;
     private Radii radii;
     private StateType stateType = StateType.MAIN;
     private final CardComponentManager manager;
@@ -82,24 +82,24 @@ public class CardView extends JPanel {
     /**
      * Constructs the {@code CardView} with displayable card title and customized {@code CardAttributes}.
      *
-     * @param attr the configuration object of the {@code CardView}, cannot be {@code null}
+     * @param attr  the configuration object of the {@code CardView}, cannot be {@code null}
      * @param title the title of the header, cannot be {@code null}
+     * @throws NullPointerException if any of the following parameters are {@code null}:
+     *                              <ul>
+     *                                <li>When the provided <code>attr</code> is <code>null</code></li>
+     *                                <li>When the provided <code>title</code> is <code>null</code></li>
+     *                              </ul>
      * @apiNote {@code CardAttributes} cannot be change after the {@code CardView} is created.
-     * @throws NullPointerException     if any of the following parameters are {@code null}:
-     *                                  <ul>
-     *                                    <li>When the provided <code>attr</code> is <code>null</code></li>
-     *                                    <li>When the provided <code>title</code> is <code>null</code></li>
-     *                                  </ul>
-     * @see CardAttributes
+     * @see CardViewConfig
      */
-    public CardView(CardAttributes attr, String title) {
+    public CardView(CardViewConfig attr, String title) {
         super(new GridBagLayout());
         manager = new CardComponentManager();
 
         this.attr = Objects.requireNonNull(attr, "CardAttributes cannot be null.");
         this.title = Objects.requireNonNull(title, "Title cannot be null.");
-        hAttr = attr.headerAttributes();
-        cAttr = attr.contentAttributes();
+        hAttr = attr.headerConfig();
+        cAttr = attr.contentPanelConfig();
 
         init();
     }
@@ -134,7 +134,7 @@ public class CardView extends JPanel {
      * @throws NullPointerException if the provided {@code text} is {@code null}
      */
     public void setHeaderText(String text) {
-        this.title = Objects.requireNonNull(text," Text cannot be null.");
+        this.title = Objects.requireNonNull(text, " Text cannot be null.");
         titleLabel.setText(text);
         this.revalidate();
     }

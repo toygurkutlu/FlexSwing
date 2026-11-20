@@ -1,8 +1,6 @@
 package io.github.toygurkutlu.flexswing.components;
 
 
-import com.sun.nio.sctp.IllegalUnbindException;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -151,9 +149,10 @@ public class Tooltip extends JWindow {
      * with {@link MouseAdapter#mouseEntered(MouseEvent)} and {@link MouseAdapter#mouseExited(MouseEvent)} methods.
      * After calling this method the provided {@code component} will show the tooltip when the mouse cursor comes
      * the {@code component}'s boundaries and will hide the tooltip when the mouse cursor goes out of boundaries.
+     *
+     * @throws IllegalArgumentException if the tooltip is already attached
      * @apiNote The user should call this method only if tooltip previously detached. Otherwise, creating new
      * Tooltip automatically triggers this method.
-     * @throws IllegalArgumentException if the tooltip is already attached
      */
     public void attachTooltip() {
         if (!tooltipAttached) {
@@ -164,9 +163,10 @@ public class Tooltip extends JWindow {
 
     /**
      * Detaches the attached tooltip from the component.
+     *
      * @apiNote Use {@link #attachTooltip()} method if you want to attach the tooltip again.
-     * */
-    public void detachTooltip(){
+     */
+    public void detachTooltip() {
         if (tooltipAttached) {
             component.removeMouseListener(tooltipListener);
             tooltipAttached = false;
@@ -307,7 +307,7 @@ public class Tooltip extends JWindow {
      *
      * @return the border color
      */
-    public Color getBorderColor(){
+    public Color getBorderColor() {
         return borderColor;
     }
 

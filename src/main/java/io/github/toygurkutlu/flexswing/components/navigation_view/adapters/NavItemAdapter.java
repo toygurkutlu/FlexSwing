@@ -24,7 +24,7 @@ public abstract class NavItemAdapter implements NavItemListener {
      * </p>
      */
     @Override
-    public void onTitleSelected(int titleIndex){
+    public void onTitleSelected(int titleIndex) {
 
     }
 
@@ -35,7 +35,7 @@ public abstract class NavItemAdapter implements NavItemListener {
      * </p>
      */
     @Override
-    public void onSubtitleSelected(int titleIndex, int subtitleIndex){
+    public void onSubtitleSelected(int titleIndex, int subtitleIndex) {
 
     }
 }

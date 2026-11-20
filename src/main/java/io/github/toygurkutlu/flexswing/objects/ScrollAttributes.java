@@ -1,8 +1,8 @@
-package io.github.toygurkutlu.flexswing.records;
+package io.github.toygurkutlu.flexswing.objects;
 
 import io.github.toygurkutlu.flexswing.components.FlexComboBox;
 import io.github.toygurkutlu.flexswing.components.NavigationView;
-import io.github.toygurkutlu.flexswing.components.navigation_view.records.NavItemAttributes;
+import io.github.toygurkutlu.flexswing.components.navigation_view.records.NavViewItemConfig;
 
 import java.awt.*;
 import java.util.Objects;
@@ -15,12 +15,8 @@ import java.util.Objects;
  *     <li>When using default attributes, any specific property can be modified using the fluent {@code with...()} methods.</li>
  * </ul>
  *
- * @param trackColor     the track color
- * @param thumbColor     the thumb color
- * @param thumbDragColor the thumb color while dragging
- * @param thumbRadius    the radius of the thumb corners
  * @see NavigationView
- * @see NavItemAttributes
+ * @see NavViewItemConfig
  * @see FlexComboBox
  * @see #defaultScrollAttributes()
  * @see #withTrackColor(Color)
@@ -28,10 +24,50 @@ import java.util.Objects;
  * @see #withThumbDragColor(Color)
  * @see #withThumbRadius(int)
  */
-public record ScrollAttributes(Color trackColor,
-                               Color thumbColor,
-                               Color thumbDragColor,
-                               int thumbRadius) {
+public class ScrollAttributes {
+    private Color trackColor;
+    private Color thumbColor;
+    private Color thumbDragColor;
+    private int thumbRadius;
+
+    public ScrollAttributes(Color trackColor, Color thumbColor, Color thumbDragColor, int thumbRadius) {
+        this.trackColor = trackColor;
+        this.thumbColor = thumbColor;
+        this.thumbDragColor = thumbDragColor;
+        this.thumbRadius = thumbRadius;
+    }
+
+    public Color getTrackColor() {
+        return trackColor;
+    }
+
+    public void setTrackColor(Color trackColor) {
+        this.trackColor = trackColor;
+    }
+
+    public Color getThumbColor() {
+        return thumbColor;
+    }
+
+    public void setThumbColor(Color thumbColor) {
+        this.thumbColor = thumbColor;
+    }
+
+    public Color getThumbDragColor() {
+        return thumbDragColor;
+    }
+
+    public void setThumbDragColor(Color thumbDragColor) {
+        this.thumbDragColor = thumbDragColor;
+    }
+
+    public int getThumbRadius() {
+        return thumbRadius;
+    }
+
+    public void setThumbRadius(int thumbRadius) {
+        this.thumbRadius = thumbRadius;
+    }
 
     /**
      * Creates the default style attributes for the vertical scroll bar.

@@ -19,7 +19,7 @@ public interface NavItemListener {
     /**
      * Invoked when the subtitle is selected.
      *
-     * @param titleIndex the index of the selected subtitle's parent title
+     * @param titleIndex    the index of the selected subtitle's parent title
      * @param subtitleIndex the index of the selected subtitle
      */
     void onSubtitleSelected(int titleIndex, int subtitleIndex);

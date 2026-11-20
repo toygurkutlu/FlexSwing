@@ -5,7 +5,7 @@ import io.github.toygurkutlu.flexswing.components.FlexLabel;
 import io.github.toygurkutlu.flexswing.components.FlexPanel;
 import io.github.toygurkutlu.flexswing.components.card_view.enums.MechanismType;
 import io.github.toygurkutlu.flexswing.components.card_view.objects.CardMechanism;
-import io.github.toygurkutlu.flexswing.components.card_view.records.CardAttributes;
+import io.github.toygurkutlu.flexswing.components.card_view.records.CardViewConfig;
 import io.github.toygurkutlu.flexswing.objects.StateColors;
 
 /**
@@ -18,7 +18,7 @@ import io.github.toygurkutlu.flexswing.objects.StateColors;
  * @see CardView
  * @see FlexPanel
  * @see FlexLabel
- * @see CardAttributes
+ * @see CardViewConfig
  * @see CardMechanism
  * @see MechanismType
  */

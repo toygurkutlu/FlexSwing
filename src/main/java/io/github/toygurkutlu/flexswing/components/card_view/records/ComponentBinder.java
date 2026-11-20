@@ -1,6 +1,7 @@
 package io.github.toygurkutlu.flexswing.components.card_view.records;
 
 import io.github.toygurkutlu.flexswing.components.card_view.enums.TextType;
+
 import javax.swing.*;
 import java.util.Objects;
 

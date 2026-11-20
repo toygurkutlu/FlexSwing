@@ -1,8 +1,7 @@
 package io.github.toygurkutlu.flexswing.components.combo_box.ui;
 
-import io.github.toygurkutlu.flexswing.components.combo_box.records.ComboAttributes;
-import io.github.toygurkutlu.flexswing.components.combo_box.records.PopupAttributes;
-import io.github.toygurkutlu.flexswing.objects.Padding;
+import io.github.toygurkutlu.flexswing.components.combo_box.domain.ComboBoxConfig;
+import io.github.toygurkutlu.flexswing.components.combo_box.domain.PopupConfig;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,21 +10,31 @@ import java.awt.*;
 public class FlexComboBoxCellRenderer<T> extends JPanel implements ListCellRenderer<T> {
 
     private final JLabel label = new JLabel();
+    private Color itemForeground;
+    private Color itemBackground;
+    private Color selectedForeground;
+    private Color selectedBackground;
+    private Font font;
 
-    private final PopupAttributes attr;
+    private final PopupConfig attr;
 
-    public FlexComboBoxCellRenderer(ComboAttributes comboAttr) {
-        this.attr = comboAttr.popupAttributes();
-        Padding padding = attr.padding();
+    public FlexComboBoxCellRenderer(ComboBoxConfig comboAttr) {
+        this.attr = comboAttr.getPopupConfig();
+
+        itemBackground = attr.getItemBackground();
+        itemForeground = attr.getItemForeground();
+        selectedBackground = attr.getSelectedBackground();
+        selectedForeground = attr.getSelectedForeground();
+        font = attr.getFont();
 
         label.setOpaque(false);
         label.setHorizontalAlignment(JLabel.LEFT);
-        label.setFont(attr.font());
+        label.setFont(font);
         label.setBorder(new EmptyBorder(3, 10, 3, 10));
 
-        setLayout(new BorderLayout());
         setOpaque(true);
-        setBorder(new EmptyBorder(padding.top(), padding.left(), padding.bottom(), padding.right()));
+        setLayout(new BorderLayout());
+        setBorder(new EmptyBorder(3, 3, 3, 3));
         add(label, BorderLayout.CENTER);
     }
 
@@ -37,13 +46,44 @@ public class FlexComboBoxCellRenderer<T> extends JPanel implements ListCellRende
             label.setText(text);
 
             if (isSelected) {
-                label.setForeground(attr.selectedForeground());
-                this.setBackground(attr.selectedBackground());
+                label.setForeground(selectedForeground);
+                this.setBackground(selectedBackground);
             } else {
-                label.setForeground(attr.itemForeground());
-                this.setBackground(attr.itemBackground());
+                label.setForeground(itemForeground);
+                this.setBackground(itemBackground);
             }
         }
         return this;
+    }
+
+    public void setItemForeground(Color fg) {
+        this.itemForeground = fg;
+        revalidate();
+        repaint();
+    }
+
+    public void setItemBackground(Color bg) {
+        this.itemBackground = bg;
+        revalidate();
+        repaint();
+    }
+
+    public void setSelectedForeground(Color fg) {
+        this.selectedForeground = fg;
+        revalidate();
+        repaint();
+    }
+
+    public void setSelectedBackground(Color bg) {
+        this.selectedBackground = bg;
+        revalidate();
+        repaint();
+    }
+
+    public void setItemFont(Font font) {
+        this.font = font;
+        label.setFont(font);
+        revalidate();
+        repaint();
     }
 }

@@ -1,12 +1,12 @@
 package io.github.toygurkutlu.flexswing.components.card_view.enums;
 
 import io.github.toygurkutlu.flexswing.components.CardView;
+import io.github.toygurkutlu.flexswing.components.card_view.adapter.CardMechanismAdapter;
+import io.github.toygurkutlu.flexswing.components.card_view.listener.CardMechanismListener;
 import io.github.toygurkutlu.flexswing.components.card_view.objects.CardMechanism;
+import io.github.toygurkutlu.flexswing.components.card_view.records.CardViewConfig;
 import io.github.toygurkutlu.flexswing.enums.StateType;
 import io.github.toygurkutlu.flexswing.objects.StateColors;
-import io.github.toygurkutlu.flexswing.components.card_view.records.CardAttributes;
-import io.github.toygurkutlu.flexswing.components.card_view.listener.CardMechanismListener;
-import io.github.toygurkutlu.flexswing.components.card_view.adapter.CardMechanismAdapter;
 
 /**
  * Represents the available mechanisms of the {@code CardView}.
@@ -23,7 +23,7 @@ public enum MechanismType {
      *
      * @apiNote When enabled, the hover mechanism automatically highlights the card based on
      * the configured {@code CardAttributes} when the mouse cursor enters the card boundaries.
-     * @see CardAttributes
+     * @see CardViewConfig
      */
     HOVERABLE,
 
@@ -33,7 +33,7 @@ public enum MechanismType {
      * @apiNote When enabled, the select mechanism paints the card based on the configured
      * {@code CardAttributes} and allows the user to manage runtime status changes
      * by registering a {@link CardMechanismListener}.
-     * @see CardAttributes
+     * @see CardViewConfig
      * @see CardMechanismListener
      * @see CardMechanismAdapter
      * @see CardView#setCardMechanismListener(CardMechanismListener)
@@ -58,7 +58,7 @@ public enum MechanismType {
      * @apiNote When enabled, the favorite mechanism adds a interactive favorite icon to the configured
      * {@link CardSection}, allows the user to toggle the favorite state, and enables runtime
      * status change management by registering a {@link CardMechanismListener}.
-     * @see CardAttributes#favIconLocation()
+     * @see CardViewConfig#favIconLocation()
      * @see CardMechanismListener
      * @see CardMechanismAdapter
      * @see CardView#setCardMechanismListener(CardMechanismListener)

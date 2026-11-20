@@ -1,9 +1,9 @@
 package io.github.toygurkutlu.flexswing.components.combo_box.ui;
 
-import io.github.toygurkutlu.flexswing.components.combo_box.records.ComboAttributes;
-import io.github.toygurkutlu.flexswing.components.combo_box.records.DisplayPanelAttributes;
+import io.github.toygurkutlu.flexswing.components.combo_box.domain.ComboBoxConfig;
+import io.github.toygurkutlu.flexswing.components.combo_box.domain.DisplayPanelConfig;
+import io.github.toygurkutlu.flexswing.components.combo_box.domain.TextAlignment;
 import io.github.toygurkutlu.flexswing.objects.FlexUtil;
-import io.github.toygurkutlu.flexswing.objects.Padding;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxEditor;
@@ -16,23 +16,23 @@ public class FlexComboBoxEditor extends BasicComboBoxEditor {
     private final JPanel panel;
     private final JLabel label = new JLabel();
 
-    private final int borderThickness;
-    private final DisplayPanelAttributes displayAttr;
-    private final int topLeft;
-    private final int topRight;
+    private final DisplayPanelConfig displayAttr;
     private int bottomLeft;
-    private final int bottomRight;
+    private int topLeft;
+    private Color background;
+    private Color borderColor;
 
-    public FlexComboBoxEditor(ComboAttributes attr) {
-        displayAttr = attr.displayPanelAttributes();
-        topLeft = displayAttr.radii().topLeft();
-        topRight = displayAttr.radii().topRight();
-        bottomLeft = displayAttr.radii().bottomLeft();
-        bottomRight = displayAttr.radii().bottomRight();
+    public FlexComboBoxEditor(ComboBoxConfig attr) {
+        displayAttr = attr.getDisplayPanelConfig();
 
-        Padding gaps = displayAttr.padding();
+        topLeft = displayAttr.getRadii().topLeft();
+        bottomLeft = displayAttr.getRadii().bottomLeft();
+        TextAlignment textAlignment = attr.getDisplayPanelConfig().getTextAlignment();
 
-        borderThickness = displayAttr.borderThickness();
+        background = displayAttr.getBackground();
+        borderColor = displayAttr.getBorderColor();
+
+        int borderThickness = 1;
 
         panel = new JPanel(new BorderLayout()) {
             @Override
@@ -45,40 +45,32 @@ public class FlexComboBoxEditor extends BasicComboBoxEditor {
 
                 Area area = new Area(FlexUtil.createRoundTopLeft(panel, topLeft, borderThickness));
 
-                if (topRight > 0) {
-                    area.intersect(new Area(FlexUtil.createRoundTopRight(panel, topRight, borderThickness)));
-                }
                 if (bottomLeft > 0) {
                     area.intersect(new Area(FlexUtil.createRoundBottomLeft(panel, bottomLeft, borderThickness)));
                 }
-                if (bottomRight > 0) {
-                    area.intersect(new Area(FlexUtil.createRoundBottomRight(panel, bottomRight, borderThickness)));
-                }
 
-                g2.setColor(displayAttr.background());
+                g2.setColor(background);
                 g2.fill(area);
 
-                if (borderThickness > 0) {
-                    g2.setColor(displayAttr.borderColor());
-                    g2.setStroke(new BasicStroke(borderThickness));
-                    g2.draw(area);
-                }
+                g2.setColor(borderColor);
+                g2.setStroke(new BasicStroke(borderThickness));
+                g2.draw(area);
                 g2.dispose();
             }
         };
 
-        panel.setBorder(BorderFactory.createEmptyBorder(gaps.top(), gaps.left(), gaps.bottom(), gaps.right()));
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         label.setOpaque(false);
-        label.setHorizontalAlignment(JLabel.LEFT);
-        label.setForeground(displayAttr.foreground());
-        label.setFont(displayAttr.font());
+        label.setHorizontalAlignment(textAlignment.getAlignment());
+        label.setForeground(displayAttr.getForeground());
+        label.setFont(displayAttr.getFont());
 
         panel.add(label, BorderLayout.CENTER);
     }
 
     public void updateBorder(boolean isPopupVisible) {
-        bottomLeft = isPopupVisible ? 0 : displayAttr.radii().bottomLeft();
+        bottomLeft = isPopupVisible ? 0 : displayAttr.getRadii().bottomLeft();
         panel.repaint();
     }
 
@@ -96,5 +88,36 @@ public class FlexComboBoxEditor extends BasicComboBoxEditor {
         }
         selectedValue = item.toString();
         label.setText(selectedValue);
+    }
+
+    public void setTextAlignment(TextAlignment alignment) {
+        label.setHorizontalAlignment(alignment.getAlignment());
+    }
+
+    public void setTextColor(Color color) {
+        label.setForeground(color);
+    }
+
+    public void setTextFont(Font font) {
+        label.setFont(font);
+    }
+
+    public void setDisplayPanelRadii(int topLeft, int bottomLeft) {
+        this.topLeft = topLeft;
+        this.bottomLeft = bottomLeft;
+        panel.revalidate();
+        panel.repaint();
+    }
+
+    public void setBorderColor(Color color) {
+        this.borderColor = color;
+        panel.revalidate();
+        panel.repaint();
+    }
+
+    public void setBackgroundColor(Color color) {
+        this.background = color;
+        panel.revalidate();
+        panel.repaint();
     }
 }

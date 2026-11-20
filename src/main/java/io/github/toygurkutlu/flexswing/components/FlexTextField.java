@@ -22,7 +22,7 @@ import java.util.Objects;
  * <ol>
  *     <li><strong>Corner radii:</strong>
  *         <ul>
- *             <li>{@link #setRadii(int)}</li>
+ *             <li>{@link #setRadius(int)}</li>
  *             <li>{@link #setRadii(Radii)}</li>
  *             <li>{@link #setRadii(int, int, int, int)}</li>
  *             <li>{@link #setTopLeftRadius(int)}</li>
@@ -235,6 +235,7 @@ public class FlexTextField extends JTextField {
         super.setFont(font);
         update();
     }
+
     /**
      * Gets the foreground color of the text.
      *
@@ -332,9 +333,9 @@ public class FlexTextField extends JTextField {
      * @param radius the corner radius, cannot be negative
      * @throws IllegalArgumentException if the {@code radius} is negative
      */
-    public void setRadii(int radius) {
+    public void setRadius(int radius) {
         if (radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
-        this.radii.setRadii(radius);
+        this.radii.setRadius(radius);
         update();
     }
 
@@ -385,7 +386,7 @@ public class FlexTextField extends JTextField {
      * @throws IllegalArgumentException if the provided {@code radius} is negative
      */
     public void setTopLeftRadius(int radius) {
-        if(radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
+        if (radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
         radii.setTopLeft(radius);
         update();
     }
@@ -406,7 +407,7 @@ public class FlexTextField extends JTextField {
      * @throws IllegalArgumentException if the provided {@code radius} is negative
      */
     public void setTopRightRadius(int radius) {
-        if(radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
+        if (radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
         radii.setTopRight(radius);
         update();
     }
@@ -427,7 +428,7 @@ public class FlexTextField extends JTextField {
      * @throws IllegalArgumentException if the provided {@code radius} is negative
      */
     public void setBottomLeftRadius(int radius) {
-        if(radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
+        if (radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
         radii.setBottomLeft(radius);
         update();
     }
@@ -448,7 +449,7 @@ public class FlexTextField extends JTextField {
      * @throws IllegalArgumentException if the provided {@code radius} is negative
      */
     public void setBottomRightRadius(int radius) {
-        if(radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
+        if (radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
         radii.setBottomRight(radius);
         update();
     }
@@ -483,7 +484,7 @@ public class FlexTextField extends JTextField {
      * @throws IllegalArgumentException if the provided {@code padding} is negative
      */
     public void setPadding(int padding) {
-        if(padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
+        if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
         this.padding.setPadding(padding);
         updatePadding();
     }
@@ -503,10 +504,10 @@ public class FlexTextField extends JTextField {
      * @throws IllegalArgumentException if any of the provided padding values are negative
      */
     public void setPadding(int top, int left, int bottom, int right) {
-        if(top < 0) throw new IllegalArgumentException("Top padding cannot be negative.");
-        if(left < 0) throw new IllegalArgumentException("Left padding cannot be negative.");
-        if(bottom < 0) throw new IllegalArgumentException("Bottom padding cannot be negative.");
-        if(right < 0) throw new IllegalArgumentException("Right padding cannot be negative.");
+        if (top < 0) throw new IllegalArgumentException("Top padding cannot be negative.");
+        if (left < 0) throw new IllegalArgumentException("Left padding cannot be negative.");
+        if (bottom < 0) throw new IllegalArgumentException("Bottom padding cannot be negative.");
+        if (right < 0) throw new IllegalArgumentException("Right padding cannot be negative.");
         this.padding.setPadding(top, left, bottom, right);
         updatePadding();
     }
@@ -528,7 +529,7 @@ public class FlexTextField extends JTextField {
      * @throws IllegalArgumentException if the provided {@code padding} is negative
      */
     public void setTopPadding(int padding) {
-        if(padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
+        if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
         this.padding.setTop(padding);
         updatePadding();
     }
@@ -550,7 +551,7 @@ public class FlexTextField extends JTextField {
      * @throws IllegalArgumentException if the provided {@code padding} is negative
      */
     public void setLeftPadding(int padding) {
-        if(padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
+        if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
         this.padding.setLeft(padding);
         updatePadding();
     }
@@ -572,7 +573,7 @@ public class FlexTextField extends JTextField {
      * @throws IllegalArgumentException if the provided {@code padding} is negative
      */
     public void setBottomPadding(int padding) {
-        if(padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
+        if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
         this.padding.setBottom(padding);
         updatePadding();
     }
@@ -594,7 +595,7 @@ public class FlexTextField extends JTextField {
      * @throws IllegalArgumentException if the provided {@code padding} is negative
      */
     public void setRightPadding(int padding) {
-        if(padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
+        if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
         this.padding.setRight(padding);
         updatePadding();
     }

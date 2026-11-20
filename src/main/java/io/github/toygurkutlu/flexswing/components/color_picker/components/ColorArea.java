@@ -80,7 +80,7 @@ public class ColorArea extends JPanel {
         }
     }
 
-    public float getHue(){
+    public float getHue() {
         return hue;
     }
 

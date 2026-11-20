@@ -14,11 +14,11 @@ import java.awt.event.MouseEvent;
 /**
  * Provides a simple dialog for selecting color.<br><br>
  * <p>
- *     Contains {@link ColorPicker.OnColorSelectedListener} which user can handle color selection via
- *     the {@link ColorPicker.OnColorSelectedListener#onColorSelected(Color)} method,
- *      which receives the newly selected color as an argument.
+ * Contains {@link ColorPicker.OnColorSelectedListener} which user can handle color selection via
+ * the {@link ColorPicker.OnColorSelectedListener#onColorSelected(Color)} method,
+ * which receives the newly selected color as an argument.
  * </p>
- * */
+ */
 public class ColorDialog extends JDialog {
 
     private String positiveText;

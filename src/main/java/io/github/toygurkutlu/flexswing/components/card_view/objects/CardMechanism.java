@@ -2,7 +2,7 @@ package io.github.toygurkutlu.flexswing.components.card_view.objects;
 
 
 import io.github.toygurkutlu.flexswing.components.card_view.enums.MechanismType;
-import io.github.toygurkutlu.flexswing.components.card_view.records.CardAttributes;
+import io.github.toygurkutlu.flexswing.components.card_view.records.CardViewConfig;
 
 import java.util.Objects;
 
@@ -14,7 +14,7 @@ import java.util.Objects;
  * </p>
  *
  * @see MechanismType
- * @see CardAttributes
+ * @see CardViewConfig
  */
 public class CardMechanism {
 

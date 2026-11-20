@@ -1,18 +1,20 @@
 package io.github.toygurkutlu.flexswing.objects;
 
 
-import java.awt.*;
-import java.util.Objects;
 import io.github.toygurkutlu.flexswing.components.CardView;
 import io.github.toygurkutlu.flexswing.components.FlexLabel;
 import io.github.toygurkutlu.flexswing.components.FlexPanel;
-import io.github.toygurkutlu.flexswing.enums.StateType;
 import io.github.toygurkutlu.flexswing.components.card_view.enums.MechanismType;
 import io.github.toygurkutlu.flexswing.components.card_view.objects.CardMechanism;
+import io.github.toygurkutlu.flexswing.enums.StateType;
+import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
+import java.util.Objects;
 
 /**
  * Represents the colors for each {@code StateType} of the {@code FlexSwing} components such as {@code CardView},
- * {@code FLabel} and {@code FPanel}.
+ * {@code FlexLabel} and {@code FlexPanel}.
  * <p>
  * Developers can either create custom {@code StateColors} instances or use the default values
  * provided for each state, allowing a properly configured {@code CardView} to handle state transitions automatically.
@@ -33,9 +35,24 @@ import io.github.toygurkutlu.flexswing.components.card_view.objects.CardMechanis
  */
 public class StateColors {
 
+    /**
+     * Represents the base (default) color used regardless of the configured mechanisms.
+     */
     private Color main;
+    /**
+     * Represents the color used on hover when the item is in its {@link #main} state and
+     * configured as {@link MechanismType#HOVERABLE}
+     */
     private Color mainHover;
+    /**
+     * Represents the color used when the item is configured as {@link MechanismType#SELECTABLE}
+     * and {@link CardMechanism#isEnabled()} returns {@code true}.
+     */
     private Color selected;
+    /**
+     * Represents the color used on hover when the item is in its {@link #selected} state and
+     * configured as {@link MechanismType#HOVERABLE}.
+     */
     private Color selectedHover;
 
     /**
@@ -53,7 +70,8 @@ public class StateColors {
      *                                <li>When the provided <code>selectedHover</code> object is <code>null</code></li>
      *                              </ul>
      */
-    public StateColors(Color main, Color mainHover, Color selected, Color selectedHover) {
+    public StateColors(@NotNull Color main, @NotNull Color mainHover, @NotNull Color selected,
+                       @NotNull Color selectedHover) {
         this.main = Objects.requireNonNull(main, "Main color cannot be null.");
         this.mainHover = Objects.requireNonNull(mainHover, "MainHover color cannot be null.");
         this.selected = Objects.requireNonNull(selected, "Selected color cannot be null.");
@@ -65,9 +83,9 @@ public class StateColors {
      *
      * @param color the new color for the all states, cannot be {@code null}.
      * @throws NullPointerException if the provided {@code color} is {@code null}
-     * */
-    public void setStateColors(Color color){
-        this.main = Objects.requireNonNull(color,"Color cannot be null.");
+     */
+    public void setStateColors(Color color) {
+        this.main = Objects.requireNonNull(color, "Color cannot be null.");
         this.mainHover = color;
         this.selected = color;
         this.selectedHover = color;
@@ -181,7 +199,7 @@ public class StateColors {
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
     public void setMainHover(Color color) {
-        this.mainHover =  Objects.requireNonNull(color, "Color cannot be null.");
+        this.mainHover = Objects.requireNonNull(color, "Color cannot be null.");
     }
 
     /**
@@ -220,6 +238,55 @@ public class StateColors {
      */
     public void setSelectedHover(Color color) {
         this.selectedHover = Objects.requireNonNull(color, "Color cannot be null.");
+    }
+
+    /**
+     * Creates a copy of this {@code StateColors} with the specified main color.
+     *
+     * @param main the new main color, cannot be {@code null}
+     * @return a new {@code StateColors} instance with the updated main color
+     * @throws IllegalArgumentException if the provided main color is {@code null}
+     */
+    public StateColors withMain(Color main) {
+        return new StateColors(Objects.requireNonNull(main, "Main color cannot be null."),
+                               this.mainHover, this.selected, this.selectedHover);
+    }
+
+    /**
+     * Creates a copy of this {@code StateColors} with the specified main color when hovered.
+     *
+     * @param mainHover the new main hover color, cannot be {@code null}
+     * @return a new {@code StateColors} instance with the updated main hover color
+     * @throws IllegalArgumentException if the provided main hover color is {@code null}
+     */
+    public StateColors withMainHover(Color mainHover) {
+        return new StateColors(this.main, Objects.requireNonNull(mainHover, "MainHover color cannot be null."),
+                               this.selected, this.selectedHover);
+    }
+
+    /**
+     * Creates a copy of this {@code StateColors} with the specified selected color.
+     *
+     * @param selected the new selected color, cannot be {@code null}
+     * @return a new {@code StateColors} instance with the updated selected color
+     * @throws IllegalArgumentException if the provided selected hover color is {@code null}
+     */
+    public StateColors withSelected(Color selected) {
+        return new StateColors(this.main, this.mainHover,
+                               Objects.requireNonNull(selected, "Selected color cannot be null."),
+                               this.selectedHover);
+    }
+
+    /**
+     * Creates a copy of this {@code StateColors} with the specified selected color when hovered.
+     *
+     * @param selectedHover the new selected hover color, cannot be {@code null}
+     * @return a new {@code StateColors} instance with the updated selected hover color
+     * @throws IllegalArgumentException if the provided selected hover color is {@code null}
+     */
+    public StateColors withSelectedHover(Color selectedHover) {
+        return new StateColors(this.main, this.mainHover, this.selected,
+                               Objects.requireNonNull(selectedHover, "SelectedHover color cannot be null."));
     }
 
     /**

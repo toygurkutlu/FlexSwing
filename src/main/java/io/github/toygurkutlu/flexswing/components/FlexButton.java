@@ -1,6 +1,8 @@
 package io.github.toygurkutlu.flexswing.components;
 
 
+import io.github.toygurkutlu.flexswing.components.button.ButtonAttribute;
+import io.github.toygurkutlu.flexswing.components.button.ButtonConfig;
 import io.github.toygurkutlu.flexswing.objects.FlexUtil;
 import io.github.toygurkutlu.flexswing.objects.Padding;
 import io.github.toygurkutlu.flexswing.objects.Radii;
@@ -19,7 +21,7 @@ import java.util.Objects;
  * <ol>
  *     <li><strong>Corner radii:</strong>
  *         <ul>
- *             <li>{@link #setRadii(int)}</li>
+ *             <li>{@link #setRadius(int)}</li>
  *             <li>{@link #setRadii(Radii)}</li>
  *             <li>{@link #setRadii(int, int, int, int)}</li>
  *             <li>{@link #setTopLeftRadius(int)}</li>
@@ -33,9 +35,10 @@ import java.util.Objects;
  *             <li>{@link #setPadding(int)}</li>
  *             <li>{@link #setPadding(Padding)}</li>
  *             <li>{@link #setPadding(int, int, int, int)}</li>
- *             <li>{@link #setTopPadding(int)}</li>
- *             <li>{@link #setLeftPadding(int)}</li>
- *             <li>{@link #setBottomPadding(int)}</li>
+ *             <li>{@link #setPaddingTop(int)}</li>
+ *             <li>{@link #setPaddingLeft(int)}</li>
+ *             <li>{@link #setPaddingBottom(int)}</li>
+ *             <li>{@link #setPaddingRight(int)}</li>
  *         </ul>
  *     </li>
  *     <li><strong>Border:</strong>
@@ -93,12 +96,13 @@ public class FlexButton extends JButton {
         LEFT, RIGHT, TOP, BOTTOM
     }
 
+    private ButtonConfig config;
+
     private Radii radii = new Radii(15, 15, 15, 15);
     private final Padding padding = new Padding(10, 10, 10, 10);
     private int borderThickness = 1;
 
     private Font font = new Font("Arial", Font.PLAIN, 14);
-    ;
     private Color defaultBackground = new Color(40, 40, 40);
     private Color defaultBorderColor = new Color(15, 15, 15);
     private Color foreground = new Color(250, 250, 250);
@@ -119,9 +123,12 @@ public class FlexButton extends JButton {
 
     /**
      * Creates a button with no set text or icon.
+     *
+     * @apiNote For the configuration of the {@code FlexButton}, the default {@link ButtonConfig} is used.
+     * @see ButtonConfig
      */
     public FlexButton() {
-        super();
+        this(ButtonConfig.defaultConfig());
         init();
     }
 
@@ -129,9 +136,11 @@ public class FlexButton extends JButton {
      * Creates a button with text.
      *
      * @param text the text of the button
+     * @apiNote For the configuration of the {@code FlexButton}, the default {@link ButtonConfig} is used.
+     * @see ButtonConfig
      */
     public FlexButton(String text) {
-        super(text);
+        this(text, ButtonConfig.defaultConfig());
         init();
     }
 
@@ -139,10 +148,11 @@ public class FlexButton extends JButton {
      * Creates a button with an icon.
      *
      * @param icon the Icon image to display on the button
+     * @apiNote For the configuration of the {@code FlexButton}, the default {@link ButtonConfig} is used.
+     * @see ButtonConfig
      */
     public FlexButton(Icon icon) {
-        super(icon);
-        this.icon = icon;
+        this(icon, ButtonConfig.defaultConfig());
         init();
     }
 
@@ -151,11 +161,72 @@ public class FlexButton extends JButton {
      *
      * @param text the text of the button
      * @param icon the Icon image to display on the button
+     * @apiNote For the configuration of the {@code FlexButton}, the default {@link ButtonConfig} is used.
+     * @see ButtonConfig
      */
     public FlexButton(String text, Icon icon) {
+        this(text, icon, ButtonConfig.defaultConfig());
+        init();
+    }
+
+    /**
+     * Creates a customized button with no set text or icon.
+     *
+     * @param config the custom config for the {@code FlexButton}
+     * @see ButtonConfig
+     */
+    public FlexButton(ButtonConfig config) {
+        super();
+        this.config = config;
+        init();
+    }
+
+    /**
+     * Creates a customized button with text.
+     *
+     * @param text   the text of the button
+     * @param config the custom config for the {@code FlexButton}
+     * @see ButtonConfig
+     */
+    public FlexButton(String text, ButtonConfig config) {
+        super(text);
+        this.config = config;
+        init();
+    }
+
+    /**
+     * Creates a customized button with an icon.
+     *
+     * @param icon   the Icon image to display on the button
+     * @param config the custom config for the {@code FlexButton}
+     * @see ButtonConfig
+     */
+    public FlexButton(Icon icon, ButtonConfig config) {
+        super(icon);
+        this.icon = icon;
+        this.config = config;
+        init();
+    }
+
+    /**
+     * Creates a customized button with initial text and an icon.
+     *
+     * @param text   the text of the button
+     * @param icon   the Icon image to display on the button
+     * @param config the custom config for the {@code FlexButton}
+     * @see ButtonConfig
+     */
+    public FlexButton(String text, Icon icon, ButtonConfig config) {
         super(text, icon);
         this.icon = icon;
+        this.config = config;
         init();
+    }
+
+    public void setConfig(ButtonConfig config) {
+        this.config = config;
+        revalidate();
+        repaint();
     }
 
     @Override
@@ -210,6 +281,69 @@ public class FlexButton extends JButton {
         }
     }
 
+    public <T> FlexButton setAttribute(ButtonAttribute<T> attr, T value) {
+        if (attr == ButtonAttribute.HAS_BORDER) {
+
+        } else if (attr == ButtonAttribute.BACKGROUNDS) {
+
+        } else if (attr == ButtonAttribute.BACKGROUND_MAIN) {
+
+        } else if (attr == ButtonAttribute.BACKGROUND_HOVER) {
+
+        } else if (attr == ButtonAttribute.BACKGROUND_PRESSED) {
+
+        } else if (attr == ButtonAttribute.BORDER_COLORS) {
+
+        } else if (attr == ButtonAttribute.BORDER_COLOR_MAIN) {
+
+        } else if (attr == ButtonAttribute.BORDER_COLOR_HOVER) {
+
+        } else if (attr == ButtonAttribute.BORDER_COLOR_PRESSED) {
+
+        } else if (attr == ButtonAttribute.FOREGROUNDS) {
+
+        } else if (attr == ButtonAttribute.FOREGROUND_MAIN) {
+
+        } else if (attr == ButtonAttribute.FOREGROUND_HOVER) {
+
+        } else if (attr == ButtonAttribute.FOREGROUND_PRESSED) {
+
+        } else if (attr == ButtonAttribute.FONT) {
+
+        } else if (attr == ButtonAttribute.HORIZONTAL_TEXT_POSITION) {
+
+        } else if (attr == ButtonAttribute.VERTICAL_TEXT_POSITION) {
+
+        } else if (attr == ButtonAttribute.ICON_TEXT_GAP) {
+
+        } else if (attr == ButtonAttribute.PADDING) {
+
+        } else if (attr == ButtonAttribute.PADDING_ALL) {
+
+        } else if (attr == ButtonAttribute.PADDING_TOP) {
+
+        } else if (attr == ButtonAttribute.PADDING_LEFT) {
+
+        } else if (attr == ButtonAttribute.PADDING_BOTTOM) {
+
+        } else if (attr == ButtonAttribute.PADDING_RIGHT) {
+
+        } else if (attr == ButtonAttribute.RADII) {
+
+        } else if (attr == ButtonAttribute.RADIUS) {
+
+        } else if (attr == ButtonAttribute.TOP_LEFT_RADIUS) {
+
+        } else if (attr == ButtonAttribute.TOP_RIGHT_RADIUS) {
+
+        } else if (attr == ButtonAttribute.BOTTOM_LEFT_RADIUS) {
+
+        } else if (attr == ButtonAttribute.BOTTOM_RIGHT_RADIUS) {
+
+        }
+        return this;
+    }
+
     /**
      * Gets the font of the text.
      *
@@ -222,11 +356,11 @@ public class FlexButton extends JButton {
     /**
      * Sets the font of the text.
      *
-     * @param font the new font for the text, cannot be {@code null}
+     * @param font the new font for the text; cannot be {@code null}
      * @throws NullPointerException if the provided {@code font} is {@code null}
      */
     public void setTextFont(Font font) {
-        this.font = Objects.requireNonNull(font, "Font cannot be null.");
+        config.setFont(font);
         super.setFont(font);
         repaint();
     }
@@ -243,11 +377,11 @@ public class FlexButton extends JButton {
     /**
      * Sets the text color (foreground) of the button.
      *
-     * @param color the new foreground for the text, cannot be {@code null}
+     * @param color the new foreground for the text; cannot be {@code null}
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
     public void setTextColor(Color color) {
-        this.foreground = Objects.requireNonNull(color, "Color cannot be null.");
+        config.setForegroundMain(color);
         super.setForeground(color);
         repaint();
     }
@@ -261,11 +395,10 @@ public class FlexButton extends JButton {
         return background;
     }
 
-
     /**
      * Sets the background color of the button.
      *
-     * @param color the new background color, cannot be {@code null}
+     * @param color the new background color; cannot be {@code null}
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
     public void setBackgroundColor(Color color) {
@@ -312,7 +445,7 @@ public class FlexButton extends JButton {
     /**
      * Sets the border color of the button.
      *
-     * @param color the new border color, cannot be {@code null}
+     * @param color the new border color; cannot be {@code null}
      * @throws NullPointerException if the provided {@code color} is {@code null}
      * @see #setHasBorder(boolean)
      */
@@ -363,7 +496,7 @@ public class FlexButton extends JButton {
     /**
      * Sets the background color of the button for hover effect.
      *
-     * @param color the new background color, cannot be {@code null}
+     * @param color the new background color; cannot be {@code null}
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
     public void setHoverBackgroundColor(Color color) {
@@ -382,7 +515,7 @@ public class FlexButton extends JButton {
     /**
      * Sets the foreground color of the button for hover effect.
      *
-     * @param color the new foreground color, cannot be {@code null}
+     * @param color the new foreground color; cannot be {@code null}
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
     public void setHoverTextColor(Color color) {
@@ -402,7 +535,7 @@ public class FlexButton extends JButton {
     /**
      * Sets the border color of the button for hover effect.
      *
-     * @param color the new border color, cannot be {@code null}
+     * @param color the new border color; cannot be {@code null}
      * @throws NullPointerException if the provided {@code color} is {@code null}
      * @see #setHasBorder(boolean)
      */
@@ -451,7 +584,7 @@ public class FlexButton extends JButton {
     /**
      * Sets the text color of the button for pressed effect.
      *
-     * @param color the new text color, cannot be {@code null}
+     * @param color the new text color; cannot be {@code null}
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
     public void setPressedTextColor(Color color) {
@@ -470,7 +603,7 @@ public class FlexButton extends JButton {
     /**
      * Sets the background color of the button for pressed effect.
      *
-     * @param color the new background color, cannot be {@code null}
+     * @param color the new background color; cannot be {@code null}
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
     public void setPressedBackgroundColor(Color color) {
@@ -490,7 +623,7 @@ public class FlexButton extends JButton {
     /**
      * Sets the border color of the button for pressed effect.
      *
-     * @param color the new border color, cannot be {@code null}
+     * @param color the new border color; cannot be {@code null}
      * @throws NullPointerException if the provided {@code color} is {@code null}
      * @see #setHasBorder(boolean)
      */
@@ -511,12 +644,12 @@ public class FlexButton extends JButton {
     /**
      * Sets the thickness of the button border.
      *
-     * @param thickness the new border thickness, cannot be negative
+     * @param thickness the new border thickness; cannot be negative
      * @throws IllegalArgumentException if the provided {@code thickness} is negative
      * @see #setHasBorder(boolean)
      */
     public void setBorderThickness(int thickness) {
-        if(thickness < 0) throw new IllegalArgumentException("Thickness cannot be negative.");
+        if (thickness < 0) throw new IllegalArgumentException("Thickness cannot be negative.");
         this.borderThickness = thickness;
         repaint();
     }
@@ -533,7 +666,7 @@ public class FlexButton extends JButton {
     /**
      * Sets the corner radii of the button border according to the provided {@code raii} object.
      *
-     * @param radii the new {@code radii} object, cannot be {@code null}
+     * @param radii the new {@code radii} object; cannot be {@code null}
      * @throws NullPointerException if the provided {@code radii} object is {@code null}
      * @see Radii
      * @see Radii#Radii(int, int, int, int)
@@ -546,22 +679,22 @@ public class FlexButton extends JButton {
     /**
      * Sets the same radius for all corners of the button border.
      *
-     * @param radius the corner radius, cannot be negative
+     * @param radius the corner radius; cannot be negative
      * @throws IllegalArgumentException if the provided {@code radius} is negative
      */
-    public void setRadii(int radius) {
+    public void setRadius(int radius) {
         if (radius < 0) throw new IllegalArgumentException("Radius cannot be negative.");
-        this.radii.setRadii(radius);
+        this.radii.setRadius(radius);
         repaint();
     }
 
     /**
      * Sets the all corners' radius of the button border according to provided values.
      *
-     * @param topLeft     radius of the top left corner, cannot be negative
-     * @param topRight    radius of the top right corner, cannot be negative
-     * @param bottomLeft  radius of the bottom left corner, cannot be negative
-     * @param bottomRight radius of the bottom right corner, cannot be negative
+     * @param topLeft     radius of the top left corner; cannot be negative
+     * @param topRight    radius of the top right corner; cannot be negative
+     * @param bottomLeft  radius of the bottom left corner; cannot be negative
+     * @param bottomRight radius of the bottom right corner; cannot be negative
      * @throws IllegalArgumentException if any of the provided radius values are negative
      */
     public void setRadii(int topLeft, int topRight, int bottomLeft, int bottomRight) {
@@ -585,7 +718,7 @@ public class FlexButton extends JButton {
     /**
      * Sets the top left corner radius of the button border.
      *
-     * @param radius the new top left corner radius, cannot be negative
+     * @param radius the new top left corner radius; cannot be negative
      * @throws IllegalArgumentException if the provided {@code radius} is negative
      */
     public void setTopLeftRadius(int radius) {
@@ -597,7 +730,7 @@ public class FlexButton extends JButton {
     /**
      * Gets the top right corner radius of the button border.
      *
-     * @return the right left corner radius
+     * @return the top right corner radius
      */
     public int getTopRightRadius() {
         return radii.topRight();
@@ -606,7 +739,7 @@ public class FlexButton extends JButton {
     /**
      * Sets the top right corner radius of the button border.
      *
-     * @param radius the new top right corner radius, cannot be negative
+     * @param radius the new top right corner radius; cannot be negative
      * @throws IllegalArgumentException if the provided {@code radius} is negative
      */
     public void setTopRightRadius(int radius) {
@@ -627,7 +760,7 @@ public class FlexButton extends JButton {
     /**
      * Sets the bottom left corner radius of the button border.
      *
-     * @param radius the new bottom left corner radius, cannot be negative
+     * @param radius the new bottom left corner radius; cannot be negative
      * @throws IllegalArgumentException if the provided {@code radius} is negative
      */
     public void setBottomLeftRadius(int radius) {
@@ -648,7 +781,7 @@ public class FlexButton extends JButton {
     /**
      * Sets the bottom right corner radius of the button border.
      *
-     * @param radius the new bottom right corner radius, cannot be negative
+     * @param radius the new bottom right corner radius; cannot be negative
      * @throws IllegalArgumentException if the provided {@code radius} is negative
      */
     public void setBottomRightRadius(int radius) {
@@ -658,9 +791,9 @@ public class FlexButton extends JButton {
     }
 
     /**
-     * Gets the internal gaps between the input area and the button border.
+     * Gets the internal gaps between the input area and the button borders.
      *
-     * @return internal gaps
+     * @return the instance of {@code Padding} object for internal gaps
      */
     public Padding getPadding() {
         return padding;
@@ -670,7 +803,7 @@ public class FlexButton extends JButton {
      * Sets the internal gaps between the input area and the button border according to provided {@code padding}
      * object.
      *
-     * @param padding the new {@code padding} object, cannot be {@code null}
+     * @param padding the new {@code padding} object; cannot be {@code null}
      * @throws NullPointerException if the provided {@code padding} object is {@code null}
      * @see Padding
      * @see Padding#Padding(int, int, int, int)
@@ -683,7 +816,7 @@ public class FlexButton extends JButton {
     /**
      * Sets the same internal gaps for all directions between the input area and the button
      *
-     * @param padding the new internal gaps for all directions, cannot be negative
+     * @param padding the new internal gaps for all directions; cannot be negative
      * @throws IllegalArgumentException if the provided {@code padding} is negative
      */
     public void setPadding(int padding) {
@@ -696,10 +829,10 @@ public class FlexButton extends JButton {
      * Sets the internal gaps for all directions between the input area and the button according to
      * the provided gaps.
      *
-     * @param top    the internal gap between the input area and the button border's top side, cannot be negative
-     * @param left   the internal gap between the input area and the button border's left side, cannot be negative
-     * @param bottom the internal gap between the input area and the button border's bottom side, cannot be negative
-     * @param right  the internal gap between the input area and the button border's right side, cannot be negative
+     * @param top    the internal gap between the input area and the button border's top side; cannot be negative
+     * @param left   the internal gap between the input area and the button border's left side; cannot be negative
+     * @param bottom the internal gap between the input area and the button border's bottom side; cannot be negative
+     * @param right  the internal gap between the input area and the button border's right side; cannot be negative
      * @throws IllegalArgumentException if any of the provided padding values are negative
      */
     public void setPadding(int top, int left, int bottom, int right) {
@@ -716,17 +849,17 @@ public class FlexButton extends JButton {
      *
      * @return the internal gap between the input area and the button border's top side
      */
-    public int getTopPadding() {
+    public int getPaddingTop() {
         return padding.top();
     }
 
     /**
      * Sets the internal gap between the input area and the button border's top side.
      *
-     * @param padding the internal gap between the input area and the button border's top side, cannot be negative
+     * @param padding the internal gap between the input area and the button border's top side; cannot be negative
      * @throws IllegalArgumentException if the provided {@code padding} is negative
      */
-    public void setTopPadding(int padding) {
+    public void setPaddingTop(int padding) {
         if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
         this.padding.setTop(padding);
         updatePadding();
@@ -737,17 +870,17 @@ public class FlexButton extends JButton {
      *
      * @return the internal gap between the input area and the button border's left side
      */
-    public int getLeftPadding() {
+    public int getPaddingLeft() {
         return padding.left();
     }
 
     /**
      * Sets the internal gap between the input area and the button border's left side.
      *
-     * @param padding the internal gap between the input area and the button border's left side, cannot be negative
+     * @param padding the internal gap between the input area and the button border's left side; cannot be negative
      * @throws IllegalArgumentException if the provided {@code padding} is negative
      */
-    public void setLeftPadding(int padding) {
+    public void setPaddingLeft(int padding) {
         if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
         this.padding.setLeft(padding);
         updatePadding();
@@ -758,17 +891,17 @@ public class FlexButton extends JButton {
      *
      * @return the internal gap between the input area and the button border's bottom side
      */
-    public int getBottomPadding() {
+    public int getPaddingBottom() {
         return padding.bottom();
     }
 
     /**
      * Sets the internal gap between the input area and the button border's bottom side.
      *
-     * @param padding the internal gap between the input area and the button border's bottom side, cannot be negative
+     * @param padding the internal gap between the input area and the button border's bottom side; cannot be negative
      * @throws IllegalArgumentException if the provided {@code padding} is negative
      */
-    public void setBottomPadding(int padding) {
+    public void setPaddingBottom(int padding) {
         if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
         this.padding.setBottom(padding);
         updatePadding();
@@ -779,17 +912,17 @@ public class FlexButton extends JButton {
      *
      * @return the internal gap between the input area and the button border's right side
      */
-    public int getRightPadding() {
+    public int getPaddingRight() {
         return padding.right();
     }
 
     /**
      * Sets the internal gap between the input area and the button border's right side.
      *
-     * @param padding the internal gap between the input area and the button border's right side, cannot be negative
+     * @param padding the internal gap between the input area and the button border's right side; cannot be negative
      * @throws IllegalArgumentException if the provided {@code padding} is negative
      */
-    public void setRightPadding(int padding) {
+    public void setPaddingRight(int padding) {
         if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
         this.padding.setRight(padding);
         updatePadding();

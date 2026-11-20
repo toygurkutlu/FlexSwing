@@ -1,4 +1,5 @@
 package io.github.toygurkutlu.flexswing.components.card_view.enums;
+
 import io.github.toygurkutlu.flexswing.components.CardView;
 
 /**

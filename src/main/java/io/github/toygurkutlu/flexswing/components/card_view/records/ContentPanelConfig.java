@@ -1,10 +1,10 @@
 package io.github.toygurkutlu.flexswing.components.card_view.records;
 
 import io.github.toygurkutlu.flexswing.components.CardView;
-import io.github.toygurkutlu.flexswing.enums.StateType;
 import io.github.toygurkutlu.flexswing.components.card_view.enums.TextType;
-import io.github.toygurkutlu.flexswing.objects.StateColors;
+import io.github.toygurkutlu.flexswing.enums.StateType;
 import io.github.toygurkutlu.flexswing.objects.Padding;
+import io.github.toygurkutlu.flexswing.objects.StateColors;
 
 import java.awt.*;
 import java.util.Objects;
@@ -22,7 +22,7 @@ import java.util.Objects;
  * @param subtitleAttributes the style attributes of the {@link TextType#SUBTITLE} components in the content panel
  * @param plainAttributes    the style attributes of the {@link TextType#PLAIN} components in the content panel
  * @param unitAttributes     the style attributes of the {@link TextType#UNIT} components in the content panel
- * @see #defaultContentAttributes()
+ * @see #defaultConfig()
  * @see #withBackgrounds(StateColors)
  * @see #withTitleTextAttributes(TextAttributes)
  * @see #withSubtitleTextAttributes(TextAttributes)
@@ -37,23 +37,23 @@ import java.util.Objects;
  * @see TextAttributes
  * @see TextType
  */
-public record ContentAttributes(StateColors backgrounds,
-                                TextAttributes titleAttributes,
-                                TextAttributes subtitleAttributes,
-                                TextAttributes plainAttributes,
-                                TextAttributes unitAttributes) {
+public record ContentPanelConfig(StateColors backgrounds,
+                                 TextAttributes titleAttributes,
+                                 TextAttributes subtitleAttributes,
+                                 TextAttributes plainAttributes,
+                                 TextAttributes unitAttributes) {
 
     /**
      * Creates the default style attributes for the {@code ContentPanel}.
      *
      * @return the {@code ContentAttributes} of the {@code ContentPanel}
      */
-    public static ContentAttributes defaultContentAttributes() {
-        return new ContentAttributes(StateColors.defaultContentBackgrounds(),
-                                     TextAttributes.defaultContentTitleTextAttributes(),
-                                     TextAttributes.defaultContentSubtitleTextAttributes(),
-                                     TextAttributes.defaultContentPlainTextAttributes(),
-                                     TextAttributes.defaultContentUnitTextAttributes());
+    public static ContentPanelConfig defaultConfig() {
+        return new ContentPanelConfig(StateColors.defaultContentBackgrounds(),
+                                      TextAttributes.defaultContentTitleTextAttributes(),
+                                      TextAttributes.defaultContentSubtitleTextAttributes(),
+                                      TextAttributes.defaultContentPlainTextAttributes(),
+                                      TextAttributes.defaultContentUnitTextAttributes());
     }
 
     /**
@@ -64,12 +64,12 @@ public record ContentAttributes(StateColors backgrounds,
      * @throws NullPointerException if the provided {@code background} object is {@code null}
      * @see StateColors#StateColors(Color, Color, Color, Color)
      */
-    public ContentAttributes withBackgrounds(StateColors backgrounds) {
-        return new ContentAttributes(Objects.requireNonNull(backgrounds, "Backgrounds cannot be null."),
-                                     this.titleAttributes,
-                                     this.subtitleAttributes,
-                                     this.plainAttributes,
-                                     this.unitAttributes);
+    public ContentPanelConfig withBackgrounds(StateColors backgrounds) {
+        return new ContentPanelConfig(Objects.requireNonNull(backgrounds, "Backgrounds cannot be null."),
+                                      this.titleAttributes,
+                                      this.subtitleAttributes,
+                                      this.plainAttributes,
+                                      this.unitAttributes);
     }
 
     /**
@@ -81,12 +81,12 @@ public record ContentAttributes(StateColors backgrounds,
      * @throws NullPointerException if the provided {@code titleTextAttributes} object is {@code null}
      * @see TextAttributes#TextAttributes(TextType, StateColors, Font, Padding)
      */
-    public ContentAttributes withTitleTextAttributes(TextAttributes titleTextAttributes) {
-        return new ContentAttributes(this.backgrounds,
-                                     Objects.requireNonNull(titleTextAttributes, "TitleTextAttributes cannot be null."),
-                                     this.subtitleAttributes,
-                                     this.plainAttributes,
-                                     this.unitAttributes);
+    public ContentPanelConfig withTitleTextAttributes(TextAttributes titleTextAttributes) {
+        return new ContentPanelConfig(this.backgrounds,
+                                      Objects.requireNonNull(titleTextAttributes, "TitleTextAttributes cannot be null."),
+                                      this.subtitleAttributes,
+                                      this.plainAttributes,
+                                      this.unitAttributes);
     }
 
     /**
@@ -98,12 +98,12 @@ public record ContentAttributes(StateColors backgrounds,
      * @throws NullPointerException if the provided {@code subtitleTextAttributes} object is {@code null}
      * @see TextAttributes#TextAttributes(TextType, StateColors, Font, Padding)
      */
-    public ContentAttributes withSubtitleTextAttributes(TextAttributes subtitleTextAttributes) {
-        return new ContentAttributes(this.backgrounds,
-                                     this.titleAttributes,
-                                     Objects.requireNonNull(subtitleTextAttributes, "SubtitleTextAttributes cannot be null."),
-                                     this.plainAttributes,
-                                     this.unitAttributes);
+    public ContentPanelConfig withSubtitleTextAttributes(TextAttributes subtitleTextAttributes) {
+        return new ContentPanelConfig(this.backgrounds,
+                                      this.titleAttributes,
+                                      Objects.requireNonNull(subtitleTextAttributes, "SubtitleTextAttributes cannot be null."),
+                                      this.plainAttributes,
+                                      this.unitAttributes);
     }
 
     /**
@@ -115,12 +115,12 @@ public record ContentAttributes(StateColors backgrounds,
      * @throws NullPointerException if the provided {@code plainTextAttribute} object is {@code null}
      * @see TextAttributes#TextAttributes(TextType, StateColors, Font, Padding)
      */
-    public ContentAttributes withPlainTextAttributes(TextAttributes plainTextAttribute) {
-        return new ContentAttributes(this.backgrounds,
-                                     this.titleAttributes,
-                                     this.subtitleAttributes,
-                                     Objects.requireNonNull(plainTextAttribute, "PlainTextAttribute cannot be null."),
-                                     this.unitAttributes);
+    public ContentPanelConfig withPlainTextAttributes(TextAttributes plainTextAttribute) {
+        return new ContentPanelConfig(this.backgrounds,
+                                      this.titleAttributes,
+                                      this.subtitleAttributes,
+                                      Objects.requireNonNull(plainTextAttribute, "PlainTextAttribute cannot be null."),
+                                      this.unitAttributes);
     }
 
     /**
@@ -132,12 +132,12 @@ public record ContentAttributes(StateColors backgrounds,
      * @throws NullPointerException if the provided {@code unitTextAttributes} object is {@code null}
      * @see TextAttributes#TextAttributes(TextType, StateColors, Font, Padding)
      */
-    public ContentAttributes withUnitTextAttributes(TextAttributes unitTextAttributes) {
-        return new ContentAttributes(this.backgrounds,
-                                     this.titleAttributes,
-                                     this.subtitleAttributes,
-                                     this.plainAttributes,
-                                     Objects.requireNonNull(unitTextAttributes, "UnitTextAttributes cannot be null."));
+    public ContentPanelConfig withUnitTextAttributes(TextAttributes unitTextAttributes) {
+        return new ContentPanelConfig(this.backgrounds,
+                                      this.titleAttributes,
+                                      this.subtitleAttributes,
+                                      this.plainAttributes,
+                                      Objects.requireNonNull(unitTextAttributes, "UnitTextAttributes cannot be null."));
     }
 
     /**
@@ -157,11 +157,11 @@ public record ContentAttributes(StateColors backgrounds,
      * @param textType  the type of the text, cannot be {@code null}
      * @param stateType the type of the card state, cannot be {@code null}
      * @return the foreground color that matches the specified {@code TextType} and {@code StateType}
-     * @throws NullPointerException     if any of the following parameters are {@code null}:
-     *                                  <ul>
-     *                                    <li>When the provided <code>textType</code> is <code>null</code></li>
-     *                                    <li>When the provided <code>stateType</code> object is <code>null</code></li>
-     *                                  </ul>
+     * @throws NullPointerException if any of the following parameters are {@code null}:
+     *                              <ul>
+     *                                <li>When the provided <code>textType</code> is <code>null</code></li>
+     *                                <li>When the provided <code>stateType</code> object is <code>null</code></li>
+     *                              </ul>
      */
     public Color foregroundByState(TextType textType, StateType stateType) {
         Objects.requireNonNull(textType, "TextType cannot be null.");

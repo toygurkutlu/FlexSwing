@@ -4,11 +4,11 @@ import io.github.toygurkutlu.flexswing.components.navigation_view.adapters.NavIt
 import io.github.toygurkutlu.flexswing.components.navigation_view.enums.TextPosition;
 import io.github.toygurkutlu.flexswing.components.navigation_view.listeners.NavItemListener;
 import io.github.toygurkutlu.flexswing.components.navigation_view.objects.NavItem;
-import io.github.toygurkutlu.flexswing.components.navigation_view.records.NavAttributes;
-import io.github.toygurkutlu.flexswing.components.navigation_view.records.NavItemAttributes;
+import io.github.toygurkutlu.flexswing.components.navigation_view.records.NavViewItemConfig;
+import io.github.toygurkutlu.flexswing.components.navigation_view.records.NavigationViewConfig;
 import io.github.toygurkutlu.flexswing.objects.FlexUtil;
 import io.github.toygurkutlu.flexswing.objects.Padding;
-import io.github.toygurkutlu.flexswing.records.ScrollAttributes;
+import io.github.toygurkutlu.flexswing.objects.ScrollAttributes;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -36,15 +36,15 @@ import java.util.Objects;
  * <p>For customizing the {@code NavigationView}, the developer should create custom {@code NavAttributes}.</p>
  *
  * @see NavItem
- * @see NavAttributes
+ * @see NavigationViewConfig
  */
 public class NavigationView extends JPanel {
 
     private JScrollPane sp;
     private final List<NavItem> items;
-    private final NavAttributes attr;
-    private final NavItemAttributes titleAttr;
-    private final NavItemAttributes subtitleAttr;
+    private final NavigationViewConfig attr;
+    private final NavViewItemConfig titleAttr;
+    private final NavViewItemConfig subtitleAttr;
     private JLabel iconLabel;
     private JPanel contentPanel;
     private Icon navLeft;
@@ -69,7 +69,7 @@ public class NavigationView extends JPanel {
      *                                <li>When the provided <code>attr</code> is <code>null</code></li>
      *                              </ul>
      */
-    public NavigationView(List<NavItem> items, NavAttributes attr) {
+    public NavigationView(List<NavItem> items, NavigationViewConfig attr) {
         super(new GridBagLayout());
         this.items = Objects.requireNonNull(items, "Items cannot be null.");
         this.attr = Objects.requireNonNull(attr, "NavAttributes cannot be null.");
@@ -233,7 +233,7 @@ public class NavigationView extends JPanel {
         gbc.gridx = 0;
         gbc.weighty = 1;
 
-        if(attr.isCollapseMechanismEnabled()) {
+        if (attr.isCollapseMechanismEnabled()) {
             gbc.gridy = 0;
             gbc.gridheight = GridBagConstraints.REMAINDER;
             gbc.anchor = GridBagConstraints.NORTH;
@@ -323,7 +323,7 @@ public class NavigationView extends JPanel {
 
             @Override
             protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
-                g.setColor(scrollAttr.trackColor());
+                g.setColor(scrollAttr.getTrackColor());
                 g.fillRect(trackBounds.x, trackBounds.y, trackBounds.width, trackBounds.height);
             }
 
@@ -348,12 +348,12 @@ public class NavigationView extends JPanel {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-                int radius = scrollAttr.thumbRadius();
+                int radius = scrollAttr.getThumbRadius();
 
                 if (isDragging || scrollbar.getValueIsAdjusting())
-                    g2.setColor(scrollAttr.thumbDragColor());
+                    g2.setColor(scrollAttr.getThumbDragColor());
                 else
-                    g2.setColor(scrollAttr.thumbColor());
+                    g2.setColor(scrollAttr.getThumbColor());
 
                 g2.fillRoundRect(thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, radius, radius);
                 g2.dispose();
@@ -465,11 +465,11 @@ public class NavigationView extends JPanel {
         repaint();
     }
 
-    public void disableVerticalScrollPane(){
+    public void disableVerticalScrollPane() {
         sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
     }
 
-    public void enableVerticalScrollPane(){
+    public void enableVerticalScrollPane() {
         sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
     }
 

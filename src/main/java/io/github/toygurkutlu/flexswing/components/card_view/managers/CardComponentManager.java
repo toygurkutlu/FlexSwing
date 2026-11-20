@@ -1,9 +1,9 @@
 package io.github.toygurkutlu.flexswing.components.card_view.managers;
 
 
+import io.github.toygurkutlu.flexswing.components.CardView;
 import io.github.toygurkutlu.flexswing.components.card_view.enums.TextType;
 import io.github.toygurkutlu.flexswing.components.card_view.records.ComponentBinder;
-import io.github.toygurkutlu.flexswing.components.CardView;
 
 import javax.swing.*;
 import java.util.ArrayList;

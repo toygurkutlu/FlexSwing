@@ -42,7 +42,7 @@ import java.util.Objects;
  * @see TextPosition
  * @see Padding
  */
-public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int verticalGap, int horizontalGap,
+public record NavViewItemConfig(TextPosition textPosition, int iconTextGap, int verticalGap, int horizontalGap,
                                 Color background, Color hoverBackground,
                                 Color selectedBackground, Color foreground, Color hoverForeground,
                                 Color selectedForeground, Font font, Padding padding) {
@@ -52,8 +52,8 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      *
      * @return the {@code NavItemAttributes} of the {@code NavigationView} title items
      */
-    public static NavItemAttributes defaultTitleAttributes() {
-        return new NavItemAttributes(TextPosition.RIGHT,
+    public static NavViewItemConfig defaultTitleAttributes() {
+        return new NavViewItemConfig(TextPosition.RIGHT,
                                      5,
                                      5,
                                      5,
@@ -72,8 +72,8 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      *
      * @return the {@code NavItemAttributes} of the {@code NavigationView} subtitle items
      */
-    public static NavItemAttributes defaultSubtitleAttributes() {
-        return new NavItemAttributes(TextPosition.RIGHT,
+    public static NavViewItemConfig defaultSubtitleAttributes() {
+        return new NavViewItemConfig(TextPosition.RIGHT,
                                      5,
                                      0,
                                      25,
@@ -94,8 +94,8 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      * @return a new {@code NavItemAttributes} instance with the updated text position
      * @throws NullPointerException if the provided {@code textPosition} is {@code null}
      */
-    public NavItemAttributes withTextPosition(TextPosition textPosition) {
-        return new NavItemAttributes(Objects.requireNonNull(textPosition, "TextPosition cannot be null."),
+    public NavViewItemConfig withTextPosition(TextPosition textPosition) {
+        return new NavViewItemConfig(Objects.requireNonNull(textPosition, "TextPosition cannot be null."),
                                      this.iconTextGap,
                                      this.verticalGap,
                                      this.horizontalGap,
@@ -116,9 +116,9 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      * @return a new {@code NavItemAttributes} instance with the updated icon text gap
      * @throws IllegalArgumentException if the provided {@code gap} is negative
      */
-    public NavItemAttributes withIconTextGap(int gap) {
+    public NavViewItemConfig withIconTextGap(int gap) {
         if (gap < 0) throw new IllegalArgumentException("Gap cannot be negative.");
-        return new NavItemAttributes(this.textPosition,
+        return new NavViewItemConfig(this.textPosition,
                                      gap,
                                      this.verticalGap,
                                      this.horizontalGap,
@@ -140,9 +140,9 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      * @return a new {@code NavItemAttributes} instance with the updated vertical gap
      * @throws IllegalArgumentException if the provided {@code gap} is negative
      */
-    public NavItemAttributes withVerticalGap(int gap) {
+    public NavViewItemConfig withVerticalGap(int gap) {
         if (gap < 0) throw new IllegalArgumentException("Gap cannot be negative.");
-        return new NavItemAttributes(this.textPosition,
+        return new NavViewItemConfig(this.textPosition,
                                      this.iconTextGap,
                                      gap,
                                      this.horizontalGap,
@@ -164,9 +164,9 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      * @return a new {@code NavItemAttributes} instance with the updated vertical gap
      * @throws IllegalArgumentException if the provided {@code gap} is negative
      */
-    public NavItemAttributes withHorizontalGap(int gap) {
+    public NavViewItemConfig withHorizontalGap(int gap) {
         if (gap < 0) throw new IllegalArgumentException("Gap cannot be negative.");
-        return new NavItemAttributes(this.textPosition,
+        return new NavViewItemConfig(this.textPosition,
                                      this.iconTextGap,
                                      this.verticalGap,
                                      gap,
@@ -187,8 +187,8 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      * @return a new {@code NavItemAttributes} instance with the updated background color
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
-    public NavItemAttributes withBackground(Color color) {
-        return new NavItemAttributes(this.textPosition,
+    public NavViewItemConfig withBackground(Color color) {
+        return new NavViewItemConfig(this.textPosition,
                                      this.iconTextGap,
                                      this.verticalGap,
                                      this.horizontalGap,
@@ -209,8 +209,8 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      * @return a new {@code NavItemAttributes} instance with the updated background color
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
-    public NavItemAttributes withHoverBackground(Color color) {
-        return new NavItemAttributes(this.textPosition,
+    public NavViewItemConfig withHoverBackground(Color color) {
+        return new NavViewItemConfig(this.textPosition,
                                      this.iconTextGap,
                                      this.verticalGap,
                                      this.horizontalGap,
@@ -231,8 +231,8 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      * @return a new {@code NavItemAttributes} instance with the updated background color
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
-    public NavItemAttributes withSelectedBackground(Color color) {
-        return new NavItemAttributes(this.textPosition,
+    public NavViewItemConfig withSelectedBackground(Color color) {
+        return new NavViewItemConfig(this.textPosition,
                                      this.iconTextGap,
                                      this.verticalGap,
                                      this.horizontalGap,
@@ -253,8 +253,8 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      * @return a new {@code NavItemAttributes} instance with the updated foreground color
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
-    public NavItemAttributes withForeground(Color color) {
-        return new NavItemAttributes(this.textPosition,
+    public NavViewItemConfig withForeground(Color color) {
+        return new NavViewItemConfig(this.textPosition,
                                      this.iconTextGap,
                                      this.verticalGap,
                                      this.horizontalGap,
@@ -275,8 +275,8 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      * @return a new {@code NavItemAttributes} instance with the updated foreground color
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
-    public NavItemAttributes withHoverForeground(Color color) {
-        return new NavItemAttributes(this.textPosition,
+    public NavViewItemConfig withHoverForeground(Color color) {
+        return new NavViewItemConfig(this.textPosition,
                                      this.iconTextGap,
                                      this.verticalGap,
                                      this.horizontalGap,
@@ -297,8 +297,8 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      * @return a new {@code NavItemAttributes} instance with the updated foreground color
      * @throws NullPointerException if the provided {@code color} is {@code null}
      */
-    public NavItemAttributes withSelectedForeground(Color color) {
-        return new NavItemAttributes(this.textPosition,
+    public NavViewItemConfig withSelectedForeground(Color color) {
+        return new NavViewItemConfig(this.textPosition,
                                      this.iconTextGap,
                                      this.verticalGap,
                                      this.horizontalGap,
@@ -319,8 +319,8 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      * @return a new {@code NavItemAttributes} instance with the updated font
      * @throws NullPointerException if the provided {@code font} is {@code null}
      */
-    public NavItemAttributes withFont(Font font) {
-        return new NavItemAttributes(this.textPosition,
+    public NavViewItemConfig withFont(Font font) {
+        return new NavViewItemConfig(this.textPosition,
                                      this.iconTextGap,
                                      this.verticalGap,
                                      this.horizontalGap,
@@ -342,8 +342,8 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      * @throws NullPointerException if the provided {@code padding} is {@code null}
      * @see #withPadding(int)
      */
-    public NavItemAttributes withPadding(Padding padding) {
-        return new NavItemAttributes(this.textPosition,
+    public NavViewItemConfig withPadding(Padding padding) {
+        return new NavViewItemConfig(this.textPosition,
                                      this.iconTextGap,
                                      this.verticalGap,
                                      this.horizontalGap,
@@ -365,9 +365,9 @@ public record NavItemAttributes(TextPosition textPosition, int iconTextGap, int 
      * @throws IllegalArgumentException if the provided {@code padding} is negative
      * @see #withPadding(Padding)
      */
-    public NavItemAttributes withPadding(int padding) {
+    public NavViewItemConfig withPadding(int padding) {
         if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative.");
-        return new NavItemAttributes(this.textPosition,
+        return new NavViewItemConfig(this.textPosition,
                                      this.iconTextGap,
                                      this.verticalGap,
                                      this.horizontalGap,
