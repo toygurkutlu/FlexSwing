@@ -2,6 +2,7 @@ package io.github.toygurkutlu.flexswing.components;
 
 
 import io.github.toygurkutlu.flexswing.components.button.ButtonAttribute;
+import io.github.toygurkutlu.flexswing.components.button.ButtonColors;
 import io.github.toygurkutlu.flexswing.components.button.ButtonConfig;
 import io.github.toygurkutlu.flexswing.objects.FlexUtil;
 import io.github.toygurkutlu.flexswing.objects.Padding;
@@ -227,6 +228,40 @@ public class FlexButton extends JButton {
         this.config = config;
         revalidate();
         repaint();
+    }
+
+    private void applyConfig() {
+        setFont(config.getFont());
+        setHorizontalTextPosition(config.getHorizontalTextPosition().getTextPosition());
+        setVerticalTextPosition(config.getVerticalTextPosition().getTextPosition());
+        setIconTextGap(config.getIconTextGap());
+
+        updateForeground();
+        updatePadding();
+
+        revalidate();
+        repaint();
+    }
+
+    private void updateForeground() {
+        ButtonModel model = getModel();
+        ButtonColors foregrounds = config.getForegrounds();
+
+        if (model.isPressed()) {
+            setForeground(foregrounds.getPressed());
+        } else if (model.isRollover()) {
+            setForeground(foregrounds.getHover());
+        } else {
+            setForeground(foregrounds.getMain());
+        }
+    }
+
+    @Override
+    public void updateUI() {
+        super.updateUI();
+        if (this.config != null) {
+            applyConfig();
+        }
     }
 
     @Override
@@ -468,10 +503,12 @@ public class FlexButton extends JButton {
      */
     public void setHoverIsEnabled(boolean isEnabled) {
         this.isHoverEnabled = isEnabled;
+        removeMouseListener(hoverAdapter);
         if (isEnabled) {
             addMouseListener(hoverAdapter);
         } else {
-            removeMouseListener(hoverAdapter);
+            updateForeground();
+            repaint();
         }
     }
 
@@ -955,7 +992,8 @@ public class FlexButton extends JButton {
     private final MouseAdapter hoverAdapter = new MouseAdapter() {
         @Override
         public void mouseEntered(MouseEvent e) {
-            setForeground(hoverForeground);
+            if (!isEnabled()) return;
+            updateForeground();
             background = hoverBackground;
             if (hasBorder) borderColor = hoverBorderColor;
             repaint();
@@ -963,7 +1001,7 @@ public class FlexButton extends JButton {
 
         @Override
         public void mouseExited(MouseEvent e) {
-            setForeground(foreground);
+            updateForeground();
             background = defaultBackground;
             if (hasBorder) borderColor = defaultBorderColor;
             repaint();
@@ -973,7 +1011,8 @@ public class FlexButton extends JButton {
     private final MouseAdapter pressedEffectAdapter = new MouseAdapter() {
         @Override
         public void mousePressed(MouseEvent e) {
-            setForeground(pressedForeground);
+            if (!isEnabled()) return;
+            updateForeground();
             background = pressedBackground;
             if (hasBorder) borderColor = pressedBorderColor;
             repaint();
@@ -981,7 +1020,7 @@ public class FlexButton extends JButton {
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            setForeground(foreground);
+            updateForeground();
             background = defaultBackground;
             if (hasBorder) borderColor = defaultBorderColor;
             repaint();

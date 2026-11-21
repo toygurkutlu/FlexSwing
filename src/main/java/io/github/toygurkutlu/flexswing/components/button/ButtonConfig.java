@@ -62,25 +62,37 @@ import java.util.Objects;
 public class ButtonConfig {
 
     /**
-     * Represents the background colors (main, hover and pressed) of the button.
+     * Represents the text font of the button.
      */
-    private ButtonColors bgs;
-    /**
-     * Represents whether the border is painted or not.
-     */
-    private boolean hasBorder;
-    /**
-     * Represents the border colors (main, hover and pressed) of the button.
-     */
-    private ButtonColors bcs;
+    private Font font;
     /**
      * Represents the foreground colors (main, hover and pressed) of the button.
      */
     private ButtonColors fgs;
     /**
-     * Represents the text font of the button.
+     * Represents the background colors (main, hover and pressed) of the button.
      */
-    private Font font;
+    private ButtonColors bgs;
+    /**
+     * Represents the border colors (main, hover and pressed) of the button.
+     */
+    private ButtonColors bcs;
+    /**
+     * Represents the thickness of the border.
+     */
+    private int borderThickness;
+    /**
+     * Represents whether the border is painted or not.
+     */
+    private boolean hasBorder;
+    /**
+     * Represents whether the hover effect is enabled or not.
+     */
+    private boolean isHoverEnabled;
+    /**
+     * Represents whether the pressed effect is enabled or not.
+     */
+    private boolean isPressedEnabled;
     /**
      * Represents the horizontal text position according to the icon.
      */
@@ -105,41 +117,299 @@ public class ButtonConfig {
     /**
      * Constructs a new configuration for the button.
      *
-     * @param hasBorder   {@code true} to paint the border of the button; {@code false} otherwise
-     * @param bgs         the {@code ButtonColors} object that contains the colors of the all 3 background states
-     *                    (main, hover and pressed); cannot be {@code null}
-     * @param bcs         the {@code ButtonColors} object that contains the colors of the all 3 border color states
-     *                    (main, hover and pressed); cannot be {@code null}
-     * @param fgs         the {@code ButtonColors} object that contains the colors of the all 3 foreground states
-     *                    (main, hover and pressed); cannot be {@code null}
-     * @param font        the font of the text; cannot be {@code null}
-     * @param htp         the horizontal position of the text; cannot be {@code null}
-     * @param vtp         the vertical position of the text; cannot be {@code null}
-     * @param iconTextGap the gap between the icon and the text; cannot be negative
-     * @param padding     the inner padding between the input area and the border button; cannot be {@code null}
-     * @param radii       the {@code Radii} object that represents the corners' radii; cannot be {@code null}
+     * @param bgs              the {@code ButtonColors} object that contains the colors of the all 3 background states
+     *                         (main, hover and pressed); cannot be {@code null}
+     * @param fgs              the {@code ButtonColors} object that contains the colors of the all 3 foreground states
+     *                         (main, hover and pressed); cannot be {@code null}
+     * @param font             the font of the text; cannot be {@code null}
+     * @param bcs              the {@code ButtonColors} object that contains the colors of the all 3 border color states
+     *                         (main, hover and pressed); cannot be {@code null}
+     * @param hasBorder        {@code true} to paint the border of the button; {@code false} otherwise
+     * @param isHoverEnabled   {@code true} to enable hover effect; {@code false} otherwise
+     * @param isPressedEnabled {@code true} to enable pressed effect; {@code false} otherwise
+     * @param htp              the horizontal position of the text; cannot be {@code null}
+     * @param vtp              the vertical position of the text; cannot be {@code null}
+     * @param iconTextGap      the gap between the icon and the text; cannot be negative
+     * @param padding          the inner padding between the input area and the border button; cannot be {@code null}
+     * @param radii            the {@code Radii} object that represents the corners' radii; cannot be {@code null}
      * @throws NullPointerException     if any of the provided parameters are {@code null}
-     * @throws IllegalArgumentException if the provided iconTextGap is negative
+     * @throws IllegalArgumentException if the provided negative value for borderThickness and/or iconTextGap
      * @see ButtonColors
      * @see HorizontalTextPosition
      * @see VerticalTextPosition
      * @see Padding
      * @see Radii
      */
-    public ButtonConfig(boolean hasBorder, @NotNull ButtonColors bgs, @NotNull ButtonColors bcs,
-                        @NotNull ButtonColors fgs, @NotNull Font font, @NotNull HorizontalTextPosition htp,
-                        @NotNull VerticalTextPosition vtp, int iconTextGap, @NotNull Padding padding,
-                        @NotNull Radii radii) {
-        this.bgs = Objects.requireNonNull(bgs, "Backgrounds cannot be null.");
-        this.hasBorder = hasBorder;
-        this.bcs = Objects.requireNonNull(bcs, "BorderColors cannot be null.");
-        this.fgs = Objects.requireNonNull(fgs, "Foregrounds cannot be null.");
+    public ButtonConfig(@NotNull Font font, @NotNull ButtonColors fgs, @NotNull ButtonColors bgs,
+                        @NotNull ButtonColors bcs, int borderThickness, boolean hasBorder, boolean isHoverEnabled,
+                        boolean isPressedEnabled, @NotNull HorizontalTextPosition htp, @NotNull VerticalTextPosition vtp,
+                        int iconTextGap, @NotNull Padding padding, @NotNull Radii radii) {
+        if (borderThickness < 0) throw new IllegalArgumentException("Border thickness cannot be negative.");
+        if (iconTextGap < 0) throw new IllegalArgumentException("IconTextGap cannot be negative.");
         this.font = Objects.requireNonNull(font, "Font cannot be null.");
-        this.htp = htp;
-        this.vtp = vtp;
+        this.fgs = Objects.requireNonNull(fgs, "Foregrounds cannot be null.");
+        this.bgs = Objects.requireNonNull(bgs, "Backgrounds cannot be null.");
+        this.bcs = Objects.requireNonNull(bcs, "BorderColors cannot be null.");
+        this.hasBorder = hasBorder;
+        this.isHoverEnabled = isHoverEnabled;
+        this.isPressedEnabled = isPressedEnabled;
+        this.htp = Objects.requireNonNull(htp, "HorizontalTextPosition cannot be null.");
+        this.vtp = Objects.requireNonNull(vtp, "VerticalTextPosition cannot be null.");
         this.iconTextGap = iconTextGap;
         this.padding = Objects.requireNonNull(padding, "Padding cannot be null.");
         this.radii = Objects.requireNonNull(radii, "Radii cannot be null.");
+    }
+
+    /**
+     * Gets the font of the button.
+     *
+     * @return the font of the button.
+     */
+    public Font getFont() {
+        return font;
+    }
+
+    /**
+     * Sets the font of the button.
+     *
+     * @param font the new font; cannot be {@code null}
+     * @throws NullPointerException if the provided font is {@code null}
+     */
+    public void setFont(Font font) {
+        this.font = Objects.requireNonNull(font, "Font cannot be null.");
+    }
+
+    /**
+     * Gets the foreground colors.
+     *
+     * @return {@code ButtonColors} instance for foreground colors
+     * @see ButtonColors
+     */
+    public ButtonColors getForegrounds() {
+        return fgs;
+    }
+
+    /**
+     * Sets the foreground colors according to the provided colors.
+     *
+     * @param fgs the new {@code ButtonColors} instance; cannot be {@code null}
+     * @throws NullPointerException if the provided bcs is {@code null}
+     * @apiNote Some foreground colors may be ignored under the following conditions:
+     * <ul>
+     *     <li>If the button is configured with hover disabled, the foreground hover color is ignored.</li>
+     *     <li>If the button is configured with pressed effect disabled, the foreground pressed color is ignored.</li>
+     * </ul>
+     * @see ButtonColors
+     * @see #isHoverEnabled()
+     * @see #setHoverEnabled(boolean)
+     * @see #isPressedEnabled()
+     * @see #setPressedEnabled(boolean)
+     */
+    public void setForegrounds(ButtonColors fgs) {
+        this.fgs = Objects.requireNonNull(fgs, "Foregrounds cannot be null.");
+    }
+
+    /**
+     * Sets the main foreground color according to the provided color.
+     *
+     * @param fgm the new main foreground color; cannot be {@code null}
+     * @throws NullPointerException if the provided fgm is {@code null}
+     */
+    public void setForegroundMain(Color fgm) {
+        this.fgs.setMain(Objects.requireNonNull(fgm, "Main foreground color cannot be null."));
+    }
+
+    /**
+     * Sets the hover foreground color according to the provided color.
+     *
+     * @param fgh the new hover foreground color; cannot be {@code null}
+     * @throws NullPointerException if the provided fgh is {@code null}
+     * @apiNote If the button configured with hover disabled, the foreground hover color is ignored.
+     * @see #isHoverEnabled()
+     * @see #setHoverEnabled(boolean)
+     */
+    public void setForegroundHover(Color fgh) {
+        this.fgs.setHover(Objects.requireNonNull(fgh, "Hover foreground color cannot be null."));
+    }
+
+    /**
+     * Sets the pressed foreground color according to the provided color.
+     *
+     * @param fgp the new pressed foreground color; cannot be {@code null}
+     * @throws NullPointerException if the provided fgp is {@code null}
+     * @apiNote If the button configured with pressed effect disabled, the foreground pressed color is ignored.
+     * @see #isPressedEnabled()
+     * @see #setPressedEnabled(boolean)
+     */
+    public void setForegroundPressed(Color fgp) {
+        this.fgs.setPressed(Objects.requireNonNull(fgp, "Pressed foreground color cannot be null."));
+    }
+
+    /**
+     * Gets the background colors.
+     *
+     * @return {@code ButtonColors} instance for background colors
+     * @see ButtonColors
+     */
+    public ButtonColors getBackgrounds() {
+        return bgs;
+    }
+
+    /**
+     * Sets the background colors according to the provided colors.
+     *
+     * @param bgs the new {@code ButtonColors} instance; cannot be {@code null}
+     * @throws NullPointerException if the provided bgs is {@code null}
+     * @apiNote Some background colors may be ignored under the following conditions:
+     * <ul>
+     *     <li>If the button is configured with hover disabled, the background hover color is ignored.</li>
+     *     <li>If the button is configured with pressed effect disabled, the background pressed color is ignored.</li>
+     * </ul>
+     * @see ButtonColors
+     * @see #isHoverEnabled()
+     * @see #setHoverEnabled(boolean)
+     * @see #isPressedEnabled()
+     * @see #setPressedEnabled(boolean)
+     */
+    public void setBackgrounds(ButtonColors bgs) {
+        this.bgs = Objects.requireNonNull(bgs, "Backgrounds cannot be null.");
+    }
+
+    /**
+     * Sets the main background color according to the provided color.
+     *
+     * @param bgm the new main background color; cannot be {@code null}
+     * @throws NullPointerException if the provided fgm is {@code null}
+     */
+    public void setBackgroundMain(Color bgm) {
+        this.bgs.setMain(Objects.requireNonNull(bgm, "Main background color cannot be null."));
+    }
+
+    /**
+     * Sets the hover background color according to the provided color.
+     *
+     * @param bgh the new hover background color; cannot be {@code null}
+     * @throws NullPointerException if the provided bgh is {@code null}
+     * @apiNote If the button configured with hover disabled, the background hover color is ignored.
+     * @see #isHoverEnabled()
+     * @see #setHoverEnabled(boolean)
+     */
+    public void setBackgroundHover(Color bgh) {
+        this.bgs.setHover(Objects.requireNonNull(bgh, "Hover background color cannot be null."));
+    }
+
+    /**
+     * Sets the pressed background color according to the provided color.
+     *
+     * @param bgp the new pressed background color; cannot be {@code null}
+     * @throws NullPointerException if the provided bgp is {@code null}
+     * @apiNote If the button configured with pressed effect disabled, the background pressed color is ignored.
+     * @see #isPressedEnabled()
+     * @see #setPressedEnabled
+     */
+    public void setBackgroundPressed(Color bgp) {
+        this.bgs.setPressed(Objects.requireNonNull(bgp, "Pressed background color cannot be null."));
+    }
+
+    /**
+     * Gets the border colors.
+     *
+     * @return {@code ButtonColors} instance for border colors
+     * @see ButtonColors
+     */
+    public ButtonColors getBorderColors() {
+        return bcs;
+    }
+
+    /**
+     * Sets the border colors according to the provided colors.
+     *
+     * @param bcs the new {@code ButtonColors} instance; cannot be {@code null}
+     * @throws NullPointerException if the provided bcs is {@code null}
+     * @apiNote Some or all border colors may be ignored under the following conditions:
+     * <ul>
+     *     <li>If the button is configured without a border, all border colors are ignored.</li>
+     *     <li>If the button is configured with hover disabled, the border hover color is ignored.</li>
+     *     <li>If the button is configured with pressed effect disabled, the border pressed color is ignored.</li>
+     * </ul>
+     * @see ButtonColors
+     * @see #isHasBorder()
+     * @see #setHasBorder(boolean)
+     * @see #isHoverEnabled()
+     * @see #setHoverEnabled(boolean)
+     * @see #isPressedEnabled()
+     * @see #setPressedEnabled(boolean)
+     */
+    public void setBorderColors(ButtonColors bcs) {
+        this.bcs = Objects.requireNonNull(bcs, "BorderColors cannot be null.");
+    }
+
+    /**
+     * Sets the main border color according to the provided color.
+     *
+     * @param bcm the new main border color; cannot be {@code null}
+     * @throws NullPointerException if the provided bcm is {@code null}
+     * @apiNote If the button configured without a border, the border color is ignored.
+     * @see #isHasBorder()
+     * @see #setHasBorder(boolean)
+     */
+    public void setBorderColorMain(Color bcm) {
+        this.bcs.setMain(Objects.requireNonNull(bcm, "Main border color cannot be null."));
+    }
+
+    /**
+     * Sets the hover border color according to the provided color.
+     *
+     * @param bch the new hover border color; cannot be {@code null}
+     * @throws NullPointerException if the provided bch is {@code null}
+     * @apiNote If the button configured without a border or configured with hover disabled,
+     * the border hover color is ignored.
+     * @see #isHasBorder()
+     * @see #setHasBorder(boolean)
+     * @see #isHoverEnabled()
+     * @see #setHoverEnabled(boolean)
+     */
+    public void setBorderColorHover(Color bch) {
+        this.bcs.setHover(Objects.requireNonNull(bch, "Hover border color cannot be null."));
+    }
+
+    /**
+     * Sets the pressed border color according to the provided color.
+     *
+     * @param bcp the new pressed border color; cannot be {@code null}
+     * @throws NullPointerException if the provided bcp is {@code null}
+     * @apiNote If the button configured without a border or configured with pressed effect disabled,
+     * the border pressed color is ignored.
+     * @see #isHasBorder()
+     * @see #setHasBorder(boolean)
+     * @see #isPressedEnabled()
+     * @see #setPressedEnabled(boolean)
+     */
+    public void setBorderColorPressed(Color bcp) {
+        this.bcs.setPressed(Objects.requireNonNull(bcp, "Pressed border color cannot be null."));
+    }
+
+    /**
+     * Gets the thickness of the button border.
+     *
+     * @return the thickness of the button border
+     */
+    public int getBorderThickness() {
+        return borderThickness;
+    }
+
+    /**
+     * Sets the thickness of the button border.
+     *
+     * @param borderThickness the new thickness; cannot be negative
+     * @throws IllegalArgumentException if the provided thickness is negative
+     * @apiNote If the button configured without a border, the border thickness is ignored.
+     * @see #isHasBorder()
+     * @see #setHasBorder(boolean)
+     */
+    public void setBorderThickness(int borderThickness) {
+        if (borderThickness < 0) throw new IllegalArgumentException("BorderThickness cannot be negative.");
+        this.borderThickness = borderThickness;
     }
 
     /**
@@ -161,177 +431,39 @@ public class ButtonConfig {
     }
 
     /**
-     * Gets the background colors.
+     * Gets whether the button hover is enabled or not.
      *
-     * @return {@code ButtonColors} instance for background colors
-     * @see ButtonColors
+     * @return {@code true} if the hover is enabled; {@code false} otherwise
      */
-    public ButtonColors getBackgrounds() {
-        return bgs;
+    public boolean isHoverEnabled() {
+        return isHoverEnabled;
     }
 
     /**
-     * Sets the background colors according to the provided colors.
+     * Sets whether the button hover is enabled or not.
      *
-     * @param bgs the new {@code ButtonColors} instance; cannot be {@code null}
-     * @throws NullPointerException if the provided bgs is {@code null}
-     * @see ButtonColors
+     * @param hoverEnabled {@code true} to enable hover; {@code false} otherwise
      */
-    public void setBackgrounds(ButtonColors bgs) {
-        this.bgs = Objects.requireNonNull(bgs, "Backgrounds cannot be null.");
+    public void setHoverEnabled(boolean hoverEnabled) {
+        isHoverEnabled = hoverEnabled;
     }
 
     /**
-     * Sets the main background color according to the provided color.
+     * Gets whether the button pressed effect is enabled or not.
      *
-     * @param bgm the new main background color; cannot be {@code null}
-     * @throws NullPointerException if the provided fgm is {@code null}
+     * @return {@code true} if the pressed effect is enabled; {@code false} otherwise
      */
-    public void setBackgroundMain(Color bgm) {
-        this.bgs.setMain(Objects.requireNonNull(bgm, "Main background color cannot be null."));
+    public boolean isPressedEnabled() {
+        return isPressedEnabled;
     }
 
     /**
-     * Sets the hover background color according to the provided color.
+     * Sets whether the button hover is enabled or not.
      *
-     * @param bgh the new hover background color; cannot be {@code null}
-     * @throws NullPointerException if the provided bgh is {@code null}
+     * @param pressedEnabled {@code true} to enable pressed effect; {@code false} otherwise
      */
-    public void setBackgroundHover(Color bgh) {
-        this.bgs.setHover(Objects.requireNonNull(bgh, "Hover background color cannot be null."));
-    }
-
-    /**
-     * Sets the pressed background color according to the provided color.
-     *
-     * @param bgp the new pressed background color; cannot be {@code null}
-     * @throws NullPointerException if the provided bgp is {@code null}
-     */
-    public void setBackgroundPressed(Color bgp) {
-        this.bgs.setPressed(Objects.requireNonNull(bgp, "Pressed background color cannot be null."));
-    }
-
-
-    /**
-     * Gets the border colors.
-     *
-     * @return {@code ButtonColors} instance for border colors
-     * @see ButtonColors
-     */
-    public ButtonColors getBorderColors() {
-        return bcs;
-    }
-
-    /**
-     * Sets the border colors according to the provided colors.
-     *
-     * @param bcs the new {@code ButtonColors} instance; cannot be {@code null}
-     * @throws NullPointerException if the provided bcs is {@code null}
-     * @see ButtonColors
-     */
-    public void setBorderColors(ButtonColors bcs) {
-        this.bcs = Objects.requireNonNull(bcs, "BorderColors cannot be null.");
-    }
-
-
-    /**
-     * Sets the main border color according to the provided color.
-     *
-     * @param bcm the new main border color; cannot be {@code null}
-     * @throws NullPointerException if the provided bcm is {@code null}
-     */
-    public void setBorderColorMain(Color bcm) {
-        this.bcs.setMain(Objects.requireNonNull(bcm, "Main border color cannot be null."));
-    }
-
-    /**
-     * Sets the hover border color according to the provided color.
-     *
-     * @param bch the new hover border color; cannot be {@code null}
-     * @throws NullPointerException if the provided bch is {@code null}
-     */
-    public void setBorderColorHover(Color bch) {
-        this.bcs.setHover(Objects.requireNonNull(bch, "Hover border color cannot be null."));
-    }
-
-    /**
-     * Sets the pressed border color according to the provided color.
-     *
-     * @param bcp the new pressed border color; cannot be {@code null}
-     * @throws NullPointerException if the provided bcp is {@code null}
-     */
-    public void setBorderColorPressed(Color bcp) {
-        this.bcs.setPressed(Objects.requireNonNull(bcp, "Pressed border color cannot be null."));
-    }
-
-    /**
-     * Gets the foreground colors.
-     *
-     * @return {@code ButtonColors} instance for foreground colors
-     * @see ButtonColors
-     */
-    public ButtonColors getForegrounds() {
-        return fgs;
-    }
-
-    /**
-     * Sets the foreground colors according to the provided colors.
-     *
-     * @param fgs the new {@code ButtonColors} instance; cannot be {@code null}
-     * @throws NullPointerException if the provided bcs is {@code null}
-     * @see ButtonColors
-     */
-    public void setForegrounds(ButtonColors fgs) {
-        this.fgs = Objects.requireNonNull(fgs, "Foregrounds cannot be null.");
-    }
-
-    /**
-     * Sets the main foreground color according to the provided color.
-     *
-     * @param fgm the new main foreground color; cannot be {@code null}
-     * @throws NullPointerException if the provided fgm is {@code null}
-     */
-    public void setForegroundMain(Color fgm) {
-        this.fgs.setMain(Objects.requireNonNull(fgm, "Main foreground color cannot be null."));
-    }
-
-    /**
-     * Sets the hover foreground color according to the provided color.
-     *
-     * @param fgh the new hover foreground color; cannot be {@code null}
-     * @throws NullPointerException if the provided fgh is {@code null}
-     */
-    public void setForegroundHover(Color fgh) {
-        this.fgs.setHover(Objects.requireNonNull(fgh, "Hover foreground color cannot be null."));
-    }
-
-    /**
-     * Sets the pressed foreground color according to the provided color.
-     *
-     * @param fgp the new pressed foreground color; cannot be {@code null}
-     * @throws NullPointerException if the provided fgp is {@code null}
-     */
-    public void setForegroundPressed(Color fgp) {
-        this.fgs.setPressed(Objects.requireNonNull(fgp, "Pressed foreground color cannot be null."));
-    }
-
-    /**
-     * Gets the font of the button.
-     *
-     * @return the font of the button.
-     */
-    public Font getFont() {
-        return font;
-    }
-
-    /**
-     * Sets the font of the button.
-     *
-     * @param font the new font; cannot be {@code null}
-     * @throws NullPointerException if the provided font is {@code null}
-     */
-    public void setFont(Font font) {
-        this.font = Objects.requireNonNull(font, "Font cannot be null.");
+    public void setPressedEnabled(boolean pressedEnabled) {
+        isPressedEnabled = pressedEnabled;
     }
 
     /**
@@ -657,174 +789,25 @@ public class ButtonConfig {
      * or modify them afterward using the setter methods of this class.
      */
     public static ButtonConfig defaultConfig() {
-        ButtonColors backgrounds = new ButtonColors(new Color(25, 25, 25),
-                                                    new Color(75, 75, 75),
-                                                    new Color(155, 155, 155));
-        ButtonColors borderColors = new ButtonColors(new Color(25, 25, 25),
-                                                     new Color(75, 75, 75),
-                                                     new Color(155, 155, 155));
-        ButtonColors foregrounds = new ButtonColors(new Color(255, 255, 255),
-                                                    new Color(25, 25, 25),
-                                                    new Color(0, 0, 0));
-        Font font = new Font("Dialog", Font.BOLD, 12);
+        Font font = new Font("Dialog", Font.PLAIN, 14);
 
-        return new ButtonConfig(true, ButtonColors.defaultBackgrounds(), ButtonColors.defaultBorderColors(),
-                                ButtonColors.defaultForegrounds(), font, HorizontalTextPosition.RIGHT,
-                                VerticalTextPosition.CENTER, 0,
-                                new Padding(5, 10, 5, 10),
+        return new ButtonConfig(font, ButtonColors.defaultForegrounds(), ButtonColors.defaultBackgrounds(),
+                                ButtonColors.defaultBorderColors(), 1, true, true,
+                                true, HorizontalTextPosition.RIGHT, VerticalTextPosition.CENTER,
+                                0, new Padding(5, 10, 5, 10),
                                 new Radii(15, 15, 15, 15));
     }
 
     /**
-     * Creates a copy of this {@code ButtonConfig} with the specified background colors.
+     * Creates a copy of this {@code ButtonConfig} with the new text font.
      *
-     * @param bgs the new background colors; cannot be {@code null}
-     * @return a new {@code ButtonConfig} instance with the updated background colors
-     * @throws NullPointerException if {@code bgs} is {@code null}
-     * @see ButtonColors
-     * @see #withBackgroundMain(Color)
-     * @see #withBackgroundHover(Color)
-     * @see #withBackgroundPressed(Color)
+     * @param font the new font; cannot be {@code null}
+     * @throws NullPointerException if the provided font is {@code null}
      */
-    public ButtonConfig withBackgrounds(ButtonColors bgs) {
-        return new ButtonConfig(this.hasBorder, Objects.requireNonNull(bgs, "Backgrounds cannot be null."),
-                                this.bcs, this.fgs, this.font, this.htp, this.vtp, this.iconTextGap,
-                                this.padding, this.radii);
-    }
-
-    /**
-     * Creates a copy of this {@code ButtonConfig} with the specified main background color.
-     *
-     * @param bgm the new background color; cannot be {@code null}
-     * @return a new {@code ButtonConfig} instance with the updated main background color
-     * @throws NullPointerException if {@code bgm} is {@code null}
-     * @apiNote Useful for changing only the main background color. To change all background colors at once,
-     * use {@link #withBackgrounds(ButtonColors)} instead.
-     * @see ButtonColors
-     * @see #withBackgrounds(ButtonColors)
-     * @see #withBackgroundHover(Color)
-     * @see #withBackgroundPressed(Color)
-     */
-    public ButtonConfig withBackgroundMain(Color bgm) {
-        return withBackgrounds(this.bgs.withMain(Objects.requireNonNull(bgm, "BackgroundMain cannot be null.")));
-    }
-
-    /**
-     * Creates a copy of this {@code ButtonConfig} with the specified hover background color.
-     *
-     * @param bgh the new background color when hovered; cannot be {@code null}
-     * @return a new {@code ButtonConfig} instance with the updated hover background color
-     * @throws NullPointerException if {@code bgh} is {@code null}
-     * @apiNote Useful for changing only the hover background color. To change all background colors at once,
-     * use {@link #withBackgrounds(ButtonColors)} instead.
-     * @see ButtonColors
-     * @see #withBackgrounds(ButtonColors)
-     * @see #withBackgroundMain(Color)
-     * @see #withBackgroundPressed(Color)
-     */
-    public ButtonConfig withBackgroundHover(Color bgh) {
-        return withBackgrounds(this.bgs.withHover(Objects.requireNonNull(bgh, "BackgroundHover cannot be null.")));
-    }
-
-    /**
-     * Creates a copy of this {@code ButtonConfig} with the specified pressed background color.
-     *
-     * @param bgp the new background color when pressed; cannot be {@code null}
-     * @return a new {@code ButtonConfig} instance with the updated pressed background color
-     * @throws NullPointerException if {@code bgp} is {@code null}
-     * @apiNote Useful for changing only the pressed background color. To change all background colors at once,
-     * use {@link #withBackgrounds(ButtonColors)} instead.
-     * @see ButtonColors
-     * @see #withBackgrounds(ButtonColors)
-     * @see #withBackgroundMain(Color)
-     * @see #withBackgroundHover(Color)
-     */
-    public ButtonConfig withBackgroundPressed(Color bgp) {
-        return withBackgrounds(this.bgs.withPressed(Objects.requireNonNull(bgp, "BackgroundPressed cannot be null.")));
-    }
-
-    /**
-     * Creates a copy of this {@code ButtonConfig} with the specified button border config.
-     *
-     * @param hasBorder {@code true} to paint the border of the button; {@code false} otherwise
-     * @return a new {@code ButtonConfig} instance with the updated border config
-     */
-    public ButtonConfig withHasBorder(boolean hasBorder) {
-        return new ButtonConfig(hasBorder, this.bgs, this.bcs, this.fgs, this.font, this.htp, this.vtp,
-                                this.iconTextGap, this.padding, this.radii);
-    }
-
-    /**
-     * Creates a copy of this {@code ButtonConfig} with the specified border colors.
-     *
-     * @param bcs the new border colors; cannot be {@code null}
-     * @return a new {@code ButtonConfig} instance with the updated border colors
-     * @throws NullPointerException if {@code bcs} is {@code null}
-     * @apiNote If {@link ButtonAttribute#HAS_BORDER} is {@code false}, the border is not drawn and
-     * these colors are ignored.
-     * @see ButtonColors
-     * @see #withBorderColorMain(Color)
-     * @see #withBorderColorHover(Color)
-     * @see #withBorderColorPressed(Color)
-     */
-    public ButtonConfig withBorderColors(ButtonColors bcs) {
-        return new ButtonConfig(this.hasBorder, this.bgs,
-                                Objects.requireNonNull(bcs, "BorderColors cannot be null."), this.fgs,
-                                this.font, this.htp, this.vtp, this.iconTextGap, this.padding, this.radii);
-    }
-
-    /**
-     * Creates a copy of this {@code ButtonConfig} with the specified main border color.
-     *
-     * @param bcm the new border color; cannot be {@code null}
-     * @return a new {@code ButtonConfig} instance with the updated main border color
-     * @throws NullPointerException if {@code bcm} is {@code null}
-     * @apiNote Useful for changing only the main border color. To change all border colors at once,
-     * use {@link #withBorderColors(ButtonColors)} instead. Note that if {@link ButtonAttribute#HAS_BORDER}
-     * is {@code false}, the border is not drawn and this color is ignored.
-     * @see ButtonColors
-     * @see #withBorderColors(ButtonColors)
-     * @see #withBorderColorHover(Color)
-     * @see #withBorderColorPressed(Color)
-     */
-    public ButtonConfig withBorderColorMain(Color bcm) {
-        return withBorderColors(this.bgs.withMain(Objects.requireNonNull(bcm, "BorderColorMain cannot be null.")));
-    }
-
-    /**
-     * Creates a copy of this {@code ButtonConfig} with the specified hover border color.
-     *
-     * @param bch the new border color when hovered; cannot be {@code null}
-     * @return a new {@code ButtonConfig} instance with the updated hover border color
-     * @throws NullPointerException if {@code bch} is {@code null}
-     * @apiNote Useful for changing only the hover border color. To change all border colors at once,
-     * use {@link #withBorderColors(ButtonColors)} instead. Note that if {@link ButtonAttribute#HAS_BORDER}
-     * is {@code false}, the border is not drawn and this color is ignored.
-     * @see ButtonColors
-     * @see #withBorderColors(ButtonColors)
-     * @see #withBorderColorMain(Color)
-     * @see #withBorderColorPressed(Color)
-     */
-    public ButtonConfig withBorderColorHover(Color bch) {
-        return withBorderColors(this.bcs.withHover(Objects.requireNonNull(bch, "BorderColorHover cannot be null.")));
-    }
-
-    /**
-     * Creates a copy of this {@code ButtonConfig} with the specified pressed border color.
-     *
-     * @param bcp the new border color when pressed; cannot be {@code null}
-     * @return a new {@code ButtonConfig} instance with the updated pressed border color
-     * @throws NullPointerException if {@code bcp} is {@code null}
-     * @apiNote Useful for changing only the pressed border color. To change all border colors at once,
-     * use {@link #withBorderColors(ButtonColors)} instead. Note that if {@link ButtonAttribute#HAS_BORDER}
-     * is {@code false}, the border is not drawn and this color is ignored.
-     * @see ButtonColors
-     * @see #withBorderColors(ButtonColors)
-     * @see #withBorderColorMain(Color)
-     * @see #withBorderColorHover(Color)
-     */
-    public ButtonConfig withBorderColorPressed(Color bcp) {
-        return withBorderColors(this.bcs.withPressed(Objects.requireNonNull(bcp, "borderColorPressed cannot be null.")));
+    public ButtonConfig withFont(Font font) {
+        return new ButtonConfig(Objects.requireNonNull(font, "Font cannot be null."), this.fgs, this.bgs,
+                                this.bcs, this.borderThickness, this.hasBorder, this.isHoverEnabled,
+                                this.isPressedEnabled, this.htp, this.vtp, this.iconTextGap, this.padding, this.radii);
     }
 
     /**
@@ -833,15 +816,24 @@ public class ButtonConfig {
      * @param fgs the new foreground colors; cannot be {@code null}
      * @return a new {@code ButtonConfig} instance with the updated foreground colors
      * @throws NullPointerException if {@code fgs} is {@code null}
+     * @apiNote Some foreground colors may be ignored under the following conditions:
+     * <ul>
+     *     <li>If the button is configured with hover disabled, the foreground hover color is ignored.</li>
+     *     <li>If the button is configured with pressed effect disabled, the foreground pressed color is ignored.</li>
+     * </ul>
      * @see ButtonColors
      * @see #withForegroundMain(Color)
      * @see #withForegroundHover(Color)
      * @see #withForegroundPressed(Color)
+     * @see #isHoverEnabled()
+     * @see #setHoverEnabled(boolean)
+     * @see #isPressedEnabled()
+     * @see #setPressedEnabled(boolean)
      */
     public ButtonConfig withForegrounds(ButtonColors fgs) {
-        return new ButtonConfig(this.hasBorder, this.bgs, this.bcs,
-                                Objects.requireNonNull(fgs, "Foregrounds cannot be null."), this.font,
-                                this.htp, this.vtp, this.iconTextGap, this.padding, this.radii);
+        return new ButtonConfig(this.font, Objects.requireNonNull(fgs, "Foregrounds cannot be null."),
+                                this.bgs, this.bcs, this.borderThickness, this.hasBorder, this.isHoverEnabled,
+                                this.isPressedEnabled, this.htp, this.vtp, this.iconTextGap, this.padding, this.radii);
     }
 
     /**
@@ -868,11 +860,14 @@ public class ButtonConfig {
      * @return a new {@code ButtonConfig} instance with the updated hover foreground color
      * @throws NullPointerException if {@code fgh} is {@code null}
      * @apiNote Useful for changing only the hover foreground color. To change all foreground colors at once,
-     * use {@link #withForegrounds(ButtonColors)} instead.
+     * use {@link #withForegrounds(ButtonColors)} instead. Note that if the button configured with hover
+     * disabled, the foreground hover color is ignored.
      * @see ButtonColors
      * @see #withForegrounds(ButtonColors)
      * @see #withForegroundMain(Color)
      * @see #withForegroundPressed(Color)
+     * @see #isHoverEnabled()
+     * @see #setHoverEnabled(boolean)
      */
     public ButtonConfig withForegroundHover(Color fgh) {
         return withForegrounds(this.fgs.withHover(Objects.requireNonNull(fgh, "ForegroundHover cannot be null.")));
@@ -885,38 +880,264 @@ public class ButtonConfig {
      * @return a new {@code ButtonConfig} instance with the updated pressed foreground color
      * @throws NullPointerException if {@code fgp} is {@code null}
      * @apiNote Useful for changing only the pressed foreground color. To change all foreground colors at once,
-     * use {@link #withForegrounds(ButtonColors)} instead.
+     * use {@link #withForegrounds(ButtonColors)} instead. Note that if the button configured with pressed effect
+     * disabled, the foreground pressed color is ignored.
      * @see ButtonColors
      * @see #withForegrounds(ButtonColors)
      * @see #withForegroundMain(Color)
      * @see #withForegroundHover(Color)
+     * @see #isPressedEnabled()
+     * @see #setPressedEnabled(boolean)
      */
     public ButtonConfig withForegroundPressed(Color fgp) {
         return withForegrounds(this.fgs.withPressed(Objects.requireNonNull(fgp, "ForegroundPressed cannot be null.")));
     }
 
     /**
-     * Creates a copy of this {@code ButtonConfig} with the new text font.
+     * Creates a copy of this {@code ButtonConfig} with the specified background colors.
      *
-     * @param font the new font; cannot be {@code null}
-     * @throws NullPointerException if the provided font is {@code null}
+     * @param bgs the new background colors; cannot be {@code null}
+     * @return a new {@code ButtonConfig} instance with the updated background colors
+     * @throws NullPointerException if {@code bgs} is {@code null}
+     * @apiNote Some background colors may be ignored under the following conditions:
+     * <ul>
+     *     <li>If the button is configured with hover disabled, the background hover color is ignored.</li>
+     *     <li>If the button is configured with pressed effect disabled, the background pressed color is ignored.</li>
+     * </ul>
+     * @see ButtonColors
+     * @see #withBackgroundMain(Color)
+     * @see #withBackgroundHover(Color)
+     * @see #withBackgroundPressed(Color)
+     * @see #isHoverEnabled()
+     * @see #setHoverEnabled(boolean)
+     * @see #isPressedEnabled()
+     * @see #setPressedEnabled(boolean)
      */
-    public ButtonConfig withFont(Font font) {
-        return new ButtonConfig(this.hasBorder, this.bgs, this.bcs, this.fgs,
-                                Objects.requireNonNull(font, "Font cannot be null."), this.htp,
-                                this.vtp, this.iconTextGap, this.padding, this.radii);
+    public ButtonConfig withBackgrounds(ButtonColors bgs) {
+        return new ButtonConfig(this.font, this.fgs, Objects.requireNonNull(bgs, "Backgrounds cannot be null."),
+                                this.bcs, this.borderThickness, this.hasBorder, this.isHoverEnabled, this.isPressedEnabled,
+                                this.htp, this.vtp, this.iconTextGap, this.padding, this.radii);
     }
 
     /**
-     * Creates a copy of this {@code ButtonConfig} with the new horizontal position of the text relative to the icon.
+     * Creates a copy of this {@code ButtonConfig} with the specified main background color.
+     *
+     * @param bgm the new background color; cannot be {@code null}
+     * @return a new {@code ButtonConfig} instance with the updated main background color
+     * @throws NullPointerException if {@code bgm} is {@code null}
+     * @apiNote Useful for changing only the main background color. To change all background colors at once,
+     * use {@link #withBackgrounds(ButtonColors)} instead.
+     * @see ButtonColors
+     * @see #withBackgrounds(ButtonColors)
+     * @see #withBackgroundHover(Color)
+     * @see #withBackgroundPressed(Color)
+     */
+    public ButtonConfig withBackgroundMain(Color bgm) {
+        return withBackgrounds(this.bgs.withMain(Objects.requireNonNull(bgm, "BackgroundMain cannot be null.")));
+    }
+
+    /**
+     * Creates a copy of this {@code ButtonConfig} with the specified hover background color.
+     *
+     * @param bgh the new background color when hovered; cannot be {@code null}
+     * @return a new {@code ButtonConfig} instance with the updated hover background color
+     * @throws NullPointerException if {@code bgh} is {@code null}
+     * @apiNote Useful for changing only the hover background color. To change all background colors at once,
+     * use {@link #withBackgrounds(ButtonColors)} instead. Note that if the button configured with hover
+     * disabled, the background hover color is ignored.
+     * @see ButtonColors
+     * @see #withBackgrounds(ButtonColors)
+     * @see #withBackgroundMain(Color)
+     * @see #withBackgroundPressed(Color)
+     * @see #isHoverEnabled()
+     * @see #setHoverEnabled(boolean)
+     */
+    public ButtonConfig withBackgroundHover(Color bgh) {
+        return withBackgrounds(this.bgs.withHover(Objects.requireNonNull(bgh, "BackgroundHover cannot be null.")));
+    }
+
+    /**
+     * Creates a copy of this {@code ButtonConfig} with the specified pressed background color.
+     *
+     * @param bgp the new background color when pressed; cannot be {@code null}
+     * @return a new {@code ButtonConfig} instance with the updated pressed background color
+     * @throws NullPointerException if {@code bgp} is {@code null}
+     * @apiNote Useful for changing only the pressed background color. To change all background colors at once,
+     * use {@link #withBackgrounds(ButtonColors)} instead. Note that if the button configured with pressed effect
+     * disabled, the background pressed color is ignored.
+     * @see ButtonColors
+     * @see #withBackgrounds(ButtonColors)
+     * @see #withBackgroundMain(Color)
+     * @see #withBackgroundHover(Color)
+     * @see #isPressedEnabled()
+     * @see #setPressedEnabled(boolean)
+     */
+    public ButtonConfig withBackgroundPressed(Color bgp) {
+        return withBackgrounds(this.bgs.withPressed(Objects.requireNonNull(bgp, "BackgroundPressed cannot be null.")));
+    }
+
+    /**
+     * Creates a copy of this {@code ButtonConfig} with the specified border colors.
+     *
+     * @param bcs the new border colors; cannot be {@code null}
+     * @return a new {@code ButtonConfig} instance with the updated border colors
+     * @throws NullPointerException if {@code bcs} is {@code null}
+     * @apiNote Some or all border colors may be ignored under the following conditions:
+     * <ul>
+     *     <li>If the button is configured without a border, all border colors are ignored.</li>
+     *     <li>If the button is configured with hover disabled, the border hover color is ignored.</li>
+     *     <li>If the button is configured with pressed effect disabled, the border pressed color is ignored.</li>
+     * </ul>
+     * @see ButtonColors
+     * @see #withBorderColorMain(Color)
+     * @see #withBorderColorHover(Color)
+     * @see #withBorderColorPressed(Color)
+     * @see #isHasBorder()
+     * @see #setHasBorder(boolean)
+     * @see #isHoverEnabled()
+     * @see #setHoverEnabled(boolean)
+     * @see #isPressedEnabled()
+     * @see #setPressedEnabled(boolean)
+     */
+    public ButtonConfig withBorderColors(ButtonColors bcs) {
+        return new ButtonConfig(this.font, this.fgs, this.bgs, Objects.requireNonNull(bcs, "BorderColors cannot be null."),
+                                this.borderThickness, this.hasBorder, this.isHoverEnabled, this.isPressedEnabled,
+                                this.htp, this.vtp, this.iconTextGap, this.padding, this.radii);
+    }
+
+    /**
+     * Creates a copy of this {@code ButtonConfig} with the specified main border color.
+     *
+     * @param bcm the new border color; cannot be {@code null}
+     * @return a new {@code ButtonConfig} instance with the updated main border color
+     * @throws NullPointerException if {@code bcm} is {@code null}
+     * @apiNote Useful for changing only the main border color. To change all border colors at once,
+     * use {@link #withBorderColors(ButtonColors)} instead. Note that if the button configured without
+     * a border, the border color is ignored.
+     * @see ButtonColors
+     * @see #withBorderColors(ButtonColors)
+     * @see #withBorderColorHover(Color)
+     * @see #withBorderColorPressed(Color)
+     * @see #isHasBorder()
+     * @see #setHasBorder(boolean)
+     */
+    public ButtonConfig withBorderColorMain(Color bcm) {
+        return withBorderColors(this.bgs.withMain(Objects.requireNonNull(bcm, "BorderColorMain cannot be null.")));
+    }
+
+    /**
+     * Creates a copy of this {@code ButtonConfig} with the specified hover border color.
+     *
+     * @param bch the new border color when hovered; cannot be {@code null}
+     * @return a new {@code ButtonConfig} instance with the updated hover border color
+     * @throws NullPointerException if {@code bch} is {@code null}
+     * @apiNote Useful for changing only the hover border color. To change all border colors at once,
+     * use {@link #withBorderColors(ButtonColors)} instead. Note that if the button configured without a border or
+     * configured with hover disabled, the border hover color is ignored.
+     * @see ButtonColors
+     * @see #withBorderColors(ButtonColors)
+     * @see #withBorderColorMain(Color)
+     * @see #withBorderColorPressed(Color)
+     * @see #isHasBorder()
+     * @see #setHasBorder(boolean)
+     * @see #isHoverEnabled()
+     * @see #setHoverEnabled(boolean)
+     */
+    public ButtonConfig withBorderColorHover(Color bch) {
+        return withBorderColors(this.bcs.withHover(Objects.requireNonNull(bch, "BorderColorHover cannot be null.")));
+    }
+
+    /**
+     * Creates a copy of this {@code ButtonConfig} with the specified pressed border color.
+     *
+     * @param bcp the new border color when pressed; cannot be {@code null}
+     * @return a new {@code ButtonConfig} instance with the updated pressed border color
+     * @throws NullPointerException if {@code bcp} is {@code null}
+     * @apiNote Useful for changing only the pressed border color. To change all border colors at once,
+     * use {@link #withBorderColors(ButtonColors)} instead. Note that if the button configured without a border or
+     * configured with pressed effect disabled, the border pressed color is ignored.
+     * @see ButtonColors
+     * @see #withBorderColors(ButtonColors)
+     * @see #withBorderColorMain(Color)
+     * @see #withBorderColorHover(Color)
+     * @see #isHasBorder()
+     * @see #setHasBorder(boolean)
+     * @see #isPressedEnabled()
+     * @see #setPressedEnabled(boolean)
+     */
+    public ButtonConfig withBorderColorPressed(Color bcp) {
+        return withBorderColors(this.bcs.withPressed(Objects.requireNonNull(bcp, "borderColorPressed cannot be null.")));
+    }
+
+    /**
+     * Creates a copy of this {@code ButtonConfig} with the specified thickness of the button border.
+     *
+     * @param borderThickness the new border thickness; cannot be negative
+     * @return a new {@code ButtonConfig} instance with the updated border thickness
+     * @throws IllegalArgumentException if {@code borderThickness} is negative
+     * @apiNote If the button configured without a border, the border thickness is ignored.
+     * @see ButtonColors
+     * @see #withBorderColors(ButtonColors)
+     * @see #withBorderColorMain(Color)
+     * @see #withBorderColorHover(Color)
+     * @see #isHasBorder()
+     * @see #setHasBorder(boolean)
+     */
+    public ButtonConfig withBorderThickness(int borderThickness) {
+        if (borderThickness < 0) throw new IllegalArgumentException("BorderThickness cannot be negative.");
+        return new ButtonConfig(this.font, this.fgs, this.bgs, this.bcs, borderThickness, this.hasBorder,
+                                this.isHoverEnabled, this.isPressedEnabled, this.htp, this.vtp, this.iconTextGap,
+                                this.padding, this.radii);
+    }
+
+    /**
+     * Creates a copy of this {@code ButtonConfig} with the specified button border config.
+     *
+     * @param hasBorder {@code true} to paint the border of the button; {@code false} otherwise
+     * @return a new {@code ButtonConfig} instance with the updated border config
+     */
+    public ButtonConfig withHasBorder(boolean hasBorder) {
+        return new ButtonConfig(this.font, this.fgs, this.bgs, this.bcs, this.borderThickness, hasBorder,
+                                this.isHoverEnabled, this.isPressedEnabled, this.htp, this.vtp, this.iconTextGap,
+                                this.padding, this.radii);
+    }
+
+    /**
+     * Creates a copy of this {@code ButtonConfig} with the specified button hover config.
+     *
+     * @param isHoverEnabled {@code true} to enable hover; {@code false} otherwise
+     * @return a new {@code ButtonConfig} instance with the updated hover config
+     */
+    public ButtonConfig withIsHoverEnabled(boolean isHoverEnabled) {
+        return new ButtonConfig(this.font, this.fgs, this.bgs, this.bcs, this.borderThickness, this.hasBorder,
+                                isHoverEnabled, this.isPressedEnabled, this.htp, this.vtp, this.iconTextGap,
+                                this.padding, this.radii);
+    }
+
+    /**
+     * Creates a copy of this {@code ButtonConfig} with the specified button pressed effect config.
+     *
+     * @param isPressedEnabled {@code true} to enable pressed effect; {@code false} otherwise
+     * @return a new {@code ButtonConfig} instance with the updated pressed effect config
+     */
+    public ButtonConfig withIsPressedEnabled(boolean isPressedEnabled) {
+        return new ButtonConfig(this.font, this.fgs, this.bgs, this.bcs, this.borderThickness, this.hasBorder,
+                                this.isHoverEnabled, isPressedEnabled, this.htp, this.vtp, this.iconTextGap,
+                                this.padding, this.radii);
+    }
+
+    /**
+     * Creates a copy of this {@code ButtonConfig} with the new horizontal position of the text
+     * relative to the icon.
      *
      * @param htp the horizontal text position; cannot be {@code null}
      * @throws NullPointerException if the provided htp is {@code null}
      */
     public ButtonConfig withHorizontalTextPosition(HorizontalTextPosition htp) {
-        return new ButtonConfig(this.hasBorder, this.bgs, this.bcs, this.fgs, this.font,
-                                Objects.requireNonNull(htp, "TextPosition cannot be null."), this.vtp,
-                                this.iconTextGap, this.padding, this.radii);
+        return new ButtonConfig(this.font, this.fgs, this.bgs, this.bcs, this.borderThickness, this.hasBorder,
+                                this.isHoverEnabled, this.isPressedEnabled,
+                                Objects.requireNonNull(htp, "TextPosition cannot be null."),
+                                this.vtp, this.iconTextGap, this.padding, this.radii);
     }
 
     /**
@@ -926,7 +1147,8 @@ public class ButtonConfig {
      * @throws NullPointerException if the provided vtp is {@code null}
      */
     public ButtonConfig withVerticalTextPosition(VerticalTextPosition vtp) {
-        return new ButtonConfig(this.hasBorder, this.bgs, this.bcs, this.fgs, this.font, this.htp,
+        return new ButtonConfig(this.font, this.fgs, this.bgs, this.bcs, this.borderThickness, this.hasBorder,
+                                this.isHoverEnabled, this.isPressedEnabled, this.htp,
                                 Objects.requireNonNull(vtp, "TextPosition cannot be null."), this.iconTextGap,
                                 this.padding, this.radii);
     }
@@ -939,8 +1161,9 @@ public class ButtonConfig {
      */
     public ButtonConfig withIconTextGap(int iconTextGap) {
         if (iconTextGap < 0) throw new IllegalArgumentException("IconTextGap cannot be negative");
-        return new ButtonConfig(this.hasBorder, this.bgs, this.bcs, this.fgs, this.font, this.htp, this.vtp,
-                                iconTextGap, this.padding, this.radii);
+        return new ButtonConfig(this.font, this.fgs, this.bgs, this.bcs, this.borderThickness, this.hasBorder,
+                                this.isHoverEnabled, this.isPressedEnabled, this.htp, this.vtp, iconTextGap,
+                                this.padding, this.radii);
     }
 
     /**
@@ -950,9 +1173,9 @@ public class ButtonConfig {
      * @throws NullPointerException if the provided padding is {@code null}
      */
     public ButtonConfig withPadding(Padding padding) {
-        return new ButtonConfig(this.hasBorder, this.bgs, this.bcs, this.fgs, this.font, this.htp, this.vtp,
-                                this.iconTextGap, Objects.requireNonNull(padding, "Padding cannot be null."),
-                                this.radii);
+        return new ButtonConfig(this.font, this.fgs, this.bgs, this.bcs, this.borderThickness, this.hasBorder,
+                                this.isHoverEnabled, this.isPressedEnabled, this.htp, this.vtp, this.iconTextGap,
+                                Objects.requireNonNull(padding, "Padding cannot be null."), this.radii);
     }
 
     /**
@@ -963,8 +1186,9 @@ public class ButtonConfig {
      */
     public ButtonConfig withPadding(int padding) {
         if (padding < 0) throw new IllegalArgumentException("Padding cannot be negative");
-        return new ButtonConfig(this.hasBorder, this.bgs, this.bcs, this.fgs, this.font, this.htp, this.vtp,
-                                this.iconTextGap, new Padding(padding), this.radii);
+        return new ButtonConfig(this.font, this.fgs, this.bgs, this.bcs, this.borderThickness, this.hasBorder,
+                                this.isHoverEnabled, this.isPressedEnabled, this.htp, this.vtp, this.iconTextGap,
+                                new Padding(padding), this.radii);
     }
 
     /**
@@ -974,9 +1198,9 @@ public class ButtonConfig {
      * @throws NullPointerException if the provided radii is {@code null}
      */
     public ButtonConfig withRadii(Radii radii) {
-        return new ButtonConfig(this.hasBorder, this.bgs, this.bcs, this.fgs, this.font, this.htp, this.vtp,
-                                this.iconTextGap, this.padding,
-                                Objects.requireNonNull(radii, "Radii cannot be null."));
+        return new ButtonConfig(this.font, this.fgs, this.bgs, this.bcs, this.borderThickness, this.hasBorder,
+                                this.isHoverEnabled, this.isPressedEnabled, this.htp, this.vtp, this.iconTextGap,
+                                this.padding, Objects.requireNonNull(radii, "Radii cannot be null."));
     }
 
     /**
@@ -987,7 +1211,8 @@ public class ButtonConfig {
      */
     public ButtonConfig withRadii(int radius) {
         if (radius < 0) throw new IllegalArgumentException("Radius cannot be negative");
-        return new ButtonConfig(this.hasBorder, this.bgs, this.bcs, this.fgs, this.font, this.htp, this.vtp,
-                                this.iconTextGap, this.padding, new Radii(radius));
+        return new ButtonConfig(this.font, this.fgs, this.bgs, this.bcs, this.borderThickness, this.hasBorder,
+                                this.isHoverEnabled, this.isPressedEnabled, this.htp, this.vtp, this.iconTextGap,
+                                this.padding, new Radii(radius));
     }
 }

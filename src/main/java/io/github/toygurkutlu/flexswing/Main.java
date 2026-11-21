@@ -37,10 +37,10 @@ public class Main extends JFrame {
     }
 
     private void init() {
-        FlexButton button = new FlexButton("MyButton", config);
-
-        FlexButton button = new FlexButton("MyButton");
-        button.setConfig(config);
+//        FlexButton button = new FlexButton("MyButton", config);
+//
+//        FlexButton button = new FlexButton("MyButton");
+//        button.setConfig(config);
 
         FlexIncreaser increaser = new FlexIncreaser(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
         increaser.setAttribute(IncreaserAttribute.RADII, new Radii(20, 0, 0, 20))
